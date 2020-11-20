@@ -4,16 +4,18 @@ export class UserInfo {
   userId: string = "";
   /** ニックネーム */
   name: string = "";
-  /** タスクフォルダーリスト */
-  taskFolders: TaskFolder[] = [];
+  /** タスクフォルダーIDリスト */
+  taskFolders: string[] = [];
 }
 
 /** タスクフォルダー型 */
 export class TaskFolder {
   /** タスクフォルダーID */
   taskFolderId: string = "";
+  /** フォルダー名 */
+  folderName: string = "";
   /** メンバーリスト */
-  members: string[] = [];
+  members: UserInfo[] = [];
   /** タスクリスト */
   tasks: Task[] = [];
 }

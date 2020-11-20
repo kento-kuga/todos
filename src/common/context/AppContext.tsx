@@ -2,8 +2,9 @@ import React from "react";
 import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../repositories/listener";
+import { getTaskFolders } from "../../repositories/taskRepository";
 import { getUser } from "../../repositories/userRepository";
-import { UserInfo } from "../dto/app";
+import { TaskFolder, UserInfo } from "../dto/app";
 interface Props {}
 
 //ContextのState型
@@ -12,12 +13,15 @@ interface State {
   isLoading: boolean;
   /** ユーザー情報 */
   userInfo: UserInfo | null;
+  /** タスクフォルダーリスト */
+  taskFolders: TaskFolder[] | null;
 }
 
 //初期State
 const initialState: State = {
   isLoading: false,
   userInfo: null,
+  taskFolders: null,
 };
 
 //actions
@@ -31,6 +35,10 @@ type AppContextAction =
   | {
       type: "SET_USER_INFO";
       userInfo: UserInfo | null;
+    }
+  | {
+      type: "SET_TASK_FOLDERS";
+      taskFolders: TaskFolder[] | null;
     };
 
 //reducer
@@ -50,6 +58,11 @@ const reducer = (state: State, action: AppContextAction) => {
       return {
         ...state,
         userInfo: action.userInfo,
+      };
+    case "SET_TASK_FOLDERS":
+      return {
+        ...state,
+        taskFolders: action.taskFolders,
       };
   }
 };
@@ -136,7 +149,6 @@ export const useAppContext = () => {
 
 /**
  * ユーザー情報フック
- * 呼び出し時にユーザー情報が存在しない場合、DBから取得する。
  */
 export const useUserInfo = (userId: string) => {
   //state
@@ -172,5 +184,48 @@ export const useUserInfo = (userId: string) => {
   return [
     state.userInfo ? state.userInfo : new UserInfo(),
     setUserInfo,
+  ] as const;
+};
+
+/**
+ * タスクフォルダーリストフック
+ */
+export const useTaskFolders = (taskFolderIdList: string[]) => {
+  //state
+  const [state, dispatch] = useAppContext();
+
+  //effect
+  React.useEffect(() => {
+    if (state.taskFolders === null) {
+      //タスクフォルダーリストが存在しない場合
+
+      //DBから取得し、セットする。
+      const init = async () => {
+        const data = await getTaskFolders(
+          taskFolderIdList,
+          createAppListener(dispatch)
+        );
+        if (data) {
+          dispatch({
+            type: "SET_TASK_FOLDERS",
+            taskFolders: data as TaskFolder[],
+          });
+        }
+      };
+      init();
+    }
+  }, [dispatch, state.taskFolders, taskFolderIdList]);
+
+  //セット関数
+  const setTaskFolders = (taskFolders: TaskFolder[]) => {
+    dispatch({
+      type: "SET_TASK_FOLDERS",
+      taskFolders: taskFolders,
+    });
+  };
+
+  return [
+    state.taskFolders ? state.taskFolders : ([] as TaskFolder[]),
+    setTaskFolders,
   ] as const;
 };
