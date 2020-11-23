@@ -5,7 +5,7 @@ export class UserInfo {
   /** ニックネーム */
   name: string = "";
   /** タスクフォルダーIDリスト */
-  taskFolders: string[] = [];
+  taskFolderIdList: string[] = [];
 }
 
 /** タスクフォルダー型 */

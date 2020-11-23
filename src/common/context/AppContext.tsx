@@ -2,8 +2,6 @@ import React from "react";
 import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../repositories/listener";
-import { getTaskFolders } from "../../repositories/taskRepository";
-import { getUser } from "../../repositories/userRepository";
 import { TaskFolder, UserInfo } from "../dto/app";
 interface Props {}
 
@@ -15,6 +13,8 @@ interface State {
   userInfo: UserInfo | null;
   /** タスクフォルダーリスト */
   taskFolders: TaskFolder[] | null;
+  /** Appリスナー */
+  appListener: Listener;
 }
 
 //初期State
@@ -22,6 +22,7 @@ const initialState: State = {
   isLoading: false,
   userInfo: null,
   taskFolders: null,
+  appListener: {} as Listener,
 };
 
 //actions
@@ -106,6 +107,7 @@ export const AppContextProvider: React.FC<Props> = ({ children, ...props }) => {
       <AppStateContext.Provider
         value={{
           ...state,
+          appListener: createAppListener(dispatch),
         }}
       >
         <AppDispatchContext.Provider value={dispatch}>
@@ -145,87 +147,4 @@ export const useAppContextDispatch = () => {
  */
 export const useAppContext = () => {
   return [useAppContextState(), useAppContextDispatch()] as const;
-};
-
-/**
- * ユーザー情報フック
- */
-export const useUserInfo = (userId: string) => {
-  //state
-  const [state, dispatch] = useAppContext();
-
-  //effect
-  React.useEffect(() => {
-    if (state.userInfo === null) {
-      //ユーザー情報が存在しない場合
-
-      //DBから取得し、セットする。
-      const init = async () => {
-        const data = await getUser(userId, createAppListener(dispatch));
-        if (data) {
-          dispatch({
-            type: "SET_USER_INFO",
-            userInfo: data as UserInfo,
-          });
-        }
-      };
-      init();
-    }
-  }, [dispatch, state.userInfo, userId]);
-
-  //セット関数
-  const setUserInfo = (userInfo: UserInfo) => {
-    dispatch({
-      type: "SET_USER_INFO",
-      userInfo: userInfo,
-    });
-  };
-
-  return [
-    state.userInfo ? state.userInfo : new UserInfo(),
-    setUserInfo,
-  ] as const;
-};
-
-/**
- * タスクフォルダーリストフック
- */
-export const useTaskFolders = (taskFolderIdList: string[]) => {
-  //state
-  const [state, dispatch] = useAppContext();
-
-  //effect
-  React.useEffect(() => {
-    if (state.taskFolders === null) {
-      //タスクフォルダーリストが存在しない場合
-
-      //DBから取得し、セットする。
-      const init = async () => {
-        const data = await getTaskFolders(
-          taskFolderIdList,
-          createAppListener(dispatch)
-        );
-        if (data) {
-          dispatch({
-            type: "SET_TASK_FOLDERS",
-            taskFolders: data as TaskFolder[],
-          });
-        }
-      };
-      init();
-    }
-  }, [dispatch, state.taskFolders, taskFolderIdList]);
-
-  //セット関数
-  const setTaskFolders = (taskFolders: TaskFolder[]) => {
-    dispatch({
-      type: "SET_TASK_FOLDERS",
-      taskFolders: taskFolders,
-    });
-  };
-
-  return [
-    state.taskFolders ? state.taskFolders : ([] as TaskFolder[]),
-    setTaskFolders,
-  ] as const;
 };

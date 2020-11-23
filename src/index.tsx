@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./App";
+import "semantic-ui-css/semantic.min.css";
 import { AppContextProvider } from "./common/context/AppContext";
+import { BrowserRouter as Router } from "react-router-dom";
+import { App } from "./components/Pages/app";
 
 ReactDOM.render(
   <AppContextProvider>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </AppContextProvider>,
   document.getElementById("root")
 );
