@@ -2,7 +2,7 @@ import React from "react";
 import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../repositories/listener";
-import { TaskFolder, UserInfo } from "../dto/app";
+import { TaskFolderInfo, UserInfo } from "../dto/app";
 interface Props {}
 
 //ContextのState型
@@ -12,7 +12,7 @@ interface State {
   /** ユーザー情報 */
   userInfo: UserInfo | null;
   /** タスクフォルダーリスト */
-  taskFolders: TaskFolder[] | null;
+  taskFolders: TaskFolderInfo[] | null;
   /** Appリスナー */
   appListener: Listener;
 }
@@ -39,7 +39,7 @@ type AppContextAction =
     }
   | {
       type: "SET_TASK_FOLDERS";
-      taskFolders: TaskFolder[] | null;
+      taskFolders: TaskFolderInfo[] | null;
     };
 
 //reducer

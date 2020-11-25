@@ -1,4 +1,4 @@
-import { TaskFolder } from "../common/dto/app";
+import { TaskInfo, TaskFolderInfo } from "../common/dto/app";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "./listener";
@@ -15,16 +15,35 @@ export const getTaskFolders = async (
   try {
     listener.started();
 
-    const taskFolders = [] as TaskFolder[];
+    const taskFolders = [] as TaskFolderInfo[];
 
-    for (const id of folderIdList) {
-      const doc = await db.collection("taskFolder").doc(id).get();
-      const data = await doc.data();
+    //Folders取得
+    for (const folderId of folderIdList) {
+      //コレクション取得
+      const collection = await db.collection("taskFolder").doc(folderId).get();
 
-      if (data) {
-        const taskFolder = { ...data } as TaskFolder;
-        taskFolder.taskFolderId = doc.id;
+      if (collection.exists) {
+        //コレクションが取得できた場合
+        //dtoにマッピング
+        const taskFolder = { ...collection.data() } as TaskFolderInfo;
+        taskFolder.taskFolderId = collection.id;
 
+        //Task取得
+        const taskList = [] as TaskInfo[];
+
+        await collection.ref
+          .collection("task")
+          .get()
+          .then((snapshot) => {
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              const task = { ...data } as TaskInfo;
+              taskList.push(task);
+            });
+          })
+          .catch((e) => console.error(e));
+
+        taskFolder.tasks = taskList;
         taskFolders.push(taskFolder);
       }
     }

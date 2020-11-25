@@ -8,8 +8,8 @@ export class UserInfo {
   taskFolderIdList: string[] = [];
 }
 
-/** タスクフォルダー型 */
-export class TaskFolder {
+/** タスクフォルダー情報型 */
+export class TaskFolderInfo {
   /** タスクフォルダーID */
   taskFolderId: string = "";
   /** フォルダー名 */
@@ -17,11 +17,11 @@ export class TaskFolder {
   /** メンバーリスト */
   members: UserInfo[] = [];
   /** タスクリスト */
-  tasks: Task[] = [];
+  tasks: TaskInfo[] = [];
 }
 
-/** タスク型 */
-export class Task {
+/** タスク情報型 */
+export class TaskInfo {
   /** タスクID */
   taskId: string = "";
   /** 作成者 */

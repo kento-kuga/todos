@@ -1,7 +1,7 @@
 import React from "react";
 import { getTaskFolders } from "../../repositories/taskRepository";
 import { useAppContext } from "../context/AppContext";
-import { TaskFolder } from "../dto/app";
+import { TaskFolderInfo } from "../dto/app";
 
 /**
  * タスクフォルダーリストフック
@@ -21,7 +21,7 @@ export const useTaskFolders = (taskFolderIdList: string[]) => {
         if (data) {
           dispatch({
             type: "SET_TASK_FOLDERS",
-            taskFolders: data as TaskFolder[],
+            taskFolders: data as TaskFolderInfo[],
           });
         }
       };
@@ -32,7 +32,7 @@ export const useTaskFolders = (taskFolderIdList: string[]) => {
   }, [dispatch, state.taskFolders, taskFolderIdList]);
 
   //セット関数
-  const setTaskFolders = (taskFolders: TaskFolder[]) => {
+  const setTaskFolders = (taskFolders: TaskFolderInfo[]) => {
     dispatch({
       type: "SET_TASK_FOLDERS",
       taskFolders: taskFolders,
@@ -40,7 +40,7 @@ export const useTaskFolders = (taskFolderIdList: string[]) => {
   };
 
   return [
-    state.taskFolders ? state.taskFolders : ([] as TaskFolder[]),
+    state.taskFolders ? state.taskFolders : ([] as TaskFolderInfo[]),
     setTaskFolders,
   ] as const;
 };
