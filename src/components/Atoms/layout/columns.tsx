@@ -1,6 +1,10 @@
 import React from "react";
 import * as UI from "semantic-ui-react";
-import { Columns, TextAlign, Width } from "../../../core/ui-value-type";
+import {
+  Width,
+  TextAlign,
+  Columns,
+} from "../../../common/consts/ui-value-type";
 
 interface Props {
   /** 幅 */

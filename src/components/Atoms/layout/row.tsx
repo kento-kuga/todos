@@ -1,6 +1,6 @@
 import React from "react";
 import * as UI from "semantic-ui-react";
-import { Columns, TextAlign } from "../../../core/ui-value-type";
+import { Columns, TextAlign } from "../../../common/consts/ui-value-type";
 import { Column } from "./columns";
 
 interface Props {
@@ -8,10 +8,10 @@ interface Props {
   textAlign?: TextAlign;
   /** カラム数 */
   columns?: Columns;
-  /** key */
-  key?: any;
   /** クラスネーム */
   className?: string;
+  /** key */
+  key?: any;
 }
 
 export const Row: React.FC<Props> = ({ children, ...props }) => {

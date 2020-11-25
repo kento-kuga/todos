@@ -1,6 +1,6 @@
 import React from "react";
 import * as UI from "semantic-ui-react";
-import { Columns } from "../../../core/ui-value-type";
+import { Columns } from "../../../common/consts/ui-value-type";
 
 interface Props {
   /** カラム数 */

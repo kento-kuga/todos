@@ -14,7 +14,7 @@ const AppHeaderPresenter = (props: Props) => {
       <Row columns={3} className="header-row">
         <Column width={4}></Column>
         <Column width={8} className="header-center-col">
-          <Logo label="ToDos" className="logo" />
+          <Logo label="Todos" className="logo" />
         </Column>
         <Column width={4}></Column>
       </Row>
@@ -24,7 +24,8 @@ const AppHeaderPresenter = (props: Props) => {
 
 export const AppHeader = styled(AppHeaderPresenter)`
   &&&&& {
-    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid;
+    box-shadow:0px 1.5px 0px 0px rgba(34,36,38,.15);
     height: 10vh;
     //ヘッダー行
     .header-row {

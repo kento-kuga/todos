@@ -2,6 +2,7 @@ import React from "react";
 import * as UI from "semantic-ui-react";
 
 interface Props {
+  /** クラスネーム */
   className?: string;
 }
 
