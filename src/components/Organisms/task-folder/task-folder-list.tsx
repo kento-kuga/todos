@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TaskFolderInfo } from "../../../common/dto/app";
-import { Icon } from "../../Atoms/icon";
+import { TaskFolderInfo } from "../../../common/dto/taskFolder";
 import { TaskFolder } from "./task-folder";
 
 interface Props {
@@ -14,12 +13,10 @@ interface Props {
 const TaskFolderListPresenter = (props: Props) => {
   return (
     <div className={props.className}>
-      {props.taskFolderList.map((folder) => (
-        <>
-          <div className="task-folder">
-            <TaskFolder key={folder.taskFolderId} taskFolderInfo={folder} />
-          </div>
-        </>
+      {props.taskFolderList.map((folder, i) => (
+        <div className="task-folder" key={i}>
+          <TaskFolder key={folder.taskFolderId} taskFolderInfo={folder} />
+        </div>
       ))}
     </div>
   );

@@ -2,7 +2,8 @@ import React from "react";
 import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../repositories/listener";
-import { TaskFolderInfo, UserInfo } from "../dto/app";
+import { TaskFolderInfo } from "../dto/taskFolder";
+import { UserInfo } from "../dto/user";
 interface Props {}
 
 //ContextのState型

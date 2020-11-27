@@ -1,4 +1,6 @@
-import { TaskInfo, TaskFolderInfo } from "../common/dto/app";
+import { TaskInfo } from "../common/dto/task";
+import { TaskFolderCreateReq, TaskFolderInfo } from "../common/dto/taskFolder";
+import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "./listener";
@@ -20,7 +22,7 @@ export const getTaskFolders = async (
     //Folders取得
     for (const folderId of folderIdList) {
       //コレクション取得
-      const collection = await db.collection("taskFolder").doc(folderId).get();
+      const collection = await db.collection("taskFolders").doc(folderId).get();
 
       if (collection.exists) {
         //コレクションが取得できた場合
@@ -50,6 +52,41 @@ export const getTaskFolders = async (
 
     return taskFolders;
   } catch {
+    throw new SystemError();
+  } finally {
+    listener.finished();
+  }
+};
+
+/** タスクフォルダー作成 */
+export const createTaskFolder = async (
+  folderName: string,
+  userInfo: UserInfo,
+  listener: Listener
+) => {
+  const db = Firebase.instance.db;
+
+  try {
+    listener.started();
+
+    //リクエスト作成
+    //TODO リクエスト用の型を作成
+    const taskFolder = new TaskFolderCreateReq();
+    taskFolder.folderName = folderName;
+    taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
+
+    //タスクフォルダー作成
+    const ref = await db.collection("taskFolders").doc();
+    await ref.set({ ...taskFolder });
+
+    //ユーザーのフォルダーリストにも追加。
+    const tmpTaskFolder = [...userInfo.taskFolderIdList];
+    tmpTaskFolder.push(ref.id);
+
+    await db.collection("users").doc(userInfo.userId).update({
+      taskFolderIdList: tmpTaskFolder,
+    });
+  } catch (e) {
     throw new SystemError();
   } finally {
     listener.finished();

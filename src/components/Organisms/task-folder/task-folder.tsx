@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment } from "semantic-ui-react";
 import styled from "styled-components";
-import { TaskFolderInfo } from "../../../common/dto/app";
+import { TaskFolderInfo } from "../../../common/dto/taskFolder";
 import { Icon } from "../../Atoms/icon";
 import { Column, Grid, Row } from "../../Atoms/layout";
 

@@ -1,18 +1,18 @@
 import React from "react";
 import { getUser } from "../../repositories/userRepository";
 import { useAppContext } from "../context/AppContext";
-import { UserInfo } from "../dto/app";
+import { UserInfo } from "../dto/user";
 
 /**
  * ユーザー情報フック
  */
-export const useUserInfo = (userId: string) => {
+export const useUserInfo = (userId?: string) => {
   //state
   const [state, dispatch] = useAppContext();
 
   //effect
   React.useEffect(() => {
-    if (state.userInfo === null) {
+    if (state.userInfo === null && userId) {
       //ユーザー情報が存在しない場合
 
       //DBから取得し、セットする。
@@ -21,7 +21,7 @@ export const useUserInfo = (userId: string) => {
         if (data) {
           dispatch({
             type: "SET_USER_INFO",
-            userInfo: data as UserInfo,
+            userInfo: data,
           });
         }
       };

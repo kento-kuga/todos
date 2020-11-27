@@ -1,18 +1,18 @@
 import React from "react";
-import { getTaskFolders } from "../../repositories/taskRepository";
+import { getTaskFolders } from "../../repositories/taskFolderRepository";
 import { useAppContext } from "../context/AppContext";
-import { TaskFolderInfo } from "../dto/app";
+import { TaskFolderInfo } from "../dto/taskFolder";
 
 /**
  * タスクフォルダーリストフック
  */
-export const useTaskFolders = (taskFolderIdList: string[]) => {
+export const useTaskFolders = (taskFolderIdList?: string[]) => {
   //state
   const [state, dispatch] = useAppContext();
 
   //effect
   React.useEffect(() => {
-    if (state.taskFolders === null) {
+    if (state.taskFolders === null && taskFolderIdList) {
       //タスクフォルダーリストが存在しない場合
 
       //DBから取得し、セットする。
