@@ -1,9 +1,14 @@
 import React from "react";
-import { Segment } from "semantic-ui-react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { TaskFolderInfo } from "../../../common/dto/taskFolder";
+import {
+  TaskFolderInfo,
+  UpdateTaskFolderFormParams,
+} from "../../../common/dto/taskFolder";
 import { Icon } from "../../Atoms/icon";
 import { Column, Grid, Row } from "../../Atoms/layout";
+import { Segment } from "../../Atoms/segment";
+import { UpdateTaskFolderNameForm } from "../Form/update-task-folder-name-form";
 
 interface Props {
   //タスクフォルダー情報
@@ -13,39 +18,121 @@ interface Props {
   /** 編集モード */
   editMode?: boolean;
   /** 削除時ハンドラー */
-  handleClickDelete?: (taskFolderId: string) => void;
+  handleDeleteFolder?: (taskFolderId: string) => void;
+  /** フォルダーネーム更新時ハンドラー */
+  handleUpdateFolderName?: (
+    taskFolderId: string,
+    prevFolderName: string,
+    newFolderName?: string
+  ) => void;
 }
 
 const TaskFolderPresenter = (props: Props) => {
+  //hooks
+  //フォームパーツ
+  const { control, handleSubmit } = useForm<UpdateTaskFolderFormParams>();
+
+  //state
+  //フォルダーネーム編集モード
+  const [editFolderName, setEditFolderName] = React.useState(false);
+
+  //effect
+  React.useEffect(() => {
+    //編集モードが解除されたら、ステートをリセットする。
+    if (props.editMode === false) {
+      setEditFolderName(false);
+    }
+  }, [props.editMode]);
+
   //function
   //削除ボタン押下時
   const onClickTrash = () => {
-    if (props.handleClickDelete) {
-      props.handleClickDelete(props.taskFolderInfo.taskFolderId);
+    if (props.handleDeleteFolder) {
+      props.handleDeleteFolder(props.taskFolderInfo.taskFolderId);
     }
+  };
+
+  //フォルダーネーム編集ボタン押下時
+  const onClickEditFolderName = () => {
+    setEditFolderName(true);
+  };
+
+  //フォルダーネーム確定ボタン押下時
+  const onClickFixeFolderName = (data: UpdateTaskFolderFormParams) => {
+    //フォルダーネーム更新
+    if (props.handleUpdateFolderName) {
+      props.handleUpdateFolderName(
+        props.taskFolderInfo.taskFolderId,
+        props.taskFolderInfo.folderName,
+        data.folderName
+      );
+    }
+
+    setEditFolderName(false);
   };
 
   return (
     <Segment className={props.className}>
       <Grid>
-        <Row columns={4} className="task-folder-row">
-          <Column width={1} className="task-folder-column">
-            {!props.editMode && <Icon iconName="folder outline" size="large" />}
-            {props.editMode && (
-              <Icon iconName="trash" size="large" onClick={onClickTrash} />
-            )}
-          </Column>
-          <Column width={12} className="task-folder-column">
-            {props.taskFolderInfo.folderName}
-          </Column>
-          <Column width={1} className="task-folder-column">
-            {props.taskFolderInfo.tasks.length}
-          </Column>
-          <Column width={1} className="task-folder-column">
-            <div>
-              <Icon iconName="group" size="large" />
-            </div>
-          </Column>
+        <Row columns={props.editMode ? 3 : 4} className="task-folder-row">
+          {!props.editMode && (
+            <>
+              <Column width={1} className="task-folder-column">
+                {!props.editMode && (
+                  <Icon iconName="folder outline" size="large" />
+                )}
+                {props.editMode && (
+                  <Icon iconName="trash" size="large" onClick={onClickTrash} />
+                )}
+              </Column>
+              <Column width={12} className="task-folder-column">
+                {props.taskFolderInfo.folderName}
+              </Column>
+              <Column
+                width={1}
+                className="task-folder-column task-folder-tasks-column"
+              >
+                {props.taskFolderInfo.tasks.length}
+              </Column>
+              <Column width={1} className="task-folder-column">
+                <Icon iconName="group" size="large" />
+              </Column>
+            </>
+          )}
+          {props.editMode && (
+            <>
+              <Column width={1} className="task-folder-column">
+                <Icon iconName="trash" size="large" onClick={onClickTrash} />
+              </Column>
+              <Column width={12} className="task-folder-column">
+                {!editFolderName && <> {props.taskFolderInfo.folderName} </>}
+                {editFolderName && (
+                  <UpdateTaskFolderNameForm
+                    defaultFolderName={props.taskFolderInfo.folderName}
+                    control={control}
+                  />
+                )}
+              </Column>
+              <Column width={2} className="task-folder-column" textAlign="left">
+                {!editFolderName && (
+                  <Icon
+                    iconName="edit outline"
+                    onClick={onClickEditFolderName}
+                    className="edit-task-folder-name-button"
+                    size="large"
+                  />
+                )}
+                {editFolderName && (
+                  <Icon
+                    iconName="check circle outline"
+                    onClick={handleSubmit(onClickFixeFolderName)}
+                    color="blue"
+                    className="fixed-task-folder-name-button"
+                  />
+                )}
+              </Column>
+            </>
+          )}
         </Row>
       </Grid>
     </Segment>
@@ -56,11 +143,21 @@ export const TaskFolder = styled(TaskFolderPresenter)`
   &&&&& {
     font-size: 1.3rem;
     border: 1px solid;
+    //タスクフォルダー行
     .task-folder-row {
       display: table;
+      //タスクフォルダー列
       .task-folder-column {
         display: table-cell;
         vertical-align: middle;
+        //タスクフォルダーネーム編集ボタン
+        .edit-task-folder-name-button {
+          font-size: 1.2em;
+        }
+        //タスクフォルダーネーム確定ボタン
+        .fixed-task-folder-name-button {
+          font-size: 1.2em;
+        }
       }
     }
   }

@@ -17,6 +17,14 @@ export class TaskFolderCreateMember {
   userId: string = "";
 }
 
+/** タスクフォルダー更新リクエスト型 */
+export class TaskFolderUpdateReq {
+  /** タスクフォルダー名 */
+  folderName?: string;
+  /** メンバーリスト */
+  members?: TaskFolderCreateMember;
+}
+
 /** タスクフォルダー情報型 */
 export class TaskFolderInfo {
   /** タスクフォルダーID */
@@ -30,7 +38,13 @@ export class TaskFolderInfo {
 }
 
 /** タスクフォルダー作成フォームのparam型 */
-export class createTaskFolderForm {
+export class CreateTaskFolderFormParams {
+  /** フォルダー名 */
+  folderName: string = "";
+}
+
+/** タスクフォルダーネーム更新フォームのparam型 */
+export class UpdateTaskFolderFormParams {
   /** フォルダー名 */
   folderName: string = "";
 }

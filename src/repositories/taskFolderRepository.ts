@@ -1,5 +1,9 @@
 import { TaskInfo } from "../common/dto/task";
-import { TaskFolderCreateReq, TaskFolderInfo } from "../common/dto/taskFolder";
+import {
+  TaskFolderCreateReq,
+  TaskFolderInfo,
+  TaskFolderUpdateReq,
+} from "../common/dto/taskFolder";
 import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
@@ -121,6 +125,29 @@ export const deleteTaskFolder = async (
     await db.collection("users").doc(userInfo.userId).update({
       taskFolderIdList: tmpTaskFolder,
     });
+  } catch (e) {
+    console.error(e);
+    throw new SystemError();
+  } finally {
+    listener.finished();
+  }
+};
+
+/** タスクフォルダー更新 */
+export const updateTaskFolder = async (
+  taskFolderId: string,
+  updateFolderParam: TaskFolderUpdateReq,
+  listener: Listener
+) => {
+  const db = Firebase.instance.db;
+
+  try {
+    listener.started();
+
+    await db
+      .collection("taskFolders")
+      .doc(taskFolderId)
+      .update({ ...updateFolderParam });
   } catch (e) {
     console.error(e);
     throw new SystemError();

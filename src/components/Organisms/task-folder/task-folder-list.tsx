@@ -11,7 +11,13 @@ interface Props {
   /** 編集モード */
   editMode?: boolean;
   /** 削除時ハンドラー */
-  handleClickDelete?: (taskFolderId: string) => void;
+  handleDeleteFolder?: (taskFolderId: string) => void;
+  /** フォルダーネーム更新時ハンドラー */
+  handleUpdateFolderName?: (
+    taskFolderId: string,
+    prevFolderName: string,
+    newFolderName?: string
+  ) => void;
 }
 
 const TaskFolderListPresenter = (props: Props) => {
@@ -23,7 +29,8 @@ const TaskFolderListPresenter = (props: Props) => {
             key={folder.taskFolderId}
             taskFolderInfo={folder}
             editMode={props.editMode}
-            handleClickDelete={props.handleClickDelete}
+            handleDeleteFolder={props.handleDeleteFolder}
+            handleUpdateFolderName={props.handleUpdateFolderName}
           />
         </div>
       ))}

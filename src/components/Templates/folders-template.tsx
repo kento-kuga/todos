@@ -15,7 +15,13 @@ interface Props {
   /** クラスネーム */
   className?: string;
   /** 削除時ハンドラー */
-  handleClickDelete: (taskFolderId: string) => void;
+  handleDeleteFolder: (taskFolderId: string) => void;
+  /** フォルダーネーム更新時ハンドラー */
+  handleUpdateFolderName: (
+    taskFolderId: string,
+    prevFolderName: string,
+    newFolderName?: string
+  ) => void;
 }
 
 const FoldersTemplatePresenter = (props: Props) => {
@@ -43,7 +49,8 @@ const FoldersTemplatePresenter = (props: Props) => {
             taskFolderList={props.taskFolderList}
             className="task-folder-list"
             editMode={editMode}
-            handleClickDelete={props.handleClickDelete}
+            handleDeleteFolder={props.handleDeleteFolder}
+            handleUpdateFolderName={props.handleUpdateFolderName}
           />
         </Row>
         <Row textAlign="right" className="add-folder-row">
