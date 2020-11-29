@@ -1,24 +1,24 @@
 //eslint-disable-next-line
 import React from "react";
 import {
-  createTaskFolder,
+  deleteTaskFolder,
   getTaskFolders,
 } from "../../repositories/taskFolderRepository";
 import { getUser } from "../../repositories/userRepository";
 import { useAppContext } from "../context/AppContext";
-import { useUserInfo } from "../hooks/useUserInfo";
+import { useUserInfo } from "./useUserInfo";
 import { useTaskFolders } from "./useTaskFolders";
 
-/** フォルダー作成Hooks */
-export const useCreateFolder = () => {
+/** フォルダー削除Hooks */
+export const useDeleteFolder = () => {
   //state
   const [state] = useAppContext();
   const [userInfo, setUserInfo] = useUserInfo();
   const [, setTaskFolders] = useTaskFolders();
 
-  const createFolder = async (name: string) => {
-    //フォルダー作成
-    await createTaskFolder(name, userInfo, state.appListener);
+  const deleteFolder = async (taskFolderId: string) => {
+    //フォルダー削除
+    await deleteTaskFolder(taskFolderId, userInfo, state.appListener);
 
     //ユーザー情報再取得
     const tmpUserInfo = await getUser(userInfo.userId, state.appListener);
@@ -31,10 +31,7 @@ export const useCreateFolder = () => {
       tmpUserInfo.taskFolderIdList,
       state.appListener
     );
-    if (tmpTaskFolders) {
-      setTaskFolders(tmpTaskFolders);
-    }
+    setTaskFolders(tmpTaskFolders || []);
   };
-
-  return createFolder;
+  return deleteFolder;
 };

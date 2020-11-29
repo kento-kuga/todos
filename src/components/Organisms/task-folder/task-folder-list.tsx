@@ -8,6 +8,10 @@ interface Props {
   taskFolderList: TaskFolderInfo[];
   /** クラスネーム */
   className?: string;
+  /** 編集モード */
+  editMode?: boolean;
+  /** 削除時ハンドラー */
+  handleClickDelete?: (taskFolderId: string) => void;
 }
 
 const TaskFolderListPresenter = (props: Props) => {
@@ -15,7 +19,12 @@ const TaskFolderListPresenter = (props: Props) => {
     <div className={props.className}>
       {props.taskFolderList.map((folder, i) => (
         <div className="task-folder" key={i}>
-          <TaskFolder key={folder.taskFolderId} taskFolderInfo={folder} />
+          <TaskFolder
+            key={folder.taskFolderId}
+            taskFolderInfo={folder}
+            editMode={props.editMode}
+            handleClickDelete={props.handleClickDelete}
+          />
         </div>
       ))}
     </div>

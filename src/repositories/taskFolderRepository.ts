@@ -51,7 +51,8 @@ export const getTaskFolders = async (
     }
 
     return taskFolders;
-  } catch {
+  } catch (e) {
+    console.error(e);
     throw new SystemError();
   } finally {
     listener.finished();
@@ -87,6 +88,41 @@ export const createTaskFolder = async (
       taskFolderIdList: tmpTaskFolder,
     });
   } catch (e) {
+    console.error(e);
+    throw new SystemError();
+  } finally {
+    listener.finished();
+  }
+};
+
+/** タスクフォルダー削除 */
+export const deleteTaskFolder = async (
+  taskFolderId: string,
+  userInfo: UserInfo,
+  listener: Listener
+) => {
+  const db = Firebase.instance.db;
+
+  try {
+    listener.started();
+
+    //タスクフォルダー削除
+    await db.collection("taskFolders").doc(taskFolderId).delete();
+
+    //ユーザーのフォルダーリストからも削除。
+    //削除対象のIDの場合は何も返さない。
+    // eslint-disable-next-line array-callback-return
+    const tmpTaskFolder = [...userInfo.taskFolderIdList].filter((id) => {
+      //削除対象のID以外を返却
+      return id !== taskFolderId;
+    });
+
+    //ユーザーのフォルダーリスト更新
+    await db.collection("users").doc(userInfo.userId).update({
+      taskFolderIdList: tmpTaskFolder,
+    });
+  } catch (e) {
+    console.error(e);
     throw new SystemError();
   } finally {
     listener.finished();

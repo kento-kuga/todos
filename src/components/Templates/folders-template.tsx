@@ -14,25 +14,36 @@ interface Props {
   taskFolderList: TaskFolderInfo[];
   /** クラスネーム */
   className?: string;
+  /** 削除時ハンドラー */
+  handleClickDelete: (taskFolderId: string) => void;
 }
 
 const FoldersTemplatePresenter = (props: Props) => {
   //state
   //タスクフォルダー作成モーダルフラグ
   const [createFolderOpen, setCreateFolderOpen] = React.useState(false);
+  //編集モードフラグ
+  const [editMode, setEditMode] = React.useState(false);
 
   return (
     <>
       <Grid className={props.className}>
         <Row className="header-row">
           <div className="setting-button">
-            <Icon size="large" iconName="setting" />
+            <Icon
+              size="large"
+              iconName="setting"
+              color={editMode ? "blue" : "black"}
+              onClick={() => setEditMode((state) => !state)}
+            />
           </div>
         </Row>
         <Row className="folder-list-row">
           <TaskFolderList
             taskFolderList={props.taskFolderList}
             className="task-folder-list"
+            editMode={editMode}
+            handleClickDelete={props.handleClickDelete}
           />
         </Row>
         <Row textAlign="right" className="add-folder-row">

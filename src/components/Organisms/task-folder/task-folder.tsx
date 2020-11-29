@@ -10,15 +10,30 @@ interface Props {
   taskFolderInfo: TaskFolderInfo;
   /** クラスネーム */
   className?: string;
+  /** 編集モード */
+  editMode?: boolean;
+  /** 削除時ハンドラー */
+  handleClickDelete?: (taskFolderId: string) => void;
 }
 
 const TaskFolderPresenter = (props: Props) => {
+  //function
+  //削除ボタン押下時
+  const onClickTrash = () => {
+    if (props.handleClickDelete) {
+      props.handleClickDelete(props.taskFolderInfo.taskFolderId);
+    }
+  };
+
   return (
     <Segment className={props.className}>
       <Grid>
         <Row columns={4} className="task-folder-row">
           <Column width={1} className="task-folder-column">
-            <Icon iconName="folder outline" size="large" />
+            {!props.editMode && <Icon iconName="folder outline" size="large" />}
+            {props.editMode && (
+              <Icon iconName="trash" size="large" onClick={onClickTrash} />
+            )}
           </Column>
           <Column width={12} className="task-folder-column">
             {props.taskFolderInfo.folderName}
