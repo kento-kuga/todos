@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { createTaskFolderForm } from "../../../common/dto/taskFolder";
+import { CreateTaskFolderFormParams } from "../../../common/dto/taskFolder";
 import { useCreateFolder } from "../../../common/hooks/useCreateFolder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
@@ -14,17 +14,21 @@ interface Props {
   className?: string;
 }
 
-const CreateTaskFormPresenter = (props: Props) => {
+const CreateTaskFolderFormPresenter = (props: Props) => {
   //hooks
   //フォルダー作成Hook
   const createFolder = useCreateFolder();
 
   //フォームパーツ
-  const { control, errors, handleSubmit } = useForm<createTaskFolderForm>();
+  const {
+    control,
+    errors,
+    handleSubmit,
+  } = useForm<CreateTaskFolderFormParams>();
 
   //function
   //送信ハンドラー
-  const onSubmit = (data: createTaskFolderForm) => {
+  const onSubmit = (data: CreateTaskFolderFormParams) => {
     //フォルダー作成
     createFolder(data.folderName);
     if (props.handleSubmit) {
@@ -65,7 +69,7 @@ const CreateTaskFormPresenter = (props: Props) => {
   );
 };
 
-export const CreateTaskForm = styled(CreateTaskFormPresenter)`
+export const CreateTaskFolderForm = styled(CreateTaskFolderFormPresenter)`
   &&&&& {
     .folder-name {
       padding-top: 1rem;

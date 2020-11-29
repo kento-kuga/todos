@@ -11,7 +11,7 @@ import { useTaskFolders } from "./useTaskFolders";
 
 /** フォルダー削除Hooks */
 export const useDeleteFolder = () => {
-  //state
+  //hooks
   const [state] = useAppContext();
   const [userInfo, setUserInfo] = useUserInfo();
   const [, setTaskFolders] = useTaskFolders();

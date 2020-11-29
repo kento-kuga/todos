@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Grid, Row } from "../../Atoms/layout";
 import { Modal, ModalContent } from "../../Atoms/modal";
-import { CreateTaskForm } from "../Form/create-task-form";
+import { CreateTaskFolderForm } from "../Form/create-task-folder-form";
 
 interface Props {
   /** オープンフラグ */
@@ -31,7 +31,7 @@ const CreateTaskFolderModalPresenter = (props: Props) => {
       <ModalContent className="modal-content">
         <Grid>
           <Row>
-            <CreateTaskForm handleSubmit={props.onClose} />
+            <CreateTaskFolderForm handleSubmit={props.onClose} />
           </Row>
         </Grid>
       </ModalContent>
