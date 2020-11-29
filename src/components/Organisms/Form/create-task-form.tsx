@@ -5,7 +5,6 @@ import { createTaskFolderForm } from "../../../common/dto/taskFolder";
 import { useCreateFolder } from "../../../common/hooks/useCreateFolder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
-import { Row } from "../../Atoms/layout";
 import { Label } from "../../Atoms/text";
 
 interface Props {
@@ -26,8 +25,8 @@ const CreateTaskFormPresenter = (props: Props) => {
   //function
   //送信ハンドラー
   const onSubmit = (data: createTaskFolderForm) => {
+    //フォルダー作成
     createFolder(data.folderName);
-
     if (props.handleSubmit) {
       props.handleSubmit();
     }
