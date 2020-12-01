@@ -14,22 +14,34 @@ interface Props {
   taskFolderList: TaskFolderInfo[];
   /** クラスネーム */
   className?: string;
+  /** 編集モード */
+  editMode: boolean;
+  /** 編集モード選択ハンドラー */
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  /** タスクフォルダー作成モーダルフラグ */
+  createFolderOpen: boolean;
+  /** タスクフォルダー作成モーダルフラグセット関数 */
+  setCreateFolderOpen: React.Dispatch<React.SetStateAction<boolean>>;
   /** 削除時ハンドラー */
-  handleDeleteFolder: (taskFolderId: string) => void;
+  handleDeleteFolders: (taskFolderId: string[]) => void;
   /** フォルダーネーム更新時ハンドラー */
   handleUpdateFolderName: (
     taskFolderId: string,
     prevFolderName: string,
     newFolderName?: string
   ) => void;
+  /** 選択済フォルダーIdリスト */
+  selectedFolderIdList: string[];
+  /** 選択済フォルダーIdリストセット関数 */
+  setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const FoldersTemplatePresenter = (props: Props) => {
-  //state
-  //タスクフォルダー作成モーダルフラグ
-  const [createFolderOpen, setCreateFolderOpen] = React.useState(false);
-  //編集モードフラグ
-  const [editMode, setEditMode] = React.useState(false);
+  //function
+  //削除ボタン押下時
+  const onClickDelete = () => {
+    props.handleDeleteFolders(props.selectedFolderIdList);
+  };
 
   return (
     <>
@@ -39,8 +51,8 @@ const FoldersTemplatePresenter = (props: Props) => {
             <Icon
               size="large"
               iconName="setting"
-              color={editMode ? "blue" : "black"}
-              onClick={() => setEditMode((state) => !state)}
+              color={props.editMode ? "blue" : "black"}
+              onClick={() => props.setEditMode((state) => !state)}
             />
           </div>
         </Row>
@@ -48,24 +60,38 @@ const FoldersTemplatePresenter = (props: Props) => {
           <TaskFolderList
             taskFolderList={props.taskFolderList}
             className="task-folder-list"
-            editMode={editMode}
-            handleDeleteFolder={props.handleDeleteFolder}
+            editMode={props.editMode}
             handleUpdateFolderName={props.handleUpdateFolderName}
+            selectedFolderIdList={props.selectedFolderIdList}
+            setSelectedFolderIdList={props.setSelectedFolderIdList}
           />
         </Row>
         <Row textAlign="right" className="add-folder-row">
           <div className="add-folder-button">
-            <IconGroup size="big" onClick={() => setCreateFolderOpen(true)}>
-              <Icon iconName="folder outline" />
-              <Icon iconName="add" corner="top right" inverted />
-            </IconGroup>
+            {!props.editMode && (
+              <IconGroup
+                size="big"
+                onClick={() => props.setCreateFolderOpen(true)}
+              >
+                <Icon iconName="folder outline" />
+                <Icon iconName="add" corner="top right" inverted />
+              </IconGroup>
+            )}
+            {props.editMode && (
+              <Icon
+                iconName="trash"
+                size="big"
+                disable={props.selectedFolderIdList.length === 0 ? true : false}
+                onClick={onClickDelete}
+              />
+            )}
           </div>
         </Row>
       </Grid>
       <CreateTaskFolderModal
-        open={createFolderOpen}
+        open={props.createFolderOpen}
         onClose={() => {
-          setCreateFolderOpen(false);
+          props.setCreateFolderOpen(false);
         }}
       />
     </>

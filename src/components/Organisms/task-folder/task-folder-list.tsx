@@ -9,15 +9,17 @@ interface Props {
   /** クラスネーム */
   className?: string;
   /** 編集モード */
-  editMode?: boolean;
-  /** 削除時ハンドラー */
-  handleDeleteFolder?: (taskFolderId: string) => void;
+  editMode: boolean;
   /** フォルダーネーム更新時ハンドラー */
-  handleUpdateFolderName?: (
+  handleUpdateFolderName: (
     taskFolderId: string,
     prevFolderName: string,
     newFolderName?: string
   ) => void;
+  /** 選択済フォルダーIdリスト */
+  selectedFolderIdList: string[];
+  /** 選択済フォルダーIdリストセット関数 */
+  setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const TaskFolderListPresenter = (props: Props) => {
@@ -29,8 +31,9 @@ const TaskFolderListPresenter = (props: Props) => {
             key={folder.taskFolderId}
             taskFolderInfo={folder}
             editMode={props.editMode}
-            handleDeleteFolder={props.handleDeleteFolder}
             handleUpdateFolderName={props.handleUpdateFolderName}
+            selectedFolderIdList={props.selectedFolderIdList}
+            setSelectedFolderIdList={props.setSelectedFolderIdList}
           />
         </div>
       ))}

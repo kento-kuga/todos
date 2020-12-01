@@ -101,7 +101,7 @@ export const createTaskFolder = async (
 
 /** タスクフォルダー削除 */
 export const deleteTaskFolder = async (
-  taskFolderId: string,
+  deleteTaskFolderIdList: string[],
   userInfo: UserInfo,
   listener: Listener
 ) => {
@@ -111,14 +111,14 @@ export const deleteTaskFolder = async (
     listener.started();
 
     //タスクフォルダー削除
-    await db.collection("taskFolders").doc(taskFolderId).delete();
+    for (const id of deleteTaskFolderIdList) {
+      await db.collection("taskFolders").doc(id).delete();
+    }
 
     //ユーザーのフォルダーリストからも削除。
-    //削除対象のIDの場合は何も返さない。
-    // eslint-disable-next-line array-callback-return
-    const tmpTaskFolder = [...userInfo.taskFolderIdList].filter((id) => {
-      //削除対象のID以外を返却
-      return id !== taskFolderId;
+    const tmpTaskFolder = userInfo.taskFolderIdList.filter((id) => {
+      //削除対象フォルダのidと一致するidは除外する。
+      return deleteTaskFolderIdList.every((deleteId) => deleteId !== id);
     });
 
     //ユーザーのフォルダーリスト更新

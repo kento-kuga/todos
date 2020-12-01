@@ -1,7 +1,6 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import styled from "styled-components";
-import { InputType } from "../../../common/consts/ui-value-type";
 import { UpdateTaskFolderFormParams } from "../../../common/dto/taskFolder";
 import { Form, Input } from "../../Atoms/form";
 

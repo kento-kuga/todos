@@ -47,7 +47,11 @@ export type IconName =
   | "folder"
   | "folder open"
   | "folder open outline"
-  | "setting";
+  | "setting"
+  | "edit outline"
+  | "check circle outline"
+  | "square outline"
+  | "check square outline";
 
 /** アイコンの位置 */
 export type IconCorner =

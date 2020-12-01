@@ -16,15 +16,17 @@ interface Props {
   /** クラスネーム */
   className?: string;
   /** 編集モード */
-  editMode?: boolean;
-  /** 削除時ハンドラー */
-  handleDeleteFolder?: (taskFolderId: string) => void;
+  editMode: boolean;
   /** フォルダーネーム更新時ハンドラー */
-  handleUpdateFolderName?: (
+  handleUpdateFolderName: (
     taskFolderId: string,
     prevFolderName: string,
     newFolderName?: string
   ) => void;
+  /** 選択済フォルダーIdリスト */
+  selectedFolderIdList: string[];
+  /** 選択済フォルダーIdリストセット関数 */
+  setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const TaskFolderPresenter = (props: Props) => {
@@ -35,21 +37,34 @@ const TaskFolderPresenter = (props: Props) => {
   //state
   //フォルダーネーム編集モード
   const [editFolderName, setEditFolderName] = React.useState(false);
+  //選択済み
+  const [selected, setSelected] = React.useState(false);
 
   //effect
   React.useEffect(() => {
     //編集モードが解除されたら、ステートをリセットする。
-    if (props.editMode === false) {
-      setEditFolderName(false);
-    }
+    setEditFolderName(false);
   }, [props.editMode]);
 
   //function
-  //削除ボタン押下時
-  const onClickTrash = () => {
-    if (props.handleDeleteFolder) {
-      props.handleDeleteFolder(props.taskFolderInfo.taskFolderId);
-    }
+  //未選択チェックボック押下時
+  const onClickNoSelect = () => {
+    setSelected(true);
+    //選択済フォルダーIdリストに追加
+    const tmpList = [...props.selectedFolderIdList];
+    tmpList.push(props.taskFolderInfo.taskFolderId);
+    props.setSelectedFolderIdList(tmpList);
+  };
+
+  //選択済チェックボック押下時
+  const onClickSelected = () => {
+    setSelected(false);
+
+    //選択済フォルダーIdリストから削除
+    const tmpList = props.selectedFolderIdList.filter(
+      (id) => id !== props.taskFolderInfo.taskFolderId
+    );
+    props.setSelectedFolderIdList(tmpList);
   };
 
   //フォルダーネーム編集ボタン押下時
@@ -60,13 +75,11 @@ const TaskFolderPresenter = (props: Props) => {
   //フォルダーネーム確定ボタン押下時
   const onClickFixeFolderName = (data: UpdateTaskFolderFormParams) => {
     //フォルダーネーム更新
-    if (props.handleUpdateFolderName) {
-      props.handleUpdateFolderName(
-        props.taskFolderInfo.taskFolderId,
-        props.taskFolderInfo.folderName,
-        data.folderName
-      );
-    }
+    props.handleUpdateFolderName(
+      props.taskFolderInfo.taskFolderId,
+      props.taskFolderInfo.folderName,
+      data.folderName
+    );
 
     setEditFolderName(false);
   };
@@ -78,12 +91,7 @@ const TaskFolderPresenter = (props: Props) => {
           {!props.editMode && (
             <>
               <Column width={1} className="task-folder-column">
-                {!props.editMode && (
-                  <Icon iconName="folder outline" size="large" />
-                )}
-                {props.editMode && (
-                  <Icon iconName="trash" size="large" onClick={onClickTrash} />
-                )}
+                <Icon iconName="folder outline" size="large" />
               </Column>
               <Column width={12} className="task-folder-column">
                 {props.taskFolderInfo.folderName}
@@ -102,7 +110,15 @@ const TaskFolderPresenter = (props: Props) => {
           {props.editMode && (
             <>
               <Column width={1} className="task-folder-column">
-                <Icon iconName="trash" size="large" onClick={onClickTrash} />
+                {!selected && (
+                  <Icon iconName="square outline" onClick={onClickNoSelect} />
+                )}
+                {selected && (
+                  <Icon
+                    iconName="check square outline"
+                    onClick={onClickSelected}
+                  />
+                )}
               </Column>
               <Column width={12} className="task-folder-column">
                 {!editFolderName && <> {props.taskFolderInfo.folderName} </>}
@@ -156,7 +172,8 @@ export const TaskFolder = styled(TaskFolderPresenter)`
         }
         //タスクフォルダーネーム確定ボタン
         .fixed-task-folder-name-button {
-          font-size: 1.2em;
+          font-size: 1.3em;
+          padding-top: 0.2rem;
         }
       }
     }
