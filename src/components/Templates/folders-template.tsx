@@ -95,7 +95,7 @@ const FoldersTemplatePresenter = (props: Props) => {
       </Grid>
       <CreateTaskFolderModal
         open={props.createFolderOpen}
-        onClose={() => {
+        handleClose={() => {
           props.setCreateFolderOpen(false);
         }}
         handleCreateFolder={props.handleCreateFolder}

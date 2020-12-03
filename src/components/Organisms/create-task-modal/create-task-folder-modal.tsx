@@ -8,7 +8,7 @@ interface Props {
   /** オープンフラグ */
   open: boolean;
   /** クローズハンドラ */
-  onClose: () => void;
+  handleClose: () => void;
   /** フォルダー作成時ハンドラー */
   handleCreateFolder: (folderName: string) => void;
   /** クラスネーム */
@@ -22,14 +22,14 @@ const CreateTaskFolderModalPresenter = (props: Props) => {
     //フォルダー作成
     props.handleCreateFolder(folderName);
     //モーダルを閉じる
-    if (props.onClose) {
-      props.onClose();
+    if (props.handleClose) {
+      props.handleClose();
     }
   };
 
   return (
     <Modal
-      onClose={props.onClose}
+      onClose={props.handleClose}
       open={props.open}
       className={props.className}
       noCloseOnDimmerClick
