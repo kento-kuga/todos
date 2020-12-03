@@ -122,7 +122,7 @@ export const createTaskFolder = async (
  * @param userInfo ユーザー情報
  * @param listener リスナー
  */
-export const deleteTaskFolder = async (
+export const deleteTaskFolders = async (
   deleteTaskFolderIdList: string[],
   userInfo: UserInfo,
   listener: Listener

@@ -1,7 +1,7 @@
 //eslint-disable-next-line
 import React from "react";
 import {
-  deleteTaskFolder,
+  deleteTaskFolders,
   getTaskFolders,
 } from "../../repositories/taskFolderRepository";
 import { getUser } from "../../repositories/userRepository";
@@ -18,7 +18,7 @@ export const useDeleteFolder = () => {
 
   const deleteFolder = async (taskFolderIdList: string[]) => {
     //フォルダー削除
-    await deleteTaskFolder(taskFolderIdList, userInfo, state.appListener);
+    await deleteTaskFolders(taskFolderIdList, userInfo, state.appListener);
 
     //ユーザー情報再取得
     const tmpUserInfo = await getUser(userInfo.userId, state.appListener);
