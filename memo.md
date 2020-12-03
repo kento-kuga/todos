@@ -1,6 +1,7 @@
 # リファクタリングメモ
 
-- props の不要な?を削除する
+- UpdateTaskFolderNameForm のフォームパーツをコンテキストから取る
+- modal のハンドラ props の名前修正
 - taskFolder を taskFolders に変える
 - taskFolderList を Folders に変える
 - test-id 属性消せるようにする
@@ -19,12 +20,21 @@
   - //state
   - //effect
   - //function
+
+## props
+
 - onClick を実行するコンポーネントが受け取るのは onClickProps、それ以外は handlerProps を受け取る
-- リポジトリの関数には doc をつける
-- firebase のコレクション名には定数を切る
-- 共通の css は common/css/common-style.ts にまとめる
 
 ## フォーム
 
 - フォームは親コンポーネントからコンテキストを介してパーツを受け取る
 - サブミットの送信はフォーム、サブミット時の処理は親から受け取る
+
+## リポジトリ
+
+- firebase のコレクション名には定数を切る
+- リポジトリの関数には doc をつける
+
+## CSS
+
+- 共通の css は common/css/common-style.ts にまとめる
