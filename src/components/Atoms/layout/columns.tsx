@@ -17,10 +17,19 @@ interface Props {
   key?: any;
   /** onClick */
   onClick?: () => void;
+  /** クラスネーム */
   className?: string;
 }
 
 export const Column: React.FC<Props> = ({ children, ...props }) => {
+  //function
+  //クリック時ハンドラ
+  const handleClick = () => {
+    if (props.onClick) {
+      props.onClick();
+    }
+  };
+
   return (
     <>
       <UI.GridColumn
@@ -29,7 +38,7 @@ export const Column: React.FC<Props> = ({ children, ...props }) => {
         textAlign={props.textAlign}
         className={props.className}
         key={props.key}
-        onClick={props.onClick}
+        onClick={handleClick}
       >
         {children}
       </UI.GridColumn>

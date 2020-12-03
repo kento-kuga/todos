@@ -16,20 +16,13 @@ interface Props {
 }
 
 export const IconGroup: React.FC<Props> = ({ children, ...props }) => {
-  //クリック時ハンドラ
-  const handleClick = () => {
-    if (props.onClick) {
-      props.onClick();
-    }
-  };
-
   return (
     <>
       <UI.IconGroup
         size={props.size}
         className={props.className}
         as={props.as}
-        onClick={handleClick}
+        onClick={props.onClick}
         data-testid={props.testid}
       >
         {children}

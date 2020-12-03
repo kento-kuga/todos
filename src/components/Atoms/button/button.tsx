@@ -23,7 +23,8 @@ interface Props {
 }
 
 const ButtonPresenter: React.FC<Props> = ({ children, ...props }) => {
-  //handler
+  //function
+  //クリック時ハンドラ
   const handleClick = () => {
     if (props.onClick) {
       props.onClick();

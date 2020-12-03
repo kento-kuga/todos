@@ -41,7 +41,7 @@ interface Props {
 const FoldersTemplatePresenter = (props: Props) => {
   //function
   //削除ボタン押下時
-  const onClickDelete = () => {
+  const handleDelete = () => {
     props.handleDeleteFolders(props.selectedFolderIdList);
   };
 
@@ -86,7 +86,7 @@ const FoldersTemplatePresenter = (props: Props) => {
                 iconName="trash"
                 size="big"
                 disable={props.selectedFolderIdList.length === 0 ? true : false}
-                onClick={onClickDelete}
+                onClick={handleDelete}
                 testid="folders-delete-folder-button"
               />
             )}

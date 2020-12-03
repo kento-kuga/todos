@@ -32,8 +32,9 @@ interface Props {
 export type IconProps = Props;
 
 export const Icon = (props: Props) => {
-  //クリックハンドラ
-  const onClick = () => {
+  //function
+  //クリック時ハンドラ
+  const handleClick = () => {
     if (props.onClick) {
       props.onClick();
     }
@@ -43,7 +44,7 @@ export const Icon = (props: Props) => {
     <UI.Icon
       className={props.className}
       name={props.iconName}
-      onClick={onClick}
+      onClick={handleClick}
       size={props.size}
       disabled={props.disable}
       inverted={props.inverted}

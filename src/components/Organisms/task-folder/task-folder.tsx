@@ -49,7 +49,7 @@ const TaskFolderPresenter = (props: Props) => {
   //function
 
   //選択チェックボックスカラム押下時
-  const onClickSelectCheckBoxColumn = () => {
+  const handleSelectCheckBoxColumn = () => {
     //フォルダーネーム編集中の場合、何もしない。
     if (editFolderName) return;
 
@@ -73,7 +73,7 @@ const TaskFolderPresenter = (props: Props) => {
   };
 
   //フォルダーネーム編集ボタン押下時
-  const onClickEditFolderName = () => {
+  const handleEditFolderName = () => {
     setEditFolderName(true);
 
     //`選択されていた場合、選択を解除
@@ -89,7 +89,7 @@ const TaskFolderPresenter = (props: Props) => {
   };
 
   //フォルダーネーム確定ボタン押下時
-  const onClickFixeFolderName = (data: UpdateTaskFolderFormParams) => {
+  const handleFixeFolderName = (data: UpdateTaskFolderFormParams) => {
     //フォルダーネーム更新
     props.handleUpdateFolderName(
       props.taskFolderInfo.taskFolderId,
@@ -128,7 +128,7 @@ const TaskFolderPresenter = (props: Props) => {
               <Column
                 width={1}
                 className="task-folder-column"
-                onClick={onClickSelectCheckBoxColumn}
+                onClick={handleSelectCheckBoxColumn}
               >
                 {!selected && (
                   <div className="select-task-folder-button">
@@ -154,7 +154,7 @@ const TaskFolderPresenter = (props: Props) => {
                 {!editFolderName && (
                   <Icon
                     iconName="edit outline"
-                    onClick={onClickEditFolderName}
+                    onClick={handleEditFolderName}
                     className="edit-task-folder-name-button"
                     size="large"
                   />
@@ -162,7 +162,7 @@ const TaskFolderPresenter = (props: Props) => {
                 {editFolderName && (
                   <Icon
                     iconName="check circle outline"
-                    onClick={handleSubmit(onClickFixeFolderName)}
+                    onClick={handleSubmit(handleFixeFolderName)}
                     color="blue"
                     className="fixed-task-folder-name-button"
                   />
