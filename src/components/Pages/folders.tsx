@@ -1,5 +1,8 @@
 import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { CreateTaskFolderFormParams } from "../../common/dto/taskFolder";
 import { UserInfo } from "../../common/dto/user";
+import { useCreateFolder } from "../../common/hooks/useCreateFolder";
 import { useDeleteFolder } from "../../common/hooks/useDeleteFolder";
 import { useTaskFolders } from "../../common/hooks/useTaskFolders";
 import { useUpdateFolderName } from "../../common/hooks/useUpdateFolderName";
@@ -12,10 +15,14 @@ interface Props {
 
 export const Folders = (props: Props) => {
   //hooks
+  //フォルダー作成Hook
+  const createFolder = useCreateFolder();
   //フォルダー削除処理
   const deleteFolder = useDeleteFolder();
   //フォルダー名更新処理
   const updateFolderName = useUpdateFolderName();
+  //フォームパーツ
+  const methods = useForm<CreateTaskFolderFormParams>();
 
   //state
   //タスクフォルダーリスト
@@ -30,6 +37,12 @@ export const Folders = (props: Props) => {
   );
 
   //function
+  //フォルダー作成時ハンドラー
+  const handleCreateFolder = (folderName: string) => {
+    //フォルダー作成
+    createFolder(folderName);
+  };
+
   //フォルダー削除時ハンドラー
   const handleDeleteFolders = (selectedFolderIdList: string[]) => {
     //フォルダー削除
@@ -58,17 +71,20 @@ export const Folders = (props: Props) => {
   };
 
   return (
-    <FoldersTemplate
-      userInfo={props.userInfo}
-      taskFolderList={taskFolders}
-      editMode={editMode}
-      setEditMode={setEditMode}
-      createFolderOpen={createFolderOpen}
-      setCreateFolderOpen={setCreateFolderOpen}
-      handleDeleteFolders={handleDeleteFolders}
-      handleUpdateFolderName={handleUpdateFolderName}
-      selectedFolderIdList={selectedFolderIdList}
-      setSelectedFolderIdList={setSelectedFolderIdList}
-    />
+    <FormProvider {...methods}>
+      <FoldersTemplate
+        userInfo={props.userInfo}
+        taskFolderList={taskFolders}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        createFolderOpen={createFolderOpen}
+        setCreateFolderOpen={setCreateFolderOpen}
+        handleCreateFolder={handleCreateFolder}
+        handleDeleteFolders={handleDeleteFolders}
+        handleUpdateFolderName={handleUpdateFolderName}
+        selectedFolderIdList={selectedFolderIdList}
+        setSelectedFolderIdList={setSelectedFolderIdList}
+      />
+    </FormProvider>
   );
 };

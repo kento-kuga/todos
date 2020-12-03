@@ -22,6 +22,8 @@ interface ModalProps {
   noCloseOnDimmerClick?: boolean;
   /** クラスネーム */
   className?: string;
+  /** テストid */
+  testid?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
@@ -43,6 +45,7 @@ export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
         centered={!props.topAligned}
         closeIcon={!props.noCloseIcon}
         closeOnDimmerClick={!props.noCloseOnDimmerClick}
+        data-testid={props.testid}
       >
         {children}
       </UI.Modal>

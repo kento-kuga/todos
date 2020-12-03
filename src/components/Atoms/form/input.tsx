@@ -22,6 +22,8 @@ interface Props {
   fluid?: boolean;
   /** プレースホルダー */
   placeholder?: string;
+  /** テストid */
+  testid?: string;
 }
 
 const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
@@ -33,6 +35,7 @@ const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
             maxLength={props.maxlength}
             fluid={props.fluid}
             placeholder={props.placeholder}
+            data-testid={props.testid}
           />
         }
         className={props.className}

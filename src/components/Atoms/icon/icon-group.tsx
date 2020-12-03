@@ -11,6 +11,8 @@ interface Props {
   onClick?: () => void;
   /** クラスネーム */
   className?: string;
+  /** テストid */
+  testid?: string;
 }
 
 export const IconGroup: React.FC<Props> = ({ children, ...props }) => {
@@ -28,6 +30,7 @@ export const IconGroup: React.FC<Props> = ({ children, ...props }) => {
         className={props.className}
         as={props.as}
         onClick={handleClick}
+        data-testid={props.testid}
       >
         {children}
       </UI.IconGroup>

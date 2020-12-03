@@ -15,10 +15,21 @@ interface Props {
   onClose?: () => void;
   /** クラスネーム */
   className?: string;
+  /** フォルダー作成時ハンドラー */
+  handleCreateFolder: (folderName: string) => void;
 }
 
 const CreateTaskFolderModalPresenter = (props: Props) => {
-  //state
+  //function
+  //ファルダー作成時ハンドラー
+  const handleCreateFolder = (folderName: string) => {
+    //フォルダー作成
+    props.handleCreateFolder(folderName);
+    //モーダルを閉じる
+    if (props.onClose) {
+      props.onClose();
+    }
+  };
 
   return (
     <Modal
@@ -27,11 +38,12 @@ const CreateTaskFolderModalPresenter = (props: Props) => {
       open={props.open}
       className={props.className}
       noCloseOnDimmerClick
+      testid="create-task-folder-modal"
     >
       <ModalContent className="modal-content">
         <Grid>
           <Row>
-            <CreateTaskFolderForm handleSubmit={props.onClose} />
+            <CreateTaskFolderForm handleSubmit={handleCreateFolder} />
           </Row>
         </Grid>
       </ModalContent>

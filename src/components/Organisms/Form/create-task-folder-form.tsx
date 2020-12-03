@@ -1,39 +1,27 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { CreateTaskFolderFormParams } from "../../../common/dto/taskFolder";
-import { useCreateFolder } from "../../../common/hooks/useCreateFolder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
 import { Label } from "../../Atoms/text";
 
 interface Props {
   /** 送信ハンドラー */
-  handleSubmit?: () => void;
+  handleSubmit: (folderName: string) => void;
   /** クラスネーム */
   className?: string;
 }
 
 const CreateTaskFolderFormPresenter = (props: Props) => {
   //hooks
-  //フォルダー作成Hook
-  const createFolder = useCreateFolder();
-
-  //フォームパーツ
-  const {
-    control,
-    errors,
-    handleSubmit,
-  } = useForm<CreateTaskFolderFormParams>();
+  //フォームコンテキスト
+  const { control, errors, handleSubmit } = useFormContext();
 
   //function
   //送信ハンドラー
   const onSubmit = (data: CreateTaskFolderFormParams) => {
-    //フォルダー作成
-    createFolder(data.folderName);
-    if (props.handleSubmit) {
-      props.handleSubmit();
-    }
+    props.handleSubmit(data.folderName);
   };
   return (
     <div className={props.className}>
@@ -54,6 +42,7 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
             },
           }}
           className="folder-name"
+          testid="create-task-folder-form-input"
         />
         <ErrorMessageDiv
           name="folderName"
@@ -62,7 +51,12 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
           className="error-folder-name"
         />
         <FormButtonArea textAlign="right">
-          <Button label="OK" size="small" color="black" />
+          <Button
+            label="OK"
+            size="small"
+            color="black"
+            testid="create-task-folder-form-submit-button"
+          />
         </FormButtonArea>
       </Form>
     </div>

@@ -26,6 +26,8 @@ interface Props {
   corner?: IconCorner;
   /** 角丸 */
   circular?: boolean;
+  /** テストid */
+  testid?: string;
 }
 export type IconProps = Props;
 
@@ -48,6 +50,7 @@ export const Icon = (props: Props) => {
       color={props.color}
       corner={props.corner}
       circular={props.circular}
+      data-testid={props.testid}
     />
   );
 };

@@ -22,7 +22,9 @@ interface Props {
   createFolderOpen: boolean;
   /** タスクフォルダー作成モーダルフラグセット関数 */
   setCreateFolderOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  /** 削除時ハンドラー */
+  /** フォルダー作成時ハンドラー */
+  handleCreateFolder: (folderName: string) => void;
+  /** フォルダー削除時ハンドラー */
   handleDeleteFolders: (taskFolderId: string[]) => void;
   /** フォルダーネーム更新時ハンドラー */
   handleUpdateFolderName: (
@@ -53,6 +55,7 @@ const FoldersTemplatePresenter = (props: Props) => {
               iconName="setting"
               color={props.editMode ? "blue" : "black"}
               onClick={() => props.setEditMode((state) => !state)}
+              testid="folders-setting-button"
             />
           </div>
         </Row>
@@ -72,6 +75,7 @@ const FoldersTemplatePresenter = (props: Props) => {
               <IconGroup
                 size="big"
                 onClick={() => props.setCreateFolderOpen(true)}
+                testid="folders-add-folder-button"
               >
                 <Icon iconName="folder outline" />
                 <Icon iconName="add" corner="top right" inverted />
@@ -83,6 +87,7 @@ const FoldersTemplatePresenter = (props: Props) => {
                 size="big"
                 disable={props.selectedFolderIdList.length === 0 ? true : false}
                 onClick={onClickDelete}
+                testid="folders-delete-folder-button"
               />
             )}
           </div>
@@ -93,6 +98,7 @@ const FoldersTemplatePresenter = (props: Props) => {
         onClose={() => {
           props.setCreateFolderOpen(false);
         }}
+        handleCreateFolder={props.handleCreateFolder}
       />
     </>
   );

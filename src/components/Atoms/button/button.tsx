@@ -18,6 +18,8 @@ interface Props {
   key?: any;
   /** 選択 */
   selected?: boolean;
+  /** テストid */
+  testid?: string;
 }
 
 const ButtonPresenter: React.FC<Props> = ({ children, ...props }) => {
@@ -37,6 +39,7 @@ const ButtonPresenter: React.FC<Props> = ({ children, ...props }) => {
         basic
         className={props.className}
         key={props.key}
+        data-testid={props.testid}
       >
         {props.label}
       </UI.Button>
