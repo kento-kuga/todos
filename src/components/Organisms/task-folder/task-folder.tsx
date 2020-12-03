@@ -42,8 +42,11 @@ const TaskFolderPresenter = (props: Props) => {
 
   //effect
   React.useEffect(() => {
-    //編集モードが解除されたら、ステートをリセットする。
-    setEditFolderName(false);
+    if (!props.editMode) {
+      //編集モードが解除されたら、ステートをリセットする。
+      setEditFolderName(false);
+      setSelected(false);
+    }
   }, [props.editMode]);
 
   //function

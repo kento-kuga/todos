@@ -1,6 +1,5 @@
 # リファクタリングメモ
 
-- フォルダー選択チェックが、編集モードを抜けても解除されていない
 - modal のハンドラ props の名前修正
 - taskFolder を taskFolders に変える
 - taskFolderList を Folders に変える
