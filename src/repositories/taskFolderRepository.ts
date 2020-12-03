@@ -7,9 +7,14 @@ import {
 import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
-import { Listener } from "./listener";
+import { Listener } from "../core/listener";
 
-/** タスクフォルダー情報取得 */
+/**
+ * タスク情報フォルダーリスト取得
+ * @param folderIdList フォルダーIDリスト
+ * @param listener リスナー
+ * @return taskFolders タスクフォルダーリスト
+ */
 export const getTaskFolders = async (
   folderIdList: string[],
   listener: Listener
@@ -63,7 +68,12 @@ export const getTaskFolders = async (
   }
 };
 
-/** タスクフォルダー作成 */
+/**
+ * タスクフォルダー作成
+ * @param folderName フォルダーの名前
+ * @param userInfo ユーザー情報
+ * @param listener リスナー
+ */
 export const createTaskFolder = async (
   folderName: string,
   userInfo: UserInfo,
@@ -75,7 +85,6 @@ export const createTaskFolder = async (
     listener.started();
 
     //リクエスト作成
-    //TODO リクエスト用の型を作成
     const taskFolder = new TaskFolderCreateReq();
     taskFolder.folderName = folderName;
     taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
@@ -99,7 +108,12 @@ export const createTaskFolder = async (
   }
 };
 
-/** タスクフォルダー削除 */
+/**
+ * タスクフォルダー削除
+ * @param deleteTaskFolderIdList フォルダーIDリスト
+ * @param userInfo ユーザー情報
+ * @param listener リスナー
+ */
 export const deleteTaskFolder = async (
   deleteTaskFolderIdList: string[],
   userInfo: UserInfo,
@@ -133,7 +147,12 @@ export const deleteTaskFolder = async (
   }
 };
 
-/** タスクフォルダー更新 */
+/**
+ * タスクフォルダー更新
+ * @param taskFolderId タスクフォルダーID
+ * @param updateFolderParam タスクフォルダー更新パラメータ
+ * @param listener リスナー
+ */
 export const updateTaskFolder = async (
   taskFolderId: string,
   updateFolderParam: TaskFolderUpdateReq,

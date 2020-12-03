@@ -1,9 +1,14 @@
 import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
-import { Listener } from "./listener";
+import { Listener } from "../core/listener";
 
-/** ユーザー情報取得 */
+/**
+ * ユーザー情報取得
+ * @param userId ユーザーID
+ * @param listener リスナー
+ * @return userInfo ユーザー情報
+ */
 export const getUser = async (userId: string, listener: Listener) => {
   const db = Firebase.instance.db;
 
