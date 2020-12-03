@@ -4,8 +4,7 @@
 
 # リファクタリングメモ
 
-- taskFolder を taskFolders に変える
-- taskFolderList を Folders に変える
+- タスクフォルダーの Param と dto のパラメータ名をあわせる
 - test-id 属性消せるようにする
 - 再レンダリングを抑制する
 - 不要な通信処理が行われていないか確認
