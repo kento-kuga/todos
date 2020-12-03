@@ -38,13 +38,20 @@ export class TaskFolderInfo {
 }
 
 /** タスクフォルダー作成フォームのparam型 */
-export class CreateTaskFolderFormParams {
-  /** フォルダー名 */
-  folderName: string = "";
+interface CreateTaskFolderFormParams {
+  /** 作成フォルダー名 */
+  createFolderName: string;
 }
 
 /** タスクフォルダーネーム更新フォームのparam型 */
-export class UpdateTaskFolderFormParams {
-  /** フォルダー名 */
-  folderName: string = "";
+interface UpdateTaskFolderFormParams {
+  /** 更新フォルダー名 */
+  updateFolderName: string;
+}
+
+/** フォルダーリストページのparam型 */
+export class FoldersFormParams
+  implements CreateTaskFolderFormParams, UpdateTaskFolderFormParams {
+  createFolderName: string = "";
+  updateFolderName: string = "";
 }

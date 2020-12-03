@@ -1,6 +1,6 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { CreateTaskFolderFormParams } from "../../common/dto/taskFolder";
+import { FoldersFormParams } from "../../common/dto/taskFolder";
 import { UserInfo } from "../../common/dto/user";
 import { useCreateFolder } from "../../common/hooks/useCreateFolder";
 import { useDeleteFolder } from "../../common/hooks/useDeleteFolder";
@@ -22,7 +22,7 @@ export const Folders = (props: Props) => {
   //フォルダー名更新処理
   const updateFolderName = useUpdateFolderName();
   //フォームパーツ
-  const methods = useForm<CreateTaskFolderFormParams>();
+  const methods = useForm<FoldersFormParams>();
 
   //state
   //タスクフォルダーリスト

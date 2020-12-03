@@ -1,8 +1,7 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { commonInputStyle } from "../../../common/css/common-style";
-import { UpdateTaskFolderFormParams } from "../../../common/dto/taskFolder";
 import { Form, Input } from "../../Atoms/form";
 
 interface Props {
@@ -10,19 +9,21 @@ interface Props {
   defaultFolderName: string;
   /** 送信ハンドラー */
   handleSubmit?: any;
-  /** フォームコントロール */
-  control: Control<UpdateTaskFolderFormParams>;
   /** クラスネーム */
   className?: string;
 }
 
 const UpdateTaskFolderNameFormPresenter = (props: Props) => {
+  //hooks
+  //フォームコンテキスト
+  const { control } = useFormContext();
+
   return (
     <div className={props.className}>
       <Form onSubmit={props.handleSubmit}>
         <Input
-          name="folderName"
-          control={props.control}
+          name="updateFolderName"
+          control={control}
           defaultValue={props.defaultFolderName}
           fluid
           maxlength={20}

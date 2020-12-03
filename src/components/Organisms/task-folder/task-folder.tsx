@@ -1,9 +1,9 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import {
   TaskFolderInfo,
-  UpdateTaskFolderFormParams,
+  FoldersFormParams,
 } from "../../../common/dto/taskFolder";
 import { Icon } from "../../Atoms/icon";
 import { Column, Grid, Row } from "../../Atoms/layout";
@@ -31,8 +31,8 @@ interface Props {
 
 const TaskFolderPresenter = (props: Props) => {
   //hooks
-  //フォームパーツ
-  const { control, handleSubmit } = useForm<UpdateTaskFolderFormParams>();
+  //フォームコンテキスト
+  const { handleSubmit } = useFormContext();
 
   //state
   //フォルダーネーム編集モード
@@ -89,12 +89,12 @@ const TaskFolderPresenter = (props: Props) => {
   };
 
   //フォルダーネーム確定ボタン押下時
-  const handleFixeFolderName = (data: UpdateTaskFolderFormParams) => {
+  const handleFixeFolderName = (data: FoldersFormParams) => {
     //フォルダーネーム更新
     props.handleUpdateFolderName(
       props.taskFolderInfo.taskFolderId,
       props.taskFolderInfo.folderName,
-      data.folderName
+      data.updateFolderName
     );
 
     setEditFolderName(false);
@@ -146,7 +146,6 @@ const TaskFolderPresenter = (props: Props) => {
                 {editFolderName && (
                   <UpdateTaskFolderNameForm
                     defaultFolderName={props.taskFolderInfo.folderName}
-                    control={control}
                   />
                 )}
               </Column>

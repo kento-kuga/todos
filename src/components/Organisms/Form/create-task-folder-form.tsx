@@ -1,8 +1,8 @@
 import React from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { commonInputStyle } from "../../../common/css/common-style";
-import { CreateTaskFolderFormParams } from "../../../common/dto/taskFolder";
+import { FoldersFormParams } from "../../../common/dto/taskFolder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
 import { Label } from "../../Atoms/text";
@@ -21,15 +21,15 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
 
   //function
   //送信ハンドラー
-  const onSubmit = (data: CreateTaskFolderFormParams) => {
-    props.handleSubmit(data.folderName);
+  const onSubmit = (data: FoldersFormParams) => {
+    props.handleSubmit(data.createFolderName);
   };
   return (
     <div className={props.className}>
       <Label label="フォルダー名" fontSize="large" />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          name="folderName"
+          name="createFolderName"
           control={control}
           defaultValue=""
           isError={errors.folderName ? true : false}
@@ -46,7 +46,7 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
           testid="create-task-folder-form-input"
         />
         <ErrorMessageDiv
-          name="folderName"
+          name="createFolderName"
           errors={errors}
           redFont
           className="error-folder-name"
