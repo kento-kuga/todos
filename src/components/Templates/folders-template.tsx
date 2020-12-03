@@ -23,7 +23,7 @@ interface Props {
   /** タスクフォルダー作成モーダルフラグセット関数 */
   setCreateFolderOpen: React.Dispatch<React.SetStateAction<boolean>>;
   /** フォルダー作成時ハンドラー */
-  handleCreateFolder: (folderName: string) => void;
+  handleCreateFolder: (createFolderName: string) => void;
   /** フォルダー削除時ハンドラー */
   handleDeleteFolders: (taskFolderId: string[]) => void;
   /** フォルダーネーム更新時ハンドラー */

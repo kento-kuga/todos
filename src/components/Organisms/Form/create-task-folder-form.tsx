@@ -9,7 +9,7 @@ import { Label } from "../../Atoms/text";
 
 interface Props {
   /** 送信ハンドラー */
-  handleSubmit: (folderName: string) => void;
+  handleSubmit: (createFolderName: string) => void;
   /** クラスネーム */
   className?: string;
 }
@@ -32,7 +32,7 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
           name="createFolderName"
           control={control}
           defaultValue=""
-          isError={errors.folderName ? true : false}
+          isError={errors.createFolderName ? true : false}
           fluid
           maxlength={20}
           rules={{

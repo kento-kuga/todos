@@ -10,7 +10,7 @@ interface Props {
   /** クローズハンドラ */
   handleClose: () => void;
   /** フォルダー作成時ハンドラー */
-  handleCreateFolder: (folderName: string) => void;
+  handleCreateFolder: (createFolderName: string) => void;
   /** クラスネーム */
   className?: string;
 }
@@ -18,9 +18,9 @@ interface Props {
 const CreateTaskFolderModalPresenter = (props: Props) => {
   //function
   //ファルダー作成時ハンドラー
-  const handleCreateFolder = (folderName: string) => {
+  const handleCreateFolder = (createFolderName: string) => {
     //フォルダー作成
-    props.handleCreateFolder(folderName);
+    props.handleCreateFolder(createFolderName);
     //モーダルを閉じる
     if (props.handleClose) {
       props.handleClose();

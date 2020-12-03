@@ -78,12 +78,12 @@ export const getTaskFolders = async (
 
 /**
  * タスクフォルダー作成
- * @param folderName フォルダーの名前
+ * @param createFolderName フォルダーの名前
  * @param userInfo ユーザー情報
  * @param listener リスナー
  */
 export const createTaskFolder = async (
-  folderName: string,
+  createFolderName: string,
   userInfo: UserInfo,
   listener: Listener
 ) => {
@@ -94,7 +94,7 @@ export const createTaskFolder = async (
 
     //リクエスト作成
     const taskFolder = new TaskFolderCreateReq();
-    taskFolder.folderName = folderName;
+    taskFolder.createFolderName = createFolderName;
     taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
 
     //タスクフォルダー作成

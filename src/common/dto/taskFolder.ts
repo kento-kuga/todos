@@ -3,8 +3,8 @@ import { UserInfo } from "./user";
 
 /** タスクフォルダー作成リクエスト型 */
 export class TaskFolderCreateReq {
-  /** タスクフォルダー名 */
-  folderName: string = "";
+  /** 作成フォルダー名 */
+  createFolderName: string = "";
   /** メンバーリスト */
   members: TaskFolderCreateMember[] = [];
 }
@@ -19,8 +19,8 @@ export class TaskFolderCreateMember {
 
 /** タスクフォルダー更新リクエスト型 */
 export class TaskFolderUpdateReq {
-  /** タスクフォルダー名 */
-  folderName?: string;
+  /** 更新フォルダー名 */
+  updateFolderName: string = "";
   /** メンバーリスト */
   members?: TaskFolderCreateMember;
 }

@@ -14,11 +14,14 @@ export const useUpdateFolderName = () => {
   const [userInfo] = useUserInfo();
   const [, setTaskFolders] = useTaskFolders();
 
-  const updateFolderName = async (taskFolderId: string, folderName: string) => {
+  const updateFolderName = async (
+    taskFolderId: string,
+    updateFolderName: string
+  ) => {
     //フォルダー更新
     await updateTaskFolder(
       taskFolderId,
-      { folderName: folderName } as TaskFolderUpdateReq,
+      { updateFolderName: updateFolderName } as TaskFolderUpdateReq,
       state.appListener
     );
 

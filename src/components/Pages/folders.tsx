@@ -38,9 +38,9 @@ export const Folders = (props: Props) => {
 
   //function
   //フォルダー作成時ハンドラー
-  const handleCreateFolder = (folderName: string) => {
+  const handleCreateFolder = (createFolderName: string) => {
     //フォルダー作成
-    createFolder(folderName);
+    createFolder(createFolderName);
   };
 
   //フォルダー削除時ハンドラー
