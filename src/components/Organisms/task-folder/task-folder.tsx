@@ -13,20 +13,20 @@ import { UpdateTaskFolderNameForm } from "../Form/update-task-folder-name-form";
 interface Props {
   //タスクフォルダー情報
   taskFolderInfo: TaskFolderInfo;
-  /** クラスネーム */
-  className?: string;
   /** 編集モード */
   editMode: boolean;
   /** フォルダーネーム更新時ハンドラー */
   handleUpdateFolderName: (
     taskFolderId: string,
     prevFolderName: string,
-    newFolderName?: string
+    newFolderName: string
   ) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
   setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
+  /** クラスネーム */
+  className?: string;
 }
 
 const TaskFolderPresenter = (props: Props) => {

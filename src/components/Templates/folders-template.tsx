@@ -30,7 +30,7 @@ interface Props {
   handleUpdateFolderName: (
     taskFolderId: string,
     prevFolderName: string,
-    newFolderName?: string
+    newFolderName: string
   ) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];

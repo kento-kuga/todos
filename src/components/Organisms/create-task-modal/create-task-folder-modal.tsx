@@ -7,16 +7,12 @@ import { CreateTaskFolderForm } from "../Form/create-task-folder-form";
 interface Props {
   /** オープンフラグ */
   open: boolean;
-  /** トリガー */
-  getTrigger?: () => React.ReactNode;
-  /** オープンハンドラ */
-  onOpen?: () => void;
   /** クローズハンドラ */
-  onClose?: () => void;
-  /** クラスネーム */
-  className?: string;
+  onClose: () => void;
   /** フォルダー作成時ハンドラー */
   handleCreateFolder: (folderName: string) => void;
+  /** クラスネーム */
+  className?: string;
 }
 
 const CreateTaskFolderModalPresenter = (props: Props) => {
@@ -34,7 +30,6 @@ const CreateTaskFolderModalPresenter = (props: Props) => {
   return (
     <Modal
       onClose={props.onClose}
-      onOpen={props.onOpen}
       open={props.open}
       className={props.className}
       noCloseOnDimmerClick
