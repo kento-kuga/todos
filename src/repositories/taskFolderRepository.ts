@@ -8,6 +8,11 @@ import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
+import {
+  COLLECTION_NAME_FOLDERS,
+  COLLECTION_NAME_TASKS,
+  COLLECTION_NAME_USERS,
+} from "./repositoryHelper";
 
 /**
  * タスク情報フォルダーリスト取得
@@ -31,7 +36,10 @@ export const getTaskFolders = async (
     //Folders取得
     for (const folderId of folderIdList) {
       //コレクション取得
-      const collection = await db.collection("taskFolders").doc(folderId).get();
+      const collection = await db
+        .collection(COLLECTION_NAME_FOLDERS)
+        .doc(folderId)
+        .get();
 
       if (collection.exists) {
         //コレクションが取得できた場合
@@ -43,7 +51,7 @@ export const getTaskFolders = async (
         const taskList = [] as TaskInfo[];
 
         await collection.ref
-          .collection("task")
+          .collection(COLLECTION_NAME_TASKS)
           .get()
           .then((snapshot) => {
             snapshot.forEach((doc) => {
@@ -90,14 +98,14 @@ export const createTaskFolder = async (
     taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
 
     //タスクフォルダー作成
-    const ref = await db.collection("taskFolders").doc();
+    const ref = await db.collection(COLLECTION_NAME_FOLDERS).doc();
     await ref.set({ ...taskFolder });
 
     //ユーザーのフォルダーリストにも追加。
     const tmpTaskFolder = [...userInfo.taskFolderIdList];
     tmpTaskFolder.push(ref.id);
 
-    await db.collection("users").doc(userInfo.userId).update({
+    await db.collection(COLLECTION_NAME_USERS).doc(userInfo.userId).update({
       taskFolderIdList: tmpTaskFolder,
     });
   } catch (e) {
@@ -126,7 +134,7 @@ export const deleteTaskFolder = async (
 
     //タスクフォルダー削除
     for (const id of deleteTaskFolderIdList) {
-      await db.collection("taskFolders").doc(id).delete();
+      await db.collection(COLLECTION_NAME_FOLDERS).doc(id).delete();
     }
 
     //ユーザーのフォルダーリストからも削除。
@@ -136,7 +144,7 @@ export const deleteTaskFolder = async (
     });
 
     //ユーザーのフォルダーリスト更新
-    await db.collection("users").doc(userInfo.userId).update({
+    await db.collection(COLLECTION_NAME_USERS).doc(userInfo.userId).update({
       taskFolderIdList: tmpTaskFolder,
     });
   } catch (e) {
@@ -164,7 +172,7 @@ export const updateTaskFolder = async (
     listener.started();
 
     await db
-      .collection("taskFolders")
+      .collection(COLLECTION_NAME_FOLDERS)
       .doc(taskFolderId)
       .update({ ...updateFolderParam });
   } catch (e) {

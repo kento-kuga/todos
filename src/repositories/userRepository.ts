@@ -2,6 +2,7 @@ import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
+import { COLLECTION_NAME_USERS } from "./repositoryHelper";
 
 /**
  * ユーザー情報取得
@@ -15,7 +16,7 @@ export const getUser = async (userId: string, listener: Listener) => {
   try {
     listener.started();
 
-    const doc = await db.collection("users").doc(userId).get();
+    const doc = await db.collection(COLLECTION_NAME_USERS).doc(userId).get();
     const data = await doc.data();
 
     return { ...data, userId: doc.id } as UserInfo;
