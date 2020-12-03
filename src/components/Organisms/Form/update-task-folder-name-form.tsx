@@ -1,6 +1,7 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import styled from "styled-components";
+import { commonInputStyle } from "../../../common/css/common-style";
 import { UpdateTaskFolderFormParams } from "../../../common/dto/taskFolder";
 import { Form, Input } from "../../Atoms/form";
 
@@ -40,15 +41,10 @@ export const UpdateTaskFolderNameForm = styled(
 )`
   &&&&& {
     input {
-      border-width: 0 0 2px 0;
-      border-radius: 0;
-      border-color: #000;
+      ${commonInputStyle}
       font-size: 1.3rem;
       padding: 0;
       padding-top: 0.1rem;
-      &:focus {
-        outline: none;
-      }
     }
   }
 `;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
+import { commonInputStyle } from "../../../common/css/common-style";
 import { CreateTaskFolderFormParams } from "../../../common/dto/taskFolder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
@@ -68,15 +69,7 @@ export const CreateTaskFolderForm = styled(CreateTaskFolderFormPresenter)`
     .folder-name {
       padding-top: 1rem;
       input {
-        border-width: 0 0 2px 0;
-        border-radius: 0;
-        border-color: #000;
-        font-size: 1.2rem;
-        padding: 0;
-        padding-bottom: 0.2rem;
-        &:focus {
-          outline: none;
-        }
+        ${commonInputStyle}
       }
     }
   }
