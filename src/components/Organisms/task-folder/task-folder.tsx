@@ -47,29 +47,45 @@ const TaskFolderPresenter = (props: Props) => {
   }, [props.editMode]);
 
   //function
-  //未選択チェックボック押下時
-  const onClickNoSelect = () => {
-    setSelected(true);
-    //選択済フォルダーIdリストに追加
-    const tmpList = [...props.selectedFolderIdList];
-    tmpList.push(props.taskFolderInfo.taskFolderId);
-    props.setSelectedFolderIdList(tmpList);
-  };
 
-  //選択済チェックボック押下時
-  const onClickSelected = () => {
-    setSelected(false);
+  //選択チェックボックスカラム押下時
+  const onClickSelectCheckBoxColumn = () => {
+    //フォルダーネーム編集中の場合、何もしない。
+    if (editFolderName) return;
 
-    //選択済フォルダーIdリストから削除
-    const tmpList = props.selectedFolderIdList.filter(
-      (id) => id !== props.taskFolderInfo.taskFolderId
-    );
-    props.setSelectedFolderIdList(tmpList);
+    if (!selected) {
+      //未選択の場合
+      setSelected(true);
+      //選択済フォルダーIdリストに追加
+      const tmpList = [...props.selectedFolderIdList];
+      tmpList.push(props.taskFolderInfo.taskFolderId);
+      props.setSelectedFolderIdList(tmpList);
+    } else {
+      //選択済みの場合
+      setSelected(false);
+
+      //選択済フォルダーIdリストから削除
+      const tmpList = props.selectedFolderIdList.filter(
+        (id) => id !== props.taskFolderInfo.taskFolderId
+      );
+      props.setSelectedFolderIdList(tmpList);
+    }
   };
 
   //フォルダーネーム編集ボタン押下時
   const onClickEditFolderName = () => {
     setEditFolderName(true);
+
+    //`選択されていた場合、選択を解除
+    if (selected) {
+      setSelected(false);
+
+      //選択済フォルダーIdリストから削除
+      const tmpList = props.selectedFolderIdList.filter(
+        (id) => id !== props.taskFolderInfo.taskFolderId
+      );
+      props.setSelectedFolderIdList(tmpList);
+    }
   };
 
   //フォルダーネーム確定ボタン押下時
@@ -109,15 +125,20 @@ const TaskFolderPresenter = (props: Props) => {
           )}
           {props.editMode && (
             <>
-              <Column width={1} className="task-folder-column">
+              <Column
+                width={1}
+                className="task-folder-column"
+                onClick={onClickSelectCheckBoxColumn}
+              >
                 {!selected && (
-                  <Icon iconName="square outline" onClick={onClickNoSelect} />
+                  <div className="select-task-folder-button">
+                    <Icon iconName="square outline" />
+                  </div>
                 )}
                 {selected && (
-                  <Icon
-                    iconName="check square outline"
-                    onClick={onClickSelected}
-                  />
+                  <div className="selected-task-folder-button">
+                    <Icon iconName="check square outline" />
+                  </div>
                 )}
               </Column>
               <Column width={12} className="task-folder-column">
@@ -166,6 +187,14 @@ export const TaskFolder = styled(TaskFolderPresenter)`
       .task-folder-column {
         display: table-cell;
         vertical-align: middle;
+        //タスクフォルダー選択ボタン
+        .select-task-folder-button {
+          padding: 0.3rem;
+        }
+        //選択済みタスクフォルダー選択ボタン
+        .selected-task-folder-button {
+          padding: 0.3rem;
+        }
         //タスクフォルダーネーム編集ボタン
         .edit-task-folder-name-button {
           font-size: 1.2em;
