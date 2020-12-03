@@ -4,7 +4,6 @@
 
 # リファクタリングメモ
 
-- modal のハンドラ props の名前修正
 - taskFolder を taskFolders に変える
 - taskFolderList を Folders に変える
 - test-id 属性消せるようにする
