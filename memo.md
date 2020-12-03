@@ -1,6 +1,6 @@
 # リファクタリングメモ
 
-- UpdateTaskFolderNameForm のフォームパーツをコンテキストから取る
+- フォルダー選択チェックが、編集モードを抜けても解除されていない
 - modal のハンドラ props の名前修正
 - taskFolder を taskFolders に変える
 - taskFolderList を Folders に変える
@@ -27,6 +27,7 @@
 
 ## フォーム
 
+- フォームパーツは、一つのページで共通化する(FormProvider と useFormContext を使用する)
 - フォームは親コンポーネントからコンテキストを介してパーツを受け取る
 - サブミットの送信はフォーム、サブミット時の処理は親から受け取る
 
