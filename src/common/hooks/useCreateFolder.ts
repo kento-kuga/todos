@@ -16,9 +16,9 @@ export const useCreateFolder = () => {
   const [userInfo, setUserInfo] = useUserInfo();
   const [, setTaskFolders] = useTaskFolders();
 
-  const createFolder = async (name: string) => {
+  const createFolder = async (createFolderName: string) => {
     //フォルダー作成
-    await createTaskFolder(name, userInfo, state.appListener);
+    await createTaskFolder(createFolderName, userInfo, state.appListener);
 
     //ユーザー情報再取得
     const tmpUserInfo = await getUser(userInfo.userId, state.appListener);

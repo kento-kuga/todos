@@ -4,7 +4,7 @@ import { UserInfo } from "./user";
 /** タスクフォルダー作成リクエスト型 */
 export class TaskFolderCreateReq {
   /** 作成フォルダー名 */
-  createFolderName: string = "";
+  folderName: string = "";
   /** メンバーリスト */
   members: TaskFolderCreateMember[] = [];
 }
@@ -20,7 +20,7 @@ export class TaskFolderCreateMember {
 /** タスクフォルダー更新リクエスト型 */
 export class TaskFolderUpdateReq {
   /** 更新フォルダー名 */
-  updateFolderName: string = "";
+  folderName: string = "";
   /** メンバーリスト */
   members?: TaskFolderCreateMember;
 }

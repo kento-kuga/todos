@@ -21,7 +21,7 @@ export const useUpdateFolderName = () => {
     //フォルダー更新
     await updateTaskFolder(
       taskFolderId,
-      { updateFolderName: updateFolderName } as TaskFolderUpdateReq,
+      { folderName: updateFolderName } as TaskFolderUpdateReq,
       state.appListener
     );
 

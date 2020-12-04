@@ -94,7 +94,7 @@ export const createTaskFolder = async (
 
     //リクエスト作成
     const taskFolder = new TaskFolderCreateReq();
-    taskFolder.createFolderName = createFolderName;
+    taskFolder.folderName = createFolderName;
     taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
 
     //タスクフォルダー作成
