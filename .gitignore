@@ -27,3 +27,4 @@ yarn-error.log*
 # production
 /build
 /src/semantic/dist
+src/components/Pages/try.tsx
