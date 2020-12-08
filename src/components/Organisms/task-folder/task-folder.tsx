@@ -29,7 +29,7 @@ interface Props {
   className?: string;
 }
 
-const TaskFolderPresenter = (props: Props) => {
+const TaskFolderPresenter = React.memo((props: Props) => {
   //hooks
   //フォームコンテキスト
   const { handleSubmit } = useFormContext();
@@ -176,7 +176,7 @@ const TaskFolderPresenter = (props: Props) => {
       </Grid>
     </Segment>
   );
-};
+});
 
 export const TaskFolder = styled(TaskFolderPresenter)`
   &&&&& {

@@ -22,7 +22,7 @@ interface Props {
   className?: string;
 }
 
-const TaskFolderListPresenter = (props: Props) => {
+const TaskFolderListPresenter = React.memo((props: Props) => {
   return (
     <div className={props.className}>
       {props.taskFolderList.map((folder, i) => (
@@ -39,7 +39,7 @@ const TaskFolderListPresenter = (props: Props) => {
       ))}
     </div>
   );
-};
+});
 
 export const TaskFolderList = styled(TaskFolderListPresenter)`
   &&&&& {

@@ -25,7 +25,7 @@ interface Props {
   /** フォルダー作成時ハンドラー */
   handleCreateFolder: (createFolderName: string) => void;
   /** フォルダー削除時ハンドラー */
-  handleDeleteFolders: (taskFolderId: string[]) => void;
+  handleDeleteFolders: () => void;
   /** フォルダーネーム更新時ハンドラー */
   handleUpdateFolderName: (
     taskFolderId: string,
@@ -38,12 +38,22 @@ interface Props {
   setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const FoldersTemplatePresenter = (props: Props) => {
+const FoldersTemplatePresenter = React.memo((props: Props) => {
   //function
-  //削除ボタン押下時
-  const handleDelete = () => {
-    props.handleDeleteFolders(props.selectedFolderIdList);
-  };
+  //設定ボタン押下時ハンドラ
+  const handleClickSettingButton = React.useCallback(() => {
+    props.setEditMode((state) => !state);
+  }, [props]);
+
+  //フォルダー作成ボタン押下時ハンドラ
+  const handleClickCreateFolderButton = React.useCallback(() => {
+    props.setCreateFolderOpen(true);
+  }, [props]);
+
+  //フォルダー作成モーダルクローズハンドラ
+  const handleCloseCreateFolderModal = React.useCallback(() => {
+    props.setCreateFolderOpen(false);
+  }, [props]);
 
   return (
     <>
@@ -54,7 +64,7 @@ const FoldersTemplatePresenter = (props: Props) => {
               size="large"
               iconName="setting"
               color={props.editMode ? "blue" : "black"}
-              onClick={() => props.setEditMode((state) => !state)}
+              onClick={handleClickSettingButton}
               testid="folders-setting-button"
             />
           </div>
@@ -74,7 +84,7 @@ const FoldersTemplatePresenter = (props: Props) => {
             {!props.editMode && (
               <IconGroup
                 size="big"
-                onClick={() => props.setCreateFolderOpen(true)}
+                onClick={handleClickCreateFolderButton}
                 testid="folders-add-folder-button"
               >
                 <Icon iconName="folder outline" />
@@ -86,7 +96,7 @@ const FoldersTemplatePresenter = (props: Props) => {
                 iconName="trash"
                 size="big"
                 disable={props.selectedFolderIdList.length === 0 ? true : false}
-                onClick={handleDelete}
+                onClick={props.handleDeleteFolders}
                 testid="folders-delete-folder-button"
               />
             )}
@@ -95,14 +105,12 @@ const FoldersTemplatePresenter = (props: Props) => {
       </Grid>
       <CreateTaskFolderModal
         open={props.createFolderOpen}
-        handleClose={() => {
-          props.setCreateFolderOpen(false);
-        }}
+        handleClose={handleCloseCreateFolderModal}
         handleCreateFolder={props.handleCreateFolder}
       />
     </>
   );
-};
+});
 
 export const FoldersTemplate = styled(FoldersTemplatePresenter)`
   &&&&& {

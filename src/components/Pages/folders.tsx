@@ -38,13 +38,16 @@ export const Folders = (props: Props) => {
 
   //function
   //フォルダー作成時ハンドラー
-  const handleCreateFolder = (createFolderName: string) => {
-    //フォルダー作成
-    createFolder(createFolderName);
-  };
+  const handleCreateFolder = React.useCallback(
+    (createFolderName: string) => {
+      //フォルダー作成
+      createFolder(createFolderName);
+    },
+    [createFolder]
+  );
 
   //フォルダー削除時ハンドラー
-  const handleDeleteFolders = (selectedFolderIdList: string[]) => {
+  const handleDeleteFolders = React.useCallback(() => {
     //フォルダー削除
     deleteFolder(selectedFolderIdList);
 
@@ -53,22 +56,21 @@ export const Folders = (props: Props) => {
 
     //編集モード解除
     setEditMode(false);
-  };
+  }, [deleteFolder, selectedFolderIdList]);
 
   //フォルダー名更新時ハンドラー
-  const handleUpdateFolderName = (
-    taskFolderId: string,
-    prevFolderName: string,
-    newFolderName?: string
-  ) => {
-    //フォルダー名が未入力の場合、何もしない
-    if (!newFolderName) return;
-    //変更前のフォルダー名と同じなら、何もしない
-    if (prevFolderName === newFolderName) return;
+  const handleUpdateFolderName = React.useCallback(
+    (taskFolderId: string, prevFolderName: string, newFolderName?: string) => {
+      //フォルダー名が未入力の場合、何もしない
+      if (!newFolderName) return;
+      //変更前のフォルダー名と同じなら、何もしない
+      if (prevFolderName === newFolderName) return;
 
-    //フォルダー名更新
-    updateFolderName(taskFolderId, newFolderName);
-  };
+      //フォルダー名更新
+      updateFolderName(taskFolderId, newFolderName);
+    },
+    [updateFolderName]
+  );
 
   return (
     <FormProvider {...methods}>
