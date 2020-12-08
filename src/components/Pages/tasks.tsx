@@ -1,6 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { TasksLocationState } from "../../common/dto/task";
+import { useTasks } from "../../common/hooks/useTasks";
+import { TasksTemplate } from "../Templates/tasks-template";
 
 interface Props {}
 
@@ -9,5 +11,9 @@ export const Tasks = (props: Props) => {
   //ロケーション
   const location = useLocation<TasksLocationState>();
 
-  return <>タスクリスト：{location.state.taskFolderInfo.folderName}</>;
+  //state
+  //タスクリスト
+  const [tasks] = useTasks(location.state.taskFolderInfo.taskFolderId);
+
+  return <TasksTemplate tasks={tasks}></TasksTemplate>;
 };

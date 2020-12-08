@@ -1,4 +1,3 @@
-import { TaskInfo } from "../common/dto/task";
 import {
   TaskFolderCreateReq,
   TaskFolderInfo,
@@ -10,7 +9,6 @@ import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
 import {
   COLLECTION_NAME_FOLDERS,
-  COLLECTION_NAME_TASKS,
   COLLECTION_NAME_USERS,
 } from "./repositoryHelper";
 
@@ -46,23 +44,6 @@ export const getTaskFolders = async (
         //dtoにマッピング
         const taskFolder = { ...collection.data() } as TaskFolderInfo;
         taskFolder.taskFolderId = collection.id;
-
-        // //Task取得
-        // const taskList = [] as TaskInfo[];
-
-        // await collection.ref
-        //   .collection(COLLECTION_NAME_TASKS)
-        //   .get()
-        //   .then((snapshot) => {
-        //     snapshot.forEach((doc) => {
-        //       const data = doc.data();
-        //       const task = { ...data } as TaskInfo;
-        //       taskList.push(task);
-        //     });
-        //   })
-        //   .catch((e) => console.error(e));
-
-        // taskFolder.tasks = taskList;
         taskFolders.push(taskFolder);
       }
     }
