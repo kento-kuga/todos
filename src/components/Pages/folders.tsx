@@ -1,6 +1,7 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FoldersFormParams } from "../../common/dto/taskFolder";
+import { useHistory } from "react-router-dom";
+import { FoldersFormParams, TaskFolderInfo } from "../../common/dto/taskFolder";
 import { UserInfo } from "../../common/dto/user";
 import { useCreateFolder } from "../../common/hooks/useCreateFolder";
 import { useDeleteFolder } from "../../common/hooks/useDeleteFolder";
@@ -23,6 +24,8 @@ export const Folders = (props: Props) => {
   const updateFolderName = useUpdateFolderName();
   //フォームパーツ
   const methods = useForm<FoldersFormParams>();
+  //ヒストリー
+  const history = useHistory();
 
   //state
   //タスクフォルダーリスト
@@ -72,6 +75,18 @@ export const Folders = (props: Props) => {
     [updateFolderName]
   );
 
+  //フォルダークリック時ハンドラ
+  const handleClickFolder = React.useCallback(
+    (taskFolderInfo: TaskFolderInfo) => {
+      //編集中の場合、何もしない。
+      if (editMode) return;
+
+      //タスクリスト画面へ遷移
+      history.push("/tasks", { taskFolderInfo: taskFolderInfo });
+    },
+    [editMode, history]
+  );
+
   return (
     <FormProvider {...methods}>
       <FoldersTemplate
@@ -84,6 +99,7 @@ export const Folders = (props: Props) => {
         handleCreateFolder={handleCreateFolder}
         handleDeleteFolders={handleDeleteFolders}
         handleUpdateFolderName={handleUpdateFolderName}
+        handleClickFolder={handleClickFolder}
         selectedFolderIdList={selectedFolderIdList}
         setSelectedFolderIdList={setSelectedFolderIdList}
       />

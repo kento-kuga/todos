@@ -1,4 +1,3 @@
-import { TaskInfo } from "./task";
 import { UserInfo } from "./user";
 
 /** タスクフォルダー作成リクエスト型 */
@@ -7,6 +6,8 @@ export class TaskFolderCreateReq {
   folderName: string = "";
   /** メンバーリスト */
   members: TaskFolderCreateMember[] = [];
+  /** タスク数 */
+  taskNumber: number = 0;
 }
 
 /** タスクフォルダー作成メンバー型 */
@@ -33,8 +34,8 @@ export class TaskFolderInfo {
   folderName: string = "";
   /** メンバーリスト */
   members: UserInfo[] = [];
-  /** タスクリスト */
-  tasks: TaskInfo[] = [];
+  /** タスク数 */
+  taskNumber: number = 0;
 }
 
 /** タスクフォルダー作成フォームのparam型 */

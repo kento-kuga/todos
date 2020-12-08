@@ -21,6 +21,8 @@ interface Props {
     prevFolderName: string,
     newFolderName: string
   ) => void;
+  /** フォルダー押下時ハンドラー */
+  handleClickFolder: (taskFolderInfo: TaskFolderInfo) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
@@ -103,23 +105,36 @@ const TaskFolderPresenter = React.memo((props: Props) => {
     setEditFolderName(false);
   };
 
+  //フォルダー押下時
+  const handleClickFolder = () => {
+    props.handleClickFolder(props.taskFolderInfo);
+  };
+
   return (
     <Segment className={props.className}>
       <Grid>
         <Row columns={props.editMode ? 3 : 4} className="task-folder-row">
           {!props.editMode && (
             <>
-              <Column width={1} className="task-folder-column">
+              <Column
+                width={1}
+                className="task-folder-column"
+                onClick={handleClickFolder}
+              >
                 <Icon iconName="folder outline" size="large" />
               </Column>
-              <Column width={12} className="task-folder-column">
+              <Column
+                width={12}
+                className="task-folder-column"
+                onClick={handleClickFolder}
+              >
                 {props.taskFolderInfo.folderName}
               </Column>
               <Column
                 width={1}
                 className="task-folder-column task-folder-tasks-column"
               >
-                {props.taskFolderInfo.tasks.length}
+                {props.taskFolderInfo.taskNumber}
               </Column>
               <Column width={1} className="task-folder-column">
                 <Icon iconName="group" size="large" />

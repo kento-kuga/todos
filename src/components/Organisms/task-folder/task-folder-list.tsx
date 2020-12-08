@@ -14,6 +14,8 @@ interface Props {
     prevFolderName: string,
     newFolderName: string
   ) => void;
+  /** フォルダー押下時ハンドラー */
+  handleClickFolder: (taskFolderInfo: TaskFolderInfo) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
@@ -32,6 +34,7 @@ const TaskFolderListPresenter = React.memo((props: Props) => {
             taskFolderInfo={folder}
             editMode={props.editMode}
             handleUpdateFolderName={props.handleUpdateFolderName}
+            handleClickFolder={props.handleClickFolder}
             selectedFolderIdList={props.selectedFolderIdList}
             setSelectedFolderIdList={props.setSelectedFolderIdList}
           />
