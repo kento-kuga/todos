@@ -31,4 +31,9 @@ const TaskPresenter = (props: Props) => {
   );
 };
 
-export const Task = styled(TaskPresenter)``;
+export const Task = styled(TaskPresenter)`
+  &&&&& {
+    font-size: 1.1rem;
+    border: 1px solid;
+  }
+`;
