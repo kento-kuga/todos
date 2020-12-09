@@ -15,5 +15,10 @@ export const Tasks = (props: Props) => {
   //タスクリスト
   const [tasks] = useTasks(location.state.taskFolderInfo.taskFolderId);
 
-  return <TasksTemplate tasks={tasks}></TasksTemplate>;
+  return (
+    <TasksTemplate
+      taskFolder={location.state.taskFolderInfo}
+      tasks={tasks}
+    ></TasksTemplate>
+  );
 };
