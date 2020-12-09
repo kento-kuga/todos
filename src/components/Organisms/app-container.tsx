@@ -17,8 +17,4 @@ const AppContainerPresenter: React.FC<Props> = ({ children, ...props }) => {
   );
 };
 
-export const AppContainer = styled(AppContainerPresenter)`
-  &&&&& {
-    margin-top: 1rem;
-  }
-`;
+export const AppContainer = styled(AppContainerPresenter)``;

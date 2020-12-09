@@ -26,9 +26,9 @@ const UpdateTaskFolderNameFormPresenter = (props: Props) => {
           control={control}
           defaultValue={props.defaultFolderName}
           fluid
-          maxlength={20}
+          maxlength={14}
           rules={{
-            maxLength: 20,
+            maxLength: 14,
           }}
           className="folder-name"
         />

@@ -34,12 +34,12 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
           defaultValue=""
           isError={errors.createFolderName ? true : false}
           fluid
-          maxlength={20}
+          maxlength={14}
           rules={{
             required: "必ず入力してください。",
             maxLength: {
-              value: 20,
-              message: "20文字以内で入力してください。",
+              value: 14,
+              message: "14文字以内で入力してください。",
             },
           }}
           className="folder-name"

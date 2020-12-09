@@ -14,6 +14,8 @@ interface State {
   userInfo: UserInfo | null;
   /** タスクフォルダーリスト */
   taskFolders: TaskFolderInfo[] | null;
+  /** ヘッダーラベル */
+  headerLabel: string | undefined;
   /** Appリスナー */
   appListener: Listener;
 }
@@ -23,6 +25,7 @@ const initialState: State = {
   isLoading: false,
   userInfo: null,
   taskFolders: null,
+  headerLabel: undefined,
   appListener: {} as Listener,
 };
 
@@ -37,6 +40,10 @@ type AppContextAction =
   | {
       type: "SET_USER_INFO";
       userInfo: UserInfo | null;
+    }
+  | {
+      type: "SET_HEADER_LABEL";
+      headerLabel: string;
     }
   | {
       type: "SET_TASK_FOLDERS";
@@ -60,6 +67,11 @@ const reducer = (state: State, action: AppContextAction) => {
       return {
         ...state,
         userInfo: action.userInfo,
+      };
+    case "SET_HEADER_LABEL":
+      return {
+        ...state,
+        headerLabel: action.headerLabel,
       };
     case "SET_TASK_FOLDERS":
       return {

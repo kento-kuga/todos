@@ -15,7 +15,7 @@ interface Props {
 const TasksTemplatePresenter = (props: Props) => {
   return (
     <Grid>
-      <Row>{props.taskFolder.folderName}</Row>
+      <Row />
       <Row>
         <TaskList tasks={props.tasks} />
       </Row>
