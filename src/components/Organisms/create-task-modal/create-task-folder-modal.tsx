@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Grid, Row } from "../../Atoms/layout";
 import { Modal, ModalContent } from "../../Atoms/modal";
-import { CreateTaskFolderForm } from "../Form/create-task-folder-form";
+import { CreateTaskFolderForm } from "../form/create-task-folder-form";
 
 interface Props {
   /** オープンフラグ */

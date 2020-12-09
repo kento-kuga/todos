@@ -25,11 +25,11 @@ const AppHeaderPresenter = (props: Props) => {
 export const AppHeader = styled(AppHeaderPresenter)`
   &&&&& {
     border-bottom: 1px solid;
-    box-shadow:0px 1.5px 0px 0px rgba(34,36,38,.15);
+    box-shadow: 0px 1.5px 0px 0px rgba(34, 36, 38, 0.15);
     height: 10vh;
     //ヘッダー行
     .header-row {
-    padding-bottom: 0;
+      padding-bottom: 0;
       //ロゴ列
       .header-center-col {
         position: relative;
@@ -40,7 +40,7 @@ export const AppHeader = styled(AppHeaderPresenter)`
           top: 50%;
           left: 50%;
           transform: translateY(-50%) translateX(-50%);
-          -webkit- transform: translateY(-50%) translateX(-50%);
+          -webkit-transform: translateY(-50%) translateX(-50%);
           font-size: 1.7rem;
         }
       }

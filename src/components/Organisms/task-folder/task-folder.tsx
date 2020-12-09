@@ -8,7 +8,8 @@ import {
 import { Icon } from "../../Atoms/icon";
 import { Column, Grid, Row } from "../../Atoms/layout";
 import { Segment } from "../../Atoms/segment";
-import { UpdateTaskFolderNameForm } from "../Form/update-task-folder-name-form";
+import { CheckBox } from "../../Molecules/check-box";
+import { UpdateTaskFolderNameForm } from "../form/update-task-folder-name-form";
 
 interface Props {
   //タスクフォルダー情報
@@ -148,16 +149,10 @@ const TaskFolderPresenter = React.memo((props: Props) => {
                 className="task-folder-column"
                 onClick={handleSelectCheckBoxColumn}
               >
-                {!selected && (
-                  <div className="select-task-folder-button">
-                    <Icon iconName="square outline" />
-                  </div>
-                )}
-                {selected && (
-                  <div className="selected-task-folder-button">
-                    <Icon iconName="check square outline" />
-                  </div>
-                )}
+                <CheckBox
+                  selected={selected}
+                  className="folder-select-check-box"
+                />
               </Column>
               <Column width={12} className="task-folder-column">
                 {!editFolderName && <> {props.taskFolderInfo.folderName} </>}
@@ -204,12 +199,8 @@ export const TaskFolder = styled(TaskFolderPresenter)`
       .task-folder-column {
         display: table-cell;
         vertical-align: middle;
-        //タスクフォルダー選択ボタン
-        .select-task-folder-button {
-          padding: 0.3rem;
-        }
-        //選択済みタスクフォルダー選択ボタン
-        .selected-task-folder-button {
+        //フォルダー選択チェックボックス
+        .folder-select-check-box {
           padding: 0.3rem;
         }
         //タスクフォルダーネーム編集ボタン
