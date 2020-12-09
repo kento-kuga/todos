@@ -5,7 +5,6 @@ import { FoldersFormParams, TaskFolderInfo } from "../../common/dto/taskFolder";
 import { UserInfo } from "../../common/dto/user";
 import { useCreateFolder } from "../../common/hooks/useCreateFolder";
 import { useDeleteFolder } from "../../common/hooks/useDeleteFolder";
-import { useHeaderLabel } from "../../common/hooks/useHeaderLabel";
 import { useTaskFolders } from "../../common/hooks/useTaskFolders";
 import { useUpdateFolderName } from "../../common/hooks/useUpdateFolderName";
 import { FoldersTemplate } from "../Templates/folders-template";
@@ -27,8 +26,6 @@ export const Folders = (props: Props) => {
   const methods = useForm<FoldersFormParams>();
   //ヒストリー
   const history = useHistory();
-  //ヘッダーラベル
-  const [, setHeaderLabel] = useHeaderLabel();
 
   //state
   //タスクフォルダーリスト
@@ -41,15 +38,6 @@ export const Folders = (props: Props) => {
   const [selectedFolderIdList, setSelectedFolderIdList] = React.useState(
     [] as string[]
   );
-
-  //effect
-  React.useEffect(() => {
-    //ヘッダーラベルを設定。
-    setHeaderLabel("フォルダーリスト");
-    //setHeaderLabelは変更されないので依存しない。
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   //function
   //フォルダー作成時ハンドラー
   const handleCreateFolder = React.useCallback(

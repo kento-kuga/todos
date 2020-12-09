@@ -1,27 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { useHeaderLabel } from "../../../common/hooks/useHeaderLabel";
 import { Grid, Row } from "../../Atoms/layout";
 
 interface Props {
+  /** フォルダー名 */
+  folderName: string;
   /** クラスネーム */
   className?: string;
 }
 
-const AppHeaderPresenter = (props: Props) => {
-  //hooks
-  const [headerLabel] = useHeaderLabel();
-
+const TasksHeaderPresenter = (props: Props) => {
   return (
-    <Grid className={props.className}>
-      <Row className="header-row">
-        <div className="header-content">{headerLabel}</div>
-      </Row>
-    </Grid>
+    <>
+      <Grid className={props.className}>
+        <Row className="header-row">
+          <div className="header-content">{props.folderName}</div>
+        </Row>
+      </Grid>
+    </>
   );
 };
 
-export const AppHeader = styled(AppHeaderPresenter)`
+export const TasksHeader = styled(TasksHeaderPresenter)`
   &&&&& {
     height: 8vh;
     //ヘッダー行

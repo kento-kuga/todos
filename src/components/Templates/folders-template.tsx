@@ -5,6 +5,7 @@ import { UserInfo } from "../../common/dto/user";
 import { Icon, IconGroup } from "../Atoms/icon";
 import { Grid, Row } from "../Atoms/layout";
 import { CreateTaskFolderModal } from "../Organisms/create-task-modal/create-task-folder-modal";
+import { FoldersHeader } from "../Organisms/header/folders-header";
 import { TaskFolderList } from "../Organisms/task-folder/task-folder-list";
 
 interface Props {
@@ -58,78 +59,92 @@ const FoldersTemplatePresenter = React.memo((props: Props) => {
   }, [props]);
 
   return (
-    <>
-      <Grid className={props.className}>
-        <Row className="header-row">
-          <div className="setting-button">
-            <Icon
-              size="large"
-              iconName="setting"
-              color={props.editMode ? "blue" : "black"}
-              onClick={handleClickSettingButton}
-              testid="folders-setting-button"
-            />
-          </div>
-        </Row>
-        <Row className="folder-list-row">
-          <TaskFolderList
-            taskFolderList={props.taskFolderList}
-            className="task-folder-list"
-            editMode={props.editMode}
-            handleUpdateFolderName={props.handleUpdateFolderName}
-            handleClickFolder={props.handleClickFolder}
-            selectedFolderIdList={props.selectedFolderIdList}
-            setSelectedFolderIdList={props.setSelectedFolderIdList}
-          />
-        </Row>
-        <Row textAlign="right" className="add-folder-row">
-          <div className="add-folder-button">
-            {!props.editMode && (
-              <IconGroup
-                size="big"
-                onClick={handleClickCreateFolderButton}
-                testid="folders-add-folder-button"
-              >
-                <Icon iconName="folder outline" />
-                <Icon iconName="add" corner="top right" inverted />
-              </IconGroup>
-            )}
-            {props.editMode && (
+    <div className={props.className}>
+      <header className="folders-header">
+        <FoldersHeader />
+      </header>
+      <main className="folders-main">
+        <Grid container>
+          <Row className="setting-row">
+            <div className="setting-button">
               <Icon
-                iconName="trash"
-                size="big"
-                disable={props.selectedFolderIdList.length === 0 ? true : false}
-                onClick={props.handleDeleteFolders}
-                testid="folders-delete-folder-button"
+                size="large"
+                iconName="setting"
+                color={props.editMode ? "blue" : "black"}
+                onClick={handleClickSettingButton}
+                testid="folders-setting-button"
               />
-            )}
-          </div>
-        </Row>
-      </Grid>
+            </div>
+          </Row>
+          <Row className="folder-list-row">
+            <TaskFolderList
+              taskFolderList={props.taskFolderList}
+              className="task-folder-list"
+              editMode={props.editMode}
+              handleUpdateFolderName={props.handleUpdateFolderName}
+              handleClickFolder={props.handleClickFolder}
+              selectedFolderIdList={props.selectedFolderIdList}
+              setSelectedFolderIdList={props.setSelectedFolderIdList}
+            />
+          </Row>
+          <Row textAlign="right" className="add-folder-row">
+            <div className="add-folder-button">
+              {!props.editMode && (
+                <IconGroup
+                  size="big"
+                  onClick={handleClickCreateFolderButton}
+                  testid="folders-add-folder-button"
+                >
+                  <Icon iconName="folder outline" />
+                  <Icon iconName="add" corner="top right" inverted />
+                </IconGroup>
+              )}
+              {props.editMode && (
+                <Icon
+                  iconName="trash"
+                  size="big"
+                  disable={
+                    props.selectedFolderIdList.length === 0 ? true : false
+                  }
+                  onClick={props.handleDeleteFolders}
+                  testid="folders-delete-folder-button"
+                />
+              )}
+            </div>
+          </Row>
+        </Grid>
+      </main>
       <CreateTaskFolderModal
         open={props.createFolderOpen}
         handleClose={handleCloseCreateFolderModal}
         handleCreateFolder={props.handleCreateFolder}
       />
-    </>
+    </div>
   );
 });
 
 export const FoldersTemplate = styled(FoldersTemplatePresenter)`
   &&&&& {
-    .header-row {
-      padding-bottom: 0;
-      .setting-button {
-        text-align: right;
+    .folders-header {
+      margin-bottom: 1rem;
+    }
+    .folders-main {
+      .setting-row {
+        padding-top: 0.5rem;
+        padding-bottom: 0;
+        .setting-button {
+          font-size: 1.2rem;
+          text-align: right;
+        }
       }
-    }
-    .folder-list-row {
-      padding-bottom: 0rem;
-    }
-    .add-folder-row {
-      padding-top: 0rem;
-      .add-folder-button {
-        padding-right: 1rem;
+      .folder-list-row {
+        padding-bottom: 0rem;
+      }
+      .add-folder-row {
+        padding-top: 0rem;
+        .add-folder-button {
+          padding-right: 1rem;
+        }
       }
     }
   }

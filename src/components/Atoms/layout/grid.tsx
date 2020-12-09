@@ -1,5 +1,6 @@
 import React from "react";
 import * as UI from "semantic-ui-react";
+import styled from "styled-components";
 import { Columns } from "../../../common/consts/ui-value-type";
 
 interface Props {
@@ -9,11 +10,13 @@ interface Props {
   stackable?: boolean;
   /** 内側罫線 */
   internally?: boolean;
+  /** コンテナフラグ */
+  container?: boolean;
   /** クラスネーム */
   className?: string;
 }
 
-export const Grid: React.FC<Props> = ({ children, ...props }) => {
+const GridPresenter: React.FC<Props> = ({ children, ...props }) => {
   return (
     <>
       <UI.Grid
@@ -27,3 +30,10 @@ export const Grid: React.FC<Props> = ({ children, ...props }) => {
     </>
   );
 };
+
+export const Grid = styled(GridPresenter)<Props>`
+  &&&&& {
+    ${(props) =>
+      props.container ? "margin-left: 0rem; margin-right: 0rem;" : ""}
+  }
+`;
