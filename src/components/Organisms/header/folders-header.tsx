@@ -29,6 +29,7 @@ export const FoldersHeader = styled(FoldersHeaderPresenter)`
         padding-top: 2.5rem;
         padding-left: 2rem;
         font-size: 2rem;
+        font-weight: 600;
       }
     }
   }

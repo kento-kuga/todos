@@ -15,7 +15,7 @@ interface Props {
 const TaskPresenter = (props: Props) => {
   //state
   //タスク選択フラグ
-  const [selected, setSelected] = React.useState(false);
+  const [selected] = React.useState(false);
 
   return (
     <Segment className={props.className}>

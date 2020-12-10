@@ -20,10 +20,12 @@ const TasksTemplatePresenter = (props: Props) => {
   return (
     <div className={props.className}>
       <header className="tasks-header">
-        <TasksHeader folderName={props.taskFolder.folderName} />
+        <TasksHeader />
       </header>
       <main className="tasks-main">
         <Grid container>
+          <Row />
+          <div className="task-folder-name">{props.taskFolder.folderName}</div>
           <Row>
             <TaskList tasks={props.tasks} />
           </Row>
@@ -32,7 +34,13 @@ const TasksTemplatePresenter = (props: Props) => {
       <footer className="tasks-footer">
         <Grid>
           <Row textAlign="center">
-            <Icon iconName="add" circular size="large" color="blue" />
+            <Icon
+              className="add-icon"
+              iconName="add"
+              size="big"
+              circular
+              color="blue"
+            />
           </Row>
         </Grid>
       </footer>
@@ -42,19 +50,33 @@ const TasksTemplatePresenter = (props: Props) => {
 
 export const TasksTemplate = styled(TasksTemplatePresenter)`
   &&&&& {
-    display: flex;
-    flex-flow: column;
     min-height: 100vh;
     overflow-x: hidden;
 
     .tasks-header {
-      margin-bottom: 1.5rem;
+      position: fixed;
+      top: 0;
+      z-index: 1;
+      height: 6vh;
+      width: 100%;
+      background-color: white;
     }
     .tasks-main {
-      flex: 1;
+      padding-top: 6vh;
+      padding-bottom: 20vh;
+      .task-folder-name {
+        font-size: 2rem;
+        font-weight: 600;
+      }
     }
     .tasks-footer {
-      padding-bottom: calc(env(safe-area-inset-bottom) + 40px);
+      position: fixed;
+      height: 10vh;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: white;
+      z-index: 1;
     }
   }
 `;
