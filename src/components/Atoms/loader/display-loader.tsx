@@ -9,7 +9,7 @@ interface Props {
 export const DisplayLoader = (props: Props) => {
   return (
     <>
-      <UI.Dimmer active={props.isDisplay}>
+      <UI.Dimmer active={props.isDisplay} page>
         <UI.Loader />
       </UI.Dimmer>
     </>

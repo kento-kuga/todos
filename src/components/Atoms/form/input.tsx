@@ -24,25 +24,39 @@ interface Props {
   placeholder?: string;
   /** テストid */
   testid?: string;
+  /** フォーカスアウト時ハンドラ */
+  handleBlur?: () => void;
 }
 
 const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
+  //function
+  //フォーカスアウト時ハンドラ
+  const handleBlur = React.useCallback(() => {
+    if (props.handleBlur) {
+      props.handleBlur();
+    }
+  }, [props]);
+
   return (
     <>
       <Controller
-        as={
+        render={(controllerProps) => (
           <UI.Input
             maxLength={props.maxlength}
             fluid={props.fluid}
             placeholder={props.placeholder}
             data-testid={props.testid}
+            onBlur={handleBlur}
+            onChange={controllerProps.onChange}
+            className={props.className}
+            value={controllerProps.value}
           />
-        }
-        className={props.className}
+        )}
         name={props.name}
         control={props.control}
         rules={props.rules}
         defaultValue={props.defaultValue || ""}
+        onBlur={handleBlur}
       />
     </>
   );
