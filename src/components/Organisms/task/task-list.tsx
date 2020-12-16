@@ -8,7 +8,7 @@ interface Props {
   tasks: TaskInfo[];
 }
 
-const TaskListPresenter = (props: Props) => {
+const TaskListPresenter = React.memo((props: Props) => {
   return (
     <>
       {props.tasks.map((task, i) => (
@@ -16,6 +16,6 @@ const TaskListPresenter = (props: Props) => {
       ))}
     </>
   );
-};
+});
 
 export const TaskList = styled(TaskListPresenter)``;

@@ -4,7 +4,7 @@ import { TaskFolderInfo } from "../../common/dto/taskFolder";
 import { UserInfo } from "../../common/dto/user";
 import { Icon, IconGroup } from "../Atoms/icon";
 import { Grid, Row } from "../Atoms/layout";
-import { CreateTaskFolderModal } from "../Organisms/create-task-modal/create-task-folder-modal";
+import { CreateTaskFolderModal } from "../Organisms/create-task-folder-modal/create-task-folder-modal";
 import { FoldersHeader } from "../Organisms/header/folders-header";
 import { TaskFolderList } from "../Organisms/task-folder/task-folder-list";
 

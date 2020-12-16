@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { TaskInfo } from "../../common/dto/task";
 import { TaskFolderInfo } from "../../common/dto/taskFolder";
-import { Icon } from "../Atoms/icon";
 import { Grid, Row } from "../Atoms/layout";
+import { AddTaskForm } from "../Organisms/form/add-task-form";
 import { TasksHeader } from "../Organisms/header/tasks-header";
 import { TaskList } from "../Organisms/task/task-list";
 
@@ -12,11 +12,15 @@ interface Props {
   taskFolder: TaskFolderInfo;
   /** タスクリスト */
   tasks: TaskInfo[];
+  /** タスク追加時ハンドラ */
+  handleAddTask: (createTaskName: string) => void;
   /** クラスネーム */
   className?: string;
 }
 
 const TasksTemplatePresenter = (props: Props) => {
+  //hooks
+
   return (
     <div className={props.className}>
       <header className="tasks-header">
@@ -34,13 +38,7 @@ const TasksTemplatePresenter = (props: Props) => {
       <footer className="tasks-footer">
         <Grid>
           <Row textAlign="center">
-            <Icon
-              className="add-icon"
-              iconName="add"
-              size="big"
-              circular
-              color="blue"
-            />
+            <AddTaskForm handleSubmit={props.handleAddTask} />
           </Row>
         </Grid>
       </footer>
@@ -75,8 +73,8 @@ export const TasksTemplate = styled(TasksTemplatePresenter)`
       width: 100%;
       left: 0;
       bottom: 0;
-      background-color: white;
       z-index: 1;
+      background-color: white;
     }
   }
 `;

@@ -9,7 +9,7 @@ export class TaskInfo {
   /** 作成者 */
   creator: string = "";
   /** 作成日時 */
-  date: Date = new Date();
+  createdAt: Date = new Date();
   /** タスク名称 */
   name: string = "";
   /** 期限 */
@@ -22,4 +22,25 @@ export class TaskInfo {
 export class TasksLocationState {
   /** タスクフォルダー情報 */
   taskFolderInfo: TaskFolderInfo = new TaskFolderInfo();
+}
+
+/** タスク追加リクエスト型 */
+export class AddTaskReq {
+  /** 追加タスク名 */
+  name: string = "";
+  /** タスクフォルダーId */
+  taskFolderId: string = "";
+  /** 作成日時 */
+  createdAt: Date = new Date();
+}
+
+/** タスク作成フォームのparam型 */
+interface CreateTaskFormParams {
+  /** 作成フォルダー名 */
+  createTaskName: string;
+}
+
+/** タスクリストページのparam型 */
+export class TasksFormParams implements CreateTaskFormParams {
+  createTaskName: string = "";
 }

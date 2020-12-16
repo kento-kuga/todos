@@ -1,4 +1,5 @@
-import { TaskInfo } from "../common/dto/task";
+import { AddTaskReq, TaskInfo } from "../common/dto/task";
+import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
@@ -10,12 +11,13 @@ import { COLLECTION_NAME_TASKS } from "./repositoryHelper";
  * @param listener リスナー
  * @return tasks タスクリスト
  */
-export const getTasks = async (folderId: string, listener: Listener) => {
+export const getTasks = async (folderId: string, listener?: Listener) => {
   const db = Firebase.instance.db;
 
   try {
-    listener.started();
-
+    if (listener) {
+      listener.started();
+    }
     const tasks = [] as TaskInfo[];
 
     //tasks取得
@@ -23,6 +25,7 @@ export const getTasks = async (folderId: string, listener: Listener) => {
     await db
       .collection(COLLECTION_NAME_TASKS)
       .where("taskFolderId", "==", folderId)
+      .orderBy("createdAt", "asc")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -36,6 +39,38 @@ export const getTasks = async (folderId: string, listener: Listener) => {
     console.error(e);
     throw new SystemError();
   } finally {
-    listener.finished();
+    if (listener) {
+      listener.finished();
+    }
+  }
+};
+
+export const addTask = async (
+  createTaskName: string,
+  taskFolderId: string,
+  listener?: Listener
+) => {
+  const db = Firebase.instance.db;
+
+  try {
+    if (listener) {
+      listener.started();
+    }
+    //リクエスト作成
+    const req = new AddTaskReq();
+
+    req.name = createTaskName;
+    req.taskFolderId = taskFolderId;
+
+    //タスク追加
+    const ref = await db.collection(COLLECTION_NAME_TASKS).doc();
+    await ref.set({ ...req });
+  } catch (e) {
+    console.error(e);
+    throw new SystemError();
+  } finally {
+    if (listener) {
+      listener.finished();
+    }
   }
 };
