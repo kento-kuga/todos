@@ -45,6 +45,7 @@ export const AddTaskForm = styled(AddTaskFormPresenter)`
   &&&&& {
     .add-task-input {
       font-size: 16px;
+      overflow-wrap: break-word;
     }
   }
 `;

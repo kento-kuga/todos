@@ -16,6 +16,8 @@ export class TaskInfo {
   period?: Date;
   /** 優先度 */
   priority?: number;
+  /** 完了済みフラグ */
+  completed: boolean = false;
 }
 
 /** タスクリスト画面ロケーション型 */
@@ -32,6 +34,14 @@ export class AddTaskReq {
   taskFolderId: string = "";
   /** 作成日時 */
   createdAt: Date = new Date();
+}
+
+/** タスク更新リクエスト型 */
+export class UpdateTaskReq {
+  /** 更新タスク名 */
+  name: string = "";
+  /** 完了済みフラグ */
+  completed: boolean = false;
 }
 
 /** タスク作成フォームのparam型 */

@@ -6,9 +6,10 @@ import {
   TasksFormParams,
   TasksLocationState,
 } from "../../common/dto/task";
-import { useUpdateTasks } from "../../common/hooks/useUpdateTasks";
+import { useAddTask } from "../../common/hooks/useAddTask";
 import { useTasks } from "../../common/hooks/useTasks";
 import { TasksTemplate } from "../Templates/tasks-template";
+import { useUpdateTask } from "../../common/hooks/useUpdateTask";
 
 interface Props {}
 
@@ -19,7 +20,9 @@ export const Tasks = (props: Props) => {
   //フォームパーツ
   const methods = useForm<TasksFormParams>();
   //タスク追加Hook
-  const updateTasks = useUpdateTasks();
+  const addTask = useAddTask();
+  //タスク更新Hook
+  const updateTask = useUpdateTask();
 
   //state
   //タスクリスト
@@ -37,15 +40,30 @@ export const Tasks = (props: Props) => {
       setTasks(newTasks);
 
       //タスクリストに新しいタスクを追加し、再取得
-      updateTasks(
-        createTaskName,
-        location.state.taskFolderInfo.taskFolderId
-      ).then((tasks) => {
-        //最新のタスクリストをセット
-        setTasks(tasks);
-      });
+      addTask(createTaskName, location.state.taskFolderInfo.taskFolderId);
     },
-    [tasks, setTasks, updateTasks, location.state.taskFolderInfo.taskFolderId]
+    [tasks, setTasks, addTask, location.state.taskFolderInfo.taskFolderId]
+  );
+
+  //タスク完了状態変更時ハンドラ-
+  const handleChangeTaskCompleted = React.useCallback(
+    (task: TaskInfo, completed: boolean) => {
+      //渡された添字のタスクの選択状態を変更し、タスクリストを更新する。
+      const tmpTasks = [...tasks];
+      //タスクIDで対象のタスクを抽出
+      const tmpTask = tmpTasks.find(
+        (tmpTask) => tmpTask.taskId === task.taskId
+      );
+      if (tmpTask) {
+        //対象のタスクが存在する場合、対象タスクの完了状態を更新
+        tmpTask.completed = completed;
+        setTasks(tmpTasks);
+
+        //DBのタスクを更新
+        updateTask(tmpTask, task.taskFolderId);
+      }
+    },
+    [setTasks, tasks, updateTask]
   );
 
   return (
@@ -53,6 +71,7 @@ export const Tasks = (props: Props) => {
       <TasksTemplate
         taskFolder={location.state.taskFolderInfo}
         tasks={tasks}
+        handleChangeTaskCompleted={handleChangeTaskCompleted}
         handleAddTask={handleAddTask}
       />
     </FormProvider>

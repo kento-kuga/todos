@@ -4,8 +4,8 @@ import { TaskInfo } from "../../common/dto/task";
 import { TaskFolderInfo } from "../../common/dto/taskFolder";
 import { Grid, Row } from "../Atoms/layout";
 import { AddTaskForm } from "../Organisms/form/add-task-form";
-import { TasksHeader } from "../Organisms/header/tasks-header";
-import { TaskList } from "../Organisms/task/task-list";
+import { TasksHeader } from "../Organisms/task/tasks-header";
+import { TaskMain } from "../Organisms/task/task-main";
 
 interface Props {
   /** タスクフォルダー情報 */
@@ -14,27 +14,23 @@ interface Props {
   tasks: TaskInfo[];
   /** タスク追加時ハンドラ */
   handleAddTask: (createTaskName: string) => void;
+  //タスク完了状態変更時ハンドラ-
+  handleChangeTaskCompleted: (task: TaskInfo, completed: boolean) => void;
   /** クラスネーム */
   className?: string;
 }
 
 const TasksTemplatePresenter = (props: Props) => {
-  //hooks
-
   return (
     <div className={props.className}>
       <header className="tasks-header">
         <TasksHeader />
       </header>
-      <main className="tasks-main">
-        <Grid container>
-          <Row />
-          <div className="task-folder-name">{props.taskFolder.folderName}</div>
-          <Row>
-            <TaskList tasks={props.tasks} />
-          </Row>
-        </Grid>
-      </main>
+      <TaskMain
+        taskFolder={props.taskFolder}
+        handleChangeTaskCompleted={props.handleChangeTaskCompleted}
+        className="tasks-main"
+      />
       <footer className="tasks-footer">
         <Grid>
           <Row textAlign="center">
