@@ -20,7 +20,8 @@ export const getUser = async (userId: string, listener: Listener) => {
     const data = await doc.data();
 
     return { ...data, userId: doc.id } as UserInfo;
-  } catch {
+  } catch (e) {
+    console.error(e);
     throw new SystemError();
   } finally {
     listener.finished();
