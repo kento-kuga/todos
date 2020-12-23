@@ -1,15 +1,12 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import {
-  TaskFolderInfo,
-  FoldersFormParams,
-} from "../../../common/dto/taskFolder";
-import { Icon } from "../../Atoms/icon";
-import { Column, Grid, Row } from "../../Atoms/layout";
-import { Segment } from "../../Atoms/segment";
-import { CheckBox } from "../../Molecules/check-box";
-import { UpdateTaskFolderNameForm } from "../form/update-task-folder-name-form";
+import { TaskFolderInfo, FoldersFormParams } from "../../common/dto/taskFolder";
+import { Icon } from "../Atoms/icon";
+import { Column, Grid, Row } from "../Atoms/layout";
+import { Segment } from "../Atoms/segment";
+import { CheckBox } from "./check-box";
+import { UpdateTaskFolderNameForm } from "../Organisms/form/update-task-folder-name-form";
 
 interface Props {
   //タスクフォルダー情報
