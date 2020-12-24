@@ -27,6 +27,9 @@ const TasksFooterPresenter = (props: Props) => {
   //タスク追加時ハンドラー
   const handleAddTask = React.useCallback(
     (createTaskName: string) => {
+      //タスクリストが取得されていなければ何もしない
+      if (!tasks) return;
+
       //ローカルタスクリスト情報だけ先に更新
       const newTasks = [...tasks];
       newTasks.push({ name: createTaskName } as TaskInfo);

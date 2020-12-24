@@ -1,79 +1,33 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import {
-  TaskInfo,
-  TasksFormParams,
-  TasksLocationState,
-} from "../../common/dto/task";
-import { useAddTask } from "../../common/hooks/useAddTask";
-import { useTasks } from "../../common/hooks/useTasks";
+import { TaskFolderContext } from "../../common/context/tasks-context";
+import { TasksFormParams, TasksLocationState } from "../../common/dto/task";
 import { TasksTemplate } from "../Templates/tasks-template";
-import { useUpdateTask } from "../../common/hooks/useUpdateTask";
 
 interface Props {}
 
 export const Tasks = (props: Props) => {
+  //context
+  const taskFolderContext = React.useContext(TaskFolderContext);
+
   //hooks
   //ロケーション
   const location = useLocation<TasksLocationState>();
   //フォームパーツ
   const methods = useForm<TasksFormParams>();
-  //タスク追加Hook
-  const addTask = useAddTask();
-  //タスク更新Hook
-  const updateTask = useUpdateTask();
 
-  //state
-  //タスクリスト
-  const [tasks, setTasks] = useTasks(
-    location.state.taskFolderInfo.taskFolderId
-  );
+  //effect
+  React.useEffect(() => {
+    taskFolderContext.setTaskFolder(location.state.taskFolderInfo);
 
-  //function
-  //タスク追加時ハンドラー
-  const handleAddTask = React.useCallback(
-    (createTaskName: string) => {
-      //ローカルタスクリスト情報だけ先に更新
-      const newTasks = [...tasks];
-      newTasks.push({ name: createTaskName } as TaskInfo);
-      setTasks(newTasks);
-
-      //タスクリストに新しいタスクを追加し、再取得
-      addTask(createTaskName, location.state.taskFolderInfo.taskFolderId);
-    },
-    [tasks, setTasks, addTask, location.state.taskFolderInfo.taskFolderId]
-  );
-
-  //タスク完了状態変更時ハンドラ-
-  const handleChangeTaskCompleted = React.useCallback(
-    (task: TaskInfo, completed: boolean) => {
-      //渡された添字のタスクの選択状態を変更し、タスクリストを更新する。
-      const tmpTasks = [...tasks];
-      //タスクIDで対象のタスクを抽出
-      const tmpTask = tmpTasks.find(
-        (tmpTask) => tmpTask.taskId === task.taskId
-      );
-      if (tmpTask) {
-        //対象のタスクが存在する場合、対象タスクの完了状態を更新
-        tmpTask.completed = completed;
-        setTasks(tmpTasks);
-
-        //DBのタスクを更新
-        updateTask(tmpTask, task.taskFolderId);
-      }
-    },
-    [setTasks, tasks, updateTask]
-  );
+    // タスクリスト画面へ遷移したときのみ実行する。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state.taskFolderInfo]);
 
   return (
     <FormProvider {...methods}>
-      <TasksTemplate
-        taskFolder={location.state.taskFolderInfo}
-        tasks={tasks}
-        handleChangeTaskCompleted={handleChangeTaskCompleted}
-        handleAddTask={handleAddTask}
-      />
+      <TasksTemplate taskFolder={location.state.taskFolderInfo} />
     </FormProvider>
   );
 };

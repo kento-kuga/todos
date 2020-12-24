@@ -10,13 +10,13 @@ interface Props {
 
 const TasksHeaderPresenter = (props: Props) => {
   return (
-    <>
-      <Grid className={props.className}>
+    <header className={props.className}>
+      <Grid>
         <Row className="header-row">
           <Link to="/folders">＜リストへ</Link>
         </Row>
       </Grid>
-    </>
+    </header>
   );
 };
 

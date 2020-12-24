@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { TasksContextProvider } from "../../common/context/task-context";
+import { TasksContextProvider } from "../../common/context/tasks-context";
 import { useUserInfo } from "../../common/hooks/useUserInfo";
 import { Folders } from "./folders";
 import { Tasks } from "./tasks";

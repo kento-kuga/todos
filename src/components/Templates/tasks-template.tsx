@@ -1,21 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { TaskInfo } from "../../common/dto/task";
 import { TaskFolderInfo } from "../../common/dto/taskFolder";
-import { Grid, Row } from "../Atoms/layout";
-import { AddTaskForm } from "../Organisms/form/add-task-form";
 import { TasksHeader } from "../Organisms/task/tasks-header";
 import { TaskMain } from "../Organisms/task/task-main";
+import { TasksFooter } from "../Organisms/task/task-footer";
 
 interface Props {
   /** タスクフォルダー情報 */
   taskFolder: TaskFolderInfo;
-  /** タスクリスト */
-  tasks: TaskInfo[];
-  /** タスク追加時ハンドラ */
-  handleAddTask: (createTaskName: string) => void;
-  //タスク完了状態変更時ハンドラ-
-  handleChangeTaskCompleted: (task: TaskInfo, completed: boolean) => void;
   /** クラスネーム */
   className?: string;
 }
@@ -23,21 +15,9 @@ interface Props {
 const TasksTemplatePresenter = (props: Props) => {
   return (
     <div className={props.className}>
-      <header className="tasks-header">
-        <TasksHeader />
-      </header>
-      <TaskMain
-        taskFolder={props.taskFolder}
-        handleChangeTaskCompleted={props.handleChangeTaskCompleted}
-        className="tasks-main"
-      />
-      <footer className="tasks-footer">
-        <Grid>
-          <Row textAlign="center">
-            <AddTaskForm handleSubmit={props.handleAddTask} />
-          </Row>
-        </Grid>
-      </footer>
+      <TasksHeader className="tasks-header" />
+      <TaskMain taskFolder={props.taskFolder} className="tasks-main" />
+      <TasksFooter taskFolder={props.taskFolder} className="tasks-footer" />
     </div>
   );
 };
@@ -58,10 +38,6 @@ export const TasksTemplate = styled(TasksTemplatePresenter)`
     .tasks-main {
       padding-top: 6vh;
       padding-bottom: 20vh;
-      .task-folder-name {
-        font-size: 2rem;
-        font-weight: 600;
-      }
     }
     .tasks-footer {
       position: fixed;
