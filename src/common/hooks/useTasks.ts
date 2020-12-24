@@ -15,7 +15,6 @@ export const useTasks = (taskFolderId?: string) => {
   // effect
   React.useEffect(() => {
     const init = async () => {
-      console.log("初期取得");
       if (taskFolderId) {
         //タスクフォルダ-IDが存在する場合。
         //タスクリストを取得し、セット。
