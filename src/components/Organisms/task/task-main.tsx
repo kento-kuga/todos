@@ -10,14 +10,14 @@ import { Icon } from "../../Atoms/icon";
 import { Grid, Row } from "../../Atoms/layout";
 import { TaskList } from "../../Molecules/task-list";
 
-interface Props {
+interface ContainerProps {
   /** タスクフォルダー情報 */
   taskFolder: TaskFolderInfo;
   /** クラスネーム */
   className?: string;
 }
 
-const TaskMainPresenter = (props: Props) => {
+const TaskMainContainer = (props: ContainerProps) => {
   //hooks
   //タスクリスト削除フック
   const deleteTasks = useDeleteTasks();
@@ -91,6 +91,34 @@ const TaskMainPresenter = (props: Props) => {
   }, [completedTasks, deleteTasks, props.taskFolder.taskFolderId]);
 
   return (
+    <TaskMainPresenter
+      taskFolder={props.taskFolder}
+      unCompletedTasks={unCompletedTasks}
+      completedTasks={completedTasks}
+      handleChangeTaskCompleted={handleChangeTaskCompleted}
+      handleClickCompletedTaskDelete={handleClickCompletedTaskDelete}
+      className={props.className}
+    />
+  );
+};
+
+interface PresenterProps {
+  /** タスクフォルダー情報 */
+  taskFolder: TaskFolderInfo;
+  /** 未完了タスクリスト */
+  unCompletedTasks: TaskInfo[];
+  /** 完了済タスクリスト */
+  completedTasks: TaskInfo[];
+  /** タスク完了状態変更ハンドラー */
+  handleChangeTaskCompleted: (task: TaskInfo, completed: boolean) => void;
+  /** 完了済タスク削除ハンドラー */
+  handleClickCompletedTaskDelete: () => void;
+  /** クラスネーム */
+  className?: string;
+}
+
+const TaskMainPresenter = (props: PresenterProps) => {
+  return (
     <>
       <main className={props.className}>
         <Grid container>
@@ -98,8 +126,8 @@ const TaskMainPresenter = (props: Props) => {
           <div className="task-folder-name">{props.taskFolder.folderName}</div>
           <Row>
             <TaskList
-              tasks={unCompletedTasks}
-              handleChangeTaskCompleted={handleChangeTaskCompleted}
+              tasks={props.unCompletedTasks}
+              handleChangeTaskCompleted={props.handleChangeTaskCompleted}
             />
           </Row>
           <Row>
@@ -108,12 +136,12 @@ const TaskMainPresenter = (props: Props) => {
                 <Icon
                   iconName="trash"
                   size="large"
-                  onClick={handleClickCompletedTaskDelete}
+                  onClick={props.handleClickCompletedTaskDelete}
                 />
               </div>
               <TaskList
-                tasks={completedTasks}
-                handleChangeTaskCompleted={handleChangeTaskCompleted}
+                tasks={props.completedTasks}
+                handleChangeTaskCompleted={props.handleChangeTaskCompleted}
               />
             </Accordion>
           </Row>
@@ -123,7 +151,7 @@ const TaskMainPresenter = (props: Props) => {
   );
 };
 
-export const TaskMain = styled(TaskMainPresenter)`
+export const TaskMain = styled(TaskMainContainer)<ContainerProps>`
   &&&&& {
     .task-folder-name {
       font-size: 2rem;
