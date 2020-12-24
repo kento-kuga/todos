@@ -19,6 +19,7 @@ export const Tasks = (props: Props) => {
 
   //effect
   React.useEffect(() => {
+    //タスクフォルダーをコンテキストへセット
     taskFolderContext.setTaskFolder(location.state.taskFolderInfo);
 
     // タスクリスト画面へ遷移したときのみ実行する。
