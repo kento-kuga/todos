@@ -1,5 +1,5 @@
 import React from "react";
-import { getTasks } from "../../../repositories/task-repository";
+import { TasksRepository } from "../../../repositories/tasks-repository";
 import { useAppContext } from "../../context/app-context";
 import { TasksContext } from "../../context/tasks-context";
 import { TaskInfo } from "../../dto/task";
@@ -9,6 +9,10 @@ import { useTaskFolder } from "./task-folder-hook";
  * タスクリストフックス
  */
 export const useTasks = () => {
+  //repository
+  //タスクリストリポジトリ
+  const Tasks = new TasksRepository();
+
   //context
   //アプリコンテキス
   const [state] = useAppContext();
@@ -25,7 +29,7 @@ export const useTasks = () => {
       if (!tasksContext.tasks && taskFolder) {
         //タスクフォルダーが存在せず、タスクフォルダ-が存在する場合。
         //タスクリストを取得し、セット。
-        const tmpTasks = await getTasks(
+        const tmpTasks = await Tasks.getByFolderId(
           taskFolder.taskFolderId,
           state.appListener
         );

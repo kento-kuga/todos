@@ -1,5 +1,5 @@
 import React from "react";
-import { getUser } from "../../../repositories/user-repository";
+import { UserRepository } from "../../../repositories/user-repository";
 import { useAppContext } from "../../context/app-context";
 import { UserInfo } from "../../dto/user";
 
@@ -7,6 +7,9 @@ import { UserInfo } from "../../dto/user";
  * ユーザー情報フック
  */
 export const useUserInfo = (userId?: string) => {
+  //repository
+  const User = new UserRepository();
+
   //state
   const [state, dispatch] = useAppContext();
 
@@ -17,7 +20,7 @@ export const useUserInfo = (userId?: string) => {
 
       //DBから取得し、セットする。
       const init = async () => {
-        const data = await getUser(userId, state.appListener);
+        const data = await User.getByUserId(userId, state.appListener);
         if (data) {
           dispatch({
             type: "SET_USER_INFO",

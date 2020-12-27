@@ -1,17 +1,17 @@
-//eslint-disable-next-line
-
-import React from "react";
 import {
   createTaskFolder,
   getTaskFolders,
 } from "../../../repositories/task-folder-repository";
-import { getUser } from "../../../repositories/user-repository";
+import { UserRepository } from "../../../repositories/user-repository";
 import { useAppContext } from "../../context/app-context";
 import { useUserInfo } from "../common/user-info-hook";
 import { useTaskFolders } from "./task-folders-hook";
 
 /** フォルダー作成Hooks */
 export const useCreateFolder = () => {
+  //repository
+  const User = new UserRepository();
+
   //state
   const [state] = useAppContext();
   const [userInfo, setUserInfo] = useUserInfo();
@@ -22,7 +22,10 @@ export const useCreateFolder = () => {
     await createTaskFolder(createFolderName, userInfo, state.appListener);
 
     //ユーザー情報再取得
-    const tmpUserInfo = await getUser(userInfo.userId, state.appListener);
+    const tmpUserInfo = await User.getByUserId(
+      userInfo.userId,
+      state.appListener
+    );
     if (tmpUserInfo) {
       setUserInfo(tmpUserInfo);
     }

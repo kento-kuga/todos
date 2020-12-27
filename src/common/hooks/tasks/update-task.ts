@@ -1,9 +1,15 @@
-import { getTasks, updateTask } from "../../../repositories/task-repository";
+import { TaskRepository } from "../../../repositories/task-repository";
+import { TasksRepository } from "../../../repositories/tasks-repository";
 import { TaskInfo, UpdateTaskReq } from "../../dto/task";
 import { useTasks } from "./tasks-hook";
 
 /** タスク更新フック */
 export const useUpdateTask = () => {
+  //repository
+  //タスクリポジトリ
+  const Task = new TaskRepository();
+  //タスクリストリポジトリ
+  const Tasks = new TasksRepository();
   //state
   //タスクリスト
   const [, setTasks] = useTasks();
@@ -15,10 +21,10 @@ export const useUpdateTask = () => {
     param.completed = task.completed;
 
     //タスク更新
-    await updateTask(task.taskId, param);
+    await Task.update(task.taskId, param);
 
     //タスクリスト再取得
-    await getTasks(taskFolderId).then((tasks) => setTasks(tasks));
+    await Tasks.getByFolderId(taskFolderId).then((tasks) => setTasks(tasks));
   };
 
   return updateTaskInfo;
