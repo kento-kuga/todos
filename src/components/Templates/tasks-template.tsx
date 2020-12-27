@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { TaskFolderInfo } from "../../common/dto/taskFolder";
 import { TasksHeader } from "../Organisms/task/tasks-header";
 import { TaskMain } from "../Organisms/task/task-main";
 import { TasksFooter } from "../Organisms/task/task-footer";
