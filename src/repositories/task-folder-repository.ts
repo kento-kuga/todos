@@ -2,7 +2,7 @@ import {
   TaskFolderCreateReq,
   TaskFolderInfo,
   TaskFolderUpdateReq,
-} from "../common/dto/taskFolder";
+} from "../common/dto/task-folder";
 import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
@@ -10,7 +10,7 @@ import { Listener } from "../core/listener";
 import {
   COLLECTION_NAME_FOLDERS,
   COLLECTION_NAME_USERS,
-} from "./repositoryHelper";
+} from "./repository-helper";
 
 /**
  * タスク情報フォルダーリスト取得

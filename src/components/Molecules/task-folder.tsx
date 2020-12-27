@@ -1,7 +1,10 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import { TaskFolderInfo, FoldersFormParams } from "../../common/dto/taskFolder";
+import {
+  TaskFolderInfo,
+  FoldersFormParams,
+} from "../../common/dto/task-folder";
 import { Icon } from "../Atoms/icon";
 import { Column, Grid, Row } from "../Atoms/layout";
 import { Segment } from "../Atoms/segment";

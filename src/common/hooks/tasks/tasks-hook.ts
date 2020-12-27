@@ -1,9 +1,9 @@
 import React from "react";
-import { getTasks } from "../../../repositories/taskRepository";
-import { useAppContext } from "../../context/AppContext";
+import { getTasks } from "../../../repositories/task-repository";
+import { useAppContext } from "../../context/app-context";
 import { TasksContext } from "../../context/tasks-context";
 import { TaskInfo } from "../../dto/task";
-import { useTaskFolder } from "./useTaskFolder";
+import { useTaskFolder } from "./task-folder-hook";
 
 /**
  * タスクリストフックス

@@ -1,4 +1,4 @@
-import { TaskFolderInfo } from "./taskFolder";
+import { TaskFolderInfo } from "./task-folder";
 
 /** タスク情報型 */
 export class TaskInfo {

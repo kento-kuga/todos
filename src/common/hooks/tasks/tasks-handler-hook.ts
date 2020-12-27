@@ -1,10 +1,10 @@
 import React from "react";
 import { TaskInfo } from "../../dto/task";
-import { useAddTask } from "./useAddTask";
-import { useDeleteTasks } from "./useDeleteTasks";
-import { useTaskFolder } from "./useTaskFolder";
-import { useTasks } from "./useTasks";
-import { useUpdateTask } from "./useUpdateTask";
+import { useAddTask } from "./add-task-hook";
+import { useDeleteTasks } from "./delete-tasks-hook";
+import { useTaskFolder } from "./task-folder-hook";
+import { useTasks } from "./tasks-hook";
+import { useUpdateTask } from "./update-task";
 
 /**
  * タスクハンドラーフックス

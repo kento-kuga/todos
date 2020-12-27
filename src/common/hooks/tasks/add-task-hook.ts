@@ -1,5 +1,5 @@
-import { addTask, getTasks } from "../../../repositories/taskRepository";
-import { useTasks } from "./useTasks";
+import { addTask, getTasks } from "../../../repositories/task-repository";
+import { useTasks } from "./tasks-hook";
 
 /** タスク追加Hooks */
 export const useAddTask = () => {

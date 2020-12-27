@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TaskFolderInfo } from "../../common/dto/taskFolder";
+import { TaskFolderInfo } from "../../common/dto/task-folder";
 import { TaskFolder } from "./task-folder";
 
 interface Props {

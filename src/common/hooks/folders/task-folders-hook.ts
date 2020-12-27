@@ -1,7 +1,7 @@
 import React from "react";
-import { getTaskFolders } from "../../../repositories/taskFolderRepository";
-import { useAppContext } from "../../context/AppContext";
-import { TaskFolderInfo } from "../../dto/taskFolder";
+import { getTaskFolders } from "../../../repositories/task-folder-repository";
+import { useAppContext } from "../../context/app-context";
+import { TaskFolderInfo } from "../../dto/task-folder";
 
 /**
  * タスクフォルダーリストフック

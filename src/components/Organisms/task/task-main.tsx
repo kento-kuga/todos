@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskInfo } from "../../../common/dto/task";
-import { TaskFolderInfo } from "../../../common/dto/taskFolder";
-import { useTaskFolder } from "../../../common/hooks/tasks/useTaskFolder";
-import { useTasks } from "../../../common/hooks/tasks/useTasks";
-import { useTasksHandler } from "../../../common/hooks/tasks/useTasksHandler";
+import { TaskFolderInfo } from "../../../common/dto/task-folder";
+import { useTaskFolder } from "../../../common/hooks/tasks/task-folder-hook";
+import { useTasks } from "../../../common/hooks/tasks/tasks-hook";
+import { useTasksHandler } from "../../../common/hooks/tasks/tasks-handler-hook";
 import { Accordion } from "../../Atoms/accordion";
 import { Icon } from "../../Atoms/icon";
 import { Grid, Row } from "../../Atoms/layout";

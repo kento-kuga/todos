@@ -2,7 +2,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { commonInputStyle } from "../../../common/css/common-style";
-import { FoldersFormParams } from "../../../common/dto/taskFolder";
+import { FoldersFormParams } from "../../../common/dto/task-folder";
 import { Button } from "../../Atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../Atoms/form";
 import { Label } from "../../Atoms/text";

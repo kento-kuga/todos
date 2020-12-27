@@ -2,7 +2,7 @@ import { AddTaskReq, TaskInfo, UpdateTaskReq } from "../common/dto/task";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
-import { COLLECTION_NAME_TASKS } from "./repositoryHelper";
+import { COLLECTION_NAME_TASKS } from "./repository-helper";
 
 /**
  * タスク情報リスト取得

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useTasksHandler } from "../../../common/hooks/tasks/useTasksHandler";
+import { useTasksHandler } from "../../../common/hooks/tasks/tasks-handler-hook";
 import { Grid, Row } from "../../Atoms/layout";
 import { AddTaskForm } from "../form/add-task-form";
 

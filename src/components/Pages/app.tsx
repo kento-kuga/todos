@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { TasksContextProvider } from "../../common/context/tasks-context";
-import { useUserInfo } from "../../common/hooks/common/useUserInfo";
+import { useUserInfo } from "../../common/hooks/common/user-info-hook";
 import { Folders } from "./folders";
 import { Tasks } from "./tasks";
 import { Top } from "./top";

@@ -2,7 +2,7 @@ import React from "react";
 import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../core/listener";
-import { TaskFolderInfo } from "../dto/taskFolder";
+import { TaskFolderInfo } from "../dto/task-folder";
 import { UserInfo } from "../dto/user";
 interface Props {}
 

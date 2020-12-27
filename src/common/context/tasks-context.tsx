@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskInfo } from "../dto/task";
-import { TaskFolderInfo } from "../dto/taskFolder";
+import { TaskFolderInfo } from "../dto/task-folder";
 
 //タスクリストコンテキストの型
 interface TasksContextState {

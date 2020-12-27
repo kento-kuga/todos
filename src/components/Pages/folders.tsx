@@ -1,12 +1,15 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { FoldersFormParams, TaskFolderInfo } from "../../common/dto/taskFolder";
+import {
+  FoldersFormParams,
+  TaskFolderInfo,
+} from "../../common/dto/task-folder";
 import { UserInfo } from "../../common/dto/user";
-import { useCreateFolder } from "../../common/hooks/folders/useCreateFolder";
-import { useDeleteFolder } from "../../common/hooks/folders/useDeleteFolder";
-import { useTaskFolders } from "../../common/hooks/folders/useTaskFolders";
-import { useUpdateFolderName } from "../../common/hooks/folders/useUpdateFolderName";
+import { useCreateFolder } from "../../common/hooks/folders/create-folder-hook";
+import { useDeleteFolder } from "../../common/hooks/folders/delete-folder-hook";
+import { useTaskFolders } from "../../common/hooks/folders/task-folders-hook";
+import { useUpdateFolderName } from "../../common/hooks/folders/update-folder-name-hook";
 import { FoldersTemplate } from "../Templates/folders-template";
 
 interface Props {

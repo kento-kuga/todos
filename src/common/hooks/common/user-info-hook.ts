@@ -1,6 +1,6 @@
 import React from "react";
-import { getUser } from "../../../repositories/userRepository";
-import { useAppContext } from "../../context/AppContext";
+import { getUser } from "../../../repositories/user-repository";
+import { useAppContext } from "../../context/app-context";
 import { UserInfo } from "../../dto/user";
 
 /**

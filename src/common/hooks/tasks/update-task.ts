@@ -1,6 +1,6 @@
-import { getTasks, updateTask } from "../../../repositories/taskRepository";
+import { getTasks, updateTask } from "../../../repositories/task-repository";
 import { TaskInfo, UpdateTaskReq } from "../../dto/task";
-import { useTasks } from "./useTasks";
+import { useTasks } from "./tasks-hook";
 
 /** タスク更新フック */
 export const useUpdateTask = () => {

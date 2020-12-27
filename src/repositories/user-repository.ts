@@ -2,7 +2,7 @@ import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
-import { COLLECTION_NAME_USERS } from "./repositoryHelper";
+import { COLLECTION_NAME_USERS } from "./repository-helper";
 
 /**
  * ユーザー情報取得

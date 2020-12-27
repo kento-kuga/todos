@@ -3,11 +3,11 @@ import React from "react";
 import {
   deleteTaskFolders,
   getTaskFolders,
-} from "../../../repositories/taskFolderRepository";
-import { getUser } from "../../../repositories/userRepository";
-import { useAppContext } from "../../context/AppContext";
-import { useUserInfo } from "../common/useUserInfo";
-import { useTaskFolders } from "./useTaskFolders";
+} from "../../../repositories/task-folder-repository";
+import { getUser } from "../../../repositories/user-repository";
+import { useAppContext } from "../../context/app-context";
+import { useUserInfo } from "../common/user-info-hook";
+import { useTaskFolders } from "./task-folders-hook";
 
 /** フォルダー削除Hooks */
 export const useDeleteFolder = () => {

@@ -1,7 +1,7 @@
-import { deleteTasks, getTasks } from "../../../repositories/taskRepository";
-import { useAppContextState } from "../../context/AppContext";
+import { deleteTasks, getTasks } from "../../../repositories/task-repository";
+import { useAppContextState } from "../../context/app-context";
 import { TaskInfo } from "../../dto/task";
-import { useTasks } from "./useTasks";
+import { useTasks } from "./tasks-hook";
 
 /** タスク追加Hooks */
 export const useDeleteTasks = () => {

@@ -5,9 +5,9 @@ import { FoldersTemplate } from "../components/Templates/folders-template";
 import {
   CreateTaskFolderFormParams,
   TaskFolderInfo,
-} from "../common/dto/taskFolder";
+} from "../common/dto/task-folder";
 import userEvent from "@testing-library/user-event";
-import { useUpdateFolderName } from "../common/hooks/folders/useUpdateFolderName";
+import { useUpdateFolderName } from "../common/hooks/folders/update-folder-name-hook";
 import { FormProvider, useForm } from "react-hook-form";
 
 //テストデータ
