@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
 import { UserInfo } from "../../common/dto/user";
-import { Icon, IconGroup } from "../Atoms/icon";
-import { Grid, Row } from "../Atoms/layout";
-import { CreateTaskFolderModal } from "../Organisms/modal/create-task-folder-modal";
-import { FoldersHeader } from "../Organisms/task-folder/folders-header";
-import { TaskFolderList } from "../Molecules/task-folder-list";
+import { Icon, IconGroup } from "../atoms/icon";
+import { Grid, Row } from "../atoms/layout";
+import { CreateTaskFolderModal } from "../organisms/modal/create-task-folder-modal";
+import { FoldersHeader } from "../organisms/task-folder/folders-header";
+import { TaskFolderList } from "../molecules/task-folder-list";
 
 interface Props {
   /** ユーザー情報 */

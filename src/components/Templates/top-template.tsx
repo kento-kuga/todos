@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Grid, Row } from "../Atoms/layout";
+import { Grid, Row } from "../atoms/layout";
 
 interface Props {
   /** クラスネーム */

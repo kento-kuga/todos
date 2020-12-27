@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TopTemplate } from "../Templates/top-template";
+import { TopTemplate } from "../templates/top-template";
 
 interface Props {}
 

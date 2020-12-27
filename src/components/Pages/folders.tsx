@@ -10,7 +10,7 @@ import { useCreateFolder } from "../../common/hooks/folders/create-folder-hook";
 import { useDeleteFolder } from "../../common/hooks/folders/delete-folder-hook";
 import { useTaskFolders } from "../../common/hooks/folders/task-folders-hook";
 import { useUpdateFolderName } from "../../common/hooks/folders/update-folder-name-hook";
-import { FoldersTemplate } from "../Templates/folders-template";
+import { FoldersTemplate } from "../templates/folders-template";
 
 interface Props {
   /** ユーザー情報 */

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { TaskFolderContext } from "../../common/context/tasks-context";
 import { TasksFormParams, TasksLocationState } from "../../common/dto/task";
-import { TasksTemplate } from "../Templates/tasks-template";
+import { TasksTemplate } from "../templates/tasks-template";
 
 interface Props {}
 

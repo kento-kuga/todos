@@ -4,7 +4,7 @@ import "semantic-ui-css/semantic.min.css";
 import "./core/global-style.scss";
 import { AppContextProvider } from "./common/context/app-context";
 import { BrowserRouter as Router } from "react-router-dom";
-import { App } from "./components/Pages/app";
+import { App } from "./components/pages/app";
 
 ReactDOM.render(
   <AppContextProvider>

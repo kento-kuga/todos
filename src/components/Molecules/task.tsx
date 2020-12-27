@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { TaskInfo } from "../../common/dto/task";
-import { Column, Grid, Row } from "../Atoms/layout";
-import { Segment } from "../Atoms/segment";
+import { Column, Grid, Row } from "../atoms/layout";
+import { Segment } from "../atoms/segment";
 import { CheckBox } from "./check-box";
 
 interface Props {

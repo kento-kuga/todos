@@ -2,7 +2,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { TasksFormParams } from "../../../common/dto/task";
-import { Form, Input } from "../../Atoms/form";
+import { Form, Input } from "../../atoms/form";
 
 interface Props {
   /** 送信ハンドラー */

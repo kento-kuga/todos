@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Icon } from "../Atoms/icon";
+import { Icon } from "../atoms/icon";
 
 interface Props {
   /** 選択 */

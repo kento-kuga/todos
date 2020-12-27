@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UserInfo } from "../common/dto/user";
-import { FoldersTemplate } from "../components/Templates/folders-template";
+import { FoldersTemplate } from "../components/templates/folders-template";
 import {
   CreateTaskFolderFormParams,
   TaskFolderInfo,

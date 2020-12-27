@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Row } from "../../Atoms/layout";
-import { Modal, ModalContent } from "../../Atoms/modal";
+import { Grid, Row } from "../../atoms/layout";
+import { Modal, ModalContent } from "../../atoms/modal";
 import { CreateTaskFolderForm } from "../form/create-task-folder-form";
 
 interface Props {

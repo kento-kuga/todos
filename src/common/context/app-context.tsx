@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayLoader } from "../../components/Atoms/loader/display-loader";
+import { DisplayLoader } from "../../components/atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../core/listener";
 import { TaskFolderInfo } from "../dto/task-folder";

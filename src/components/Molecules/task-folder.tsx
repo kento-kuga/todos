@@ -5,11 +5,11 @@ import {
   TaskFolderInfo,
   FoldersFormParams,
 } from "../../common/dto/task-folder";
-import { Icon } from "../Atoms/icon";
-import { Column, Grid, Row } from "../Atoms/layout";
-import { Segment } from "../Atoms/segment";
+import { Icon } from "../atoms/icon";
+import { Column, Grid, Row } from "../atoms/layout";
+import { Segment } from "../atoms/segment";
 import { CheckBox } from "./check-box";
-import { UpdateTaskFolderNameForm } from "../Organisms/form/update-task-folder-name-form";
+import { UpdateTaskFolderNameForm } from "../organisms/form/update-task-folder-name-form";
 
 interface Props {
   //タスクフォルダー情報
