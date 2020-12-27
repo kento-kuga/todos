@@ -3,10 +3,10 @@ import React from "react";
 import {
   deleteTaskFolders,
   getTaskFolders,
-} from "../../repositories/taskFolderRepository";
-import { getUser } from "../../repositories/userRepository";
-import { useAppContext } from "../context/AppContext";
-import { useUserInfo } from "./useUserInfo";
+} from "../../../repositories/taskFolderRepository";
+import { getUser } from "../../../repositories/userRepository";
+import { useAppContext } from "../../context/AppContext";
+import { useUserInfo } from "../common/useUserInfo";
 import { useTaskFolders } from "./useTaskFolders";
 
 /** フォルダー削除Hooks */

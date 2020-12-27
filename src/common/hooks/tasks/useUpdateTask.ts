@@ -1,5 +1,5 @@
-import { getTasks, updateTask } from "../../repositories/taskRepository";
-import { TaskInfo, UpdateTaskReq } from "../dto/task";
+import { getTasks, updateTask } from "../../../repositories/taskRepository";
+import { TaskInfo, UpdateTaskReq } from "../../dto/task";
 import { useTasks } from "./useTasks";
 
 /** タスク更新フック */

@@ -1,7 +1,7 @@
 import React from "react";
-import { getUser } from "../../repositories/userRepository";
-import { useAppContext } from "../context/AppContext";
-import { UserInfo } from "../dto/user";
+import { getUser } from "../../../repositories/userRepository";
+import { useAppContext } from "../../context/AppContext";
+import { UserInfo } from "../../dto/user";
 
 /**
  * ユーザー情報フック

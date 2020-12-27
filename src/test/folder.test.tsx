@@ -7,7 +7,7 @@ import {
   TaskFolderInfo,
 } from "../common/dto/taskFolder";
 import userEvent from "@testing-library/user-event";
-import { useUpdateFolderName } from "../common/hooks/useUpdateFolderName";
+import { useUpdateFolderName } from "../common/hooks/folders/useUpdateFolderName";
 import { FormProvider, useForm } from "react-hook-form";
 
 //テストデータ

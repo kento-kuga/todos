@@ -1,8 +1,8 @@
 import React from "react";
-import { getTasks } from "../../repositories/taskRepository";
-import { useAppContext } from "../context/AppContext";
-import { TasksContext } from "../context/tasks-context";
-import { TaskInfo } from "../dto/task";
+import { getTasks } from "../../../repositories/taskRepository";
+import { useAppContext } from "../../context/AppContext";
+import { TasksContext } from "../../context/tasks-context";
+import { TaskInfo } from "../../dto/task";
 import { useTaskFolder } from "./useTaskFolder";
 
 /**
@@ -10,11 +10,15 @@ import { useTaskFolder } from "./useTaskFolder";
  */
 export const useTasks = () => {
   //context
+  //アプリコンテキス
+  const [state] = useAppContext();
+  //タスクリストコンテキスト
   const tasksContext = React.useContext(TasksContext);
 
   //state
-  const [state] = useAppContext();
+  //タスクフォルダー
   const [taskFolder] = useTaskFolder();
+
   // effect
   React.useEffect(() => {
     const init = async () => {

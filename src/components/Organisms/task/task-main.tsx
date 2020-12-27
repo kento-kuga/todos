@@ -2,37 +2,38 @@ import React from "react";
 import styled from "styled-components";
 import { TaskInfo } from "../../../common/dto/task";
 import { TaskFolderInfo } from "../../../common/dto/taskFolder";
-import { useDeleteTasks } from "../../../common/hooks/useDeleteTasks";
-import { useTasks } from "../../../common/hooks/useTasks";
-import { useUpdateTask } from "../../../common/hooks/useUpdateTask";
+import { useTaskFolder } from "../../../common/hooks/tasks/useTaskFolder";
+import { useTasks } from "../../../common/hooks/tasks/useTasks";
+import { useTasksHandler } from "../../../common/hooks/tasks/useTasksHandler";
 import { Accordion } from "../../Atoms/accordion";
 import { Icon } from "../../Atoms/icon";
 import { Grid, Row } from "../../Atoms/layout";
 import { TaskList } from "../../Molecules/task-list";
 
 interface ContainerProps {
-  /** タスクフォルダー情報 */
-  taskFolder: TaskFolderInfo;
   /** クラスネーム */
   className?: string;
 }
 
 const TaskMainContainer = (props: ContainerProps) => {
-  //hooks
-  //タスクリスト削除フック
-  const deleteTasks = useDeleteTasks();
-  //タスク更新Hook
-  const updateTask = useUpdateTask();
-
   //state
   //タスクリスト
-  const [tasks, setTasks] = useTasks();
+  const [tasks] = useTasks();
+  //タスクフォルダー
+  const [taskFolder] = useTaskFolder();
   //未完了タスク
   const [unCompletedTasks, setUnCompletedTasks] = React.useState(
     [] as TaskInfo[]
   );
   //完了済タスク
   const [completedTasks, setCompletedTasks] = React.useState([] as TaskInfo[]);
+
+  //function
+  //タスクリストハンドラー
+  const {
+    handleChangeTaskCompleted,
+    handleClickCompletedTaskDelete,
+  } = useTasksHandler();
 
   //effect
   React.useEffect(() => {
@@ -57,42 +58,9 @@ const TaskMainContainer = (props: ContainerProps) => {
     setCompletedTasks(tmpCompletedList);
   }, [tasks]);
 
-  //function
-  //タスク完了状態変更時ハンドラ-
-  const handleChangeTaskCompleted = React.useCallback(
-    (task: TaskInfo, completed: boolean) => {
-      //タスクリストが取得されていなければ何もしない
-      if (!tasks) return;
-
-      //渡された添字のタスクの選択状態を変更し、タスクリストを更新する。
-      const tmpTasks = [...tasks];
-      //タスクIDで対象のタスクを抽出
-      const tmpTask = tmpTasks.find(
-        (tmpTask) => tmpTask.taskId === task.taskId
-      );
-      if (tmpTask) {
-        //対象のタスクが存在する場合、対象タスクの完了状態を更新
-        tmpTask.completed = completed;
-        setTasks(tmpTasks);
-
-        //DBのタスクを更新
-        updateTask(tmpTask, task.taskFolderId);
-      }
-    },
-    [setTasks, tasks, updateTask]
-  );
-
-  //完了済タスク削除ボタン押下時ハンドラ
-  const handleClickCompletedTaskDelete = React.useCallback(() => {
-    if (completedTasks.length > 0) {
-      //完了済タスクが存在するなら、タスクを削除する。
-      deleteTasks(completedTasks, props.taskFolder.taskFolderId);
-    }
-  }, [completedTasks, deleteTasks, props.taskFolder.taskFolderId]);
-
   return (
     <TaskMainPresenter
-      taskFolder={props.taskFolder}
+      taskFolder={taskFolder || new TaskFolderInfo()}
       unCompletedTasks={unCompletedTasks}
       completedTasks={completedTasks}
       handleChangeTaskCompleted={handleChangeTaskCompleted}
@@ -112,7 +80,7 @@ interface PresenterProps {
   /** タスク完了状態変更ハンドラー */
   handleChangeTaskCompleted: (task: TaskInfo, completed: boolean) => void;
   /** 完了済タスク削除ハンドラー */
-  handleClickCompletedTaskDelete: () => void;
+  handleClickCompletedTaskDelete: (completedTasks: TaskInfo[]) => void;
   /** クラスネーム */
   className?: string;
 }
@@ -136,7 +104,9 @@ const TaskMainPresenter = (props: PresenterProps) => {
                 <Icon
                   iconName="trash"
                   size="large"
-                  onClick={props.handleClickCompletedTaskDelete}
+                  onClick={() =>
+                    props.handleClickCompletedTaskDelete(props.completedTasks)
+                  }
                 />
               </div>
               <TaskList

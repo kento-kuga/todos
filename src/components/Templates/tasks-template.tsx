@@ -6,8 +6,6 @@ import { TaskMain } from "../Organisms/task/task-main";
 import { TasksFooter } from "../Organisms/task/task-footer";
 
 interface Props {
-  /** タスクフォルダー情報 */
-  taskFolder: TaskFolderInfo;
   /** クラスネーム */
   className?: string;
 }
@@ -16,8 +14,8 @@ const TasksTemplatePresenter = (props: Props) => {
   return (
     <div className={props.className}>
       <TasksHeader className="tasks-header" />
-      <TaskMain taskFolder={props.taskFolder} className="tasks-main" />
-      <TasksFooter taskFolder={props.taskFolder} className="tasks-footer" />
+      <TaskMain className="tasks-main" />
+      <TasksFooter className="tasks-footer" />
     </div>
   );
 };

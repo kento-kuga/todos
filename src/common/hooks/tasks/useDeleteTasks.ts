@@ -1,6 +1,6 @@
-import { deleteTasks, getTasks } from "../../repositories/taskRepository";
-import { useAppContextState } from "../context/AppContext";
-import { TaskInfo } from "../dto/task";
+import { deleteTasks, getTasks } from "../../../repositories/taskRepository";
+import { useAppContextState } from "../../context/AppContext";
+import { TaskInfo } from "../../dto/task";
 import { useTasks } from "./useTasks";
 
 /** タスク追加Hooks */

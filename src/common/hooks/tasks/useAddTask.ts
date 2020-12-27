@@ -1,4 +1,4 @@
-import { addTask, getTasks } from "../../repositories/taskRepository";
+import { addTask, getTasks } from "../../../repositories/taskRepository";
 import { useTasks } from "./useTasks";
 
 /** タスク追加Hooks */

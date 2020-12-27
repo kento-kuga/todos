@@ -1,11 +1,11 @@
 import {
   getTaskFolders,
   updateTaskFolder,
-} from "../../repositories/taskFolderRepository";
-import { useAppContext } from "../context/AppContext";
-import { TaskFolderUpdateReq } from "../dto/taskFolder";
+} from "../../../repositories/taskFolderRepository";
+import { useAppContext } from "../../context/AppContext";
+import { TaskFolderUpdateReq } from "../../dto/taskFolder";
 import { useTaskFolders } from "./useTaskFolders";
-import { useUserInfo } from "./useUserInfo";
+import { useUserInfo } from "../common/useUserInfo";
 
 /** フォルダーネーム更新Hooks */
 export const useUpdateFolderName = () => {

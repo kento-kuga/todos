@@ -28,7 +28,7 @@ export const Tasks = (props: Props) => {
 
   return (
     <FormProvider {...methods}>
-      <TasksTemplate taskFolder={location.state.taskFolderInfo} />
+      <TasksTemplate />
     </FormProvider>
   );
 };

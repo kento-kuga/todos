@@ -1,6 +1,6 @@
 import React from "react";
-import { TaskFolderContext } from "../context/tasks-context";
-import { TaskFolderInfo } from "../dto/taskFolder";
+import { TaskFolderContext } from "../../context/tasks-context";
+import { TaskFolderInfo } from "../../dto/taskFolder";
 
 /**
  * タスクフォルダーフック
