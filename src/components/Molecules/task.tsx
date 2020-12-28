@@ -15,8 +15,6 @@ interface Props {
 }
 
 const TaskPresenter = (props: Props) => {
-  //state
-
   //function
   //チェックボックスクリック時ハンドラ
   const handleClickCheckBox = React.useCallback(() => {

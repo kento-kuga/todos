@@ -30,10 +30,7 @@ const TaskMainContainer = (props: ContainerProps) => {
 
   //function
   //タスクリストハンドラー
-  const {
-    handleChangeTaskCompleted,
-    handleClickCompletedTaskDelete,
-  } = useTasksHandler();
+  const { handleClickCompletedTaskDelete } = useTasksHandler();
 
   //effect
   React.useEffect(() => {
@@ -63,7 +60,6 @@ const TaskMainContainer = (props: ContainerProps) => {
       taskFolder={taskFolder || new TaskFolderInfo()}
       unCompletedTasks={unCompletedTasks}
       completedTasks={completedTasks}
-      handleChangeTaskCompleted={handleChangeTaskCompleted}
       handleClickCompletedTaskDelete={handleClickCompletedTaskDelete}
       className={props.className}
     />
@@ -77,8 +73,6 @@ interface PresenterProps {
   unCompletedTasks: TaskInfo[];
   /** 完了済タスクリスト */
   completedTasks: TaskInfo[];
-  /** タスク完了状態変更ハンドラー */
-  handleChangeTaskCompleted: (task: TaskInfo, completed: boolean) => void;
   /** 完了済タスク削除ハンドラー */
   handleClickCompletedTaskDelete: (completedTasks: TaskInfo[]) => void;
   /** クラスネーム */
@@ -93,10 +87,7 @@ const TaskMainPresenter = (props: PresenterProps) => {
           <Row />
           <div className="task-folder-name">{props.taskFolder.folderName}</div>
           <Row>
-            <TaskList
-              tasks={props.unCompletedTasks}
-              handleChangeTaskCompleted={props.handleChangeTaskCompleted}
-            />
+            <TaskList tasks={props.unCompletedTasks} />
           </Row>
           <Row>
             <Accordion title="完了したタスク">
@@ -109,10 +100,7 @@ const TaskMainPresenter = (props: PresenterProps) => {
                   }
                 />
               </div>
-              <TaskList
-                tasks={props.completedTasks}
-                handleChangeTaskCompleted={props.handleChangeTaskCompleted}
-              />
+              <TaskList tasks={props.completedTasks} />
             </Accordion>
           </Row>
         </Grid>
