@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Row } from "../../atoms/layout";
+import { Grid, Row } from "../atoms/layout";
 
 interface Props {
   /** クラスネーム */

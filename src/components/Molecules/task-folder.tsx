@@ -9,7 +9,7 @@ import { Icon } from "../atoms/icon";
 import { Column, Grid, Row } from "../atoms/layout";
 import { Segment } from "../atoms/segment";
 import { CheckBox } from "./check-box";
-import { UpdateTaskFolderNameForm } from "../organisms/form/update-task-folder-name-form";
+import { UpdateTaskFolderNameForm } from "./form/update-task-folder-name-form";
 
 interface Props {
   //タスクフォルダー情報

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { TasksHeader } from "../organisms/task/tasks-header";
-import { TaskMain } from "../organisms/task/task-main";
-import { TasksFooter } from "../organisms/task/task-footer";
+import { TasksHeader } from "../organisms/tasks-header";
+import { TaskMain } from "../organisms/tasks-main";
+import { TasksFooter } from "../organisms/tasks-footer";
 
 interface Props {
   /** クラスネーム */

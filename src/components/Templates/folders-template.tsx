@@ -4,9 +4,9 @@ import { TaskFolderInfo } from "../../common/dto/task-folder";
 import { UserInfo } from "../../common/dto/user";
 import { Icon, IconGroup } from "../atoms/icon";
 import { Grid, Row } from "../atoms/layout";
-import { CreateTaskFolderModal } from "../organisms/modal/create-task-folder-modal";
-import { FoldersHeader } from "../organisms/task-folder/folders-header";
-import { TaskFolderList } from "../molecules/task-folder-list";
+import { CreateTaskFolderModal } from "../molecules/modal/create-task-folder-modal";
+import { FoldersHeader } from "../organisms/folders-header";
+import { TaskFolderList } from "../organisms/task-folder-list";
 
 interface Props {
   /** ユーザー情報 */

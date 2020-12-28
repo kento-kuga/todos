@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskInfo } from "../../common/dto/task";
-import { Task } from "./task";
+import { Task } from "../molecules/task";
 
 interface Props {
   /** タスクリスト */

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
-import { TaskFolder } from "./task-folder";
+import { TaskFolder } from "../molecules/task-folder";
 
 interface Props {
   /** タスクフォルダーリスト */
