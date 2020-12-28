@@ -9,13 +9,13 @@ interface Props {
 
 const FoldersHeaderPresenter = (props: Props) => {
   return (
-    <>
-      <Grid className={props.className}>
+    <header className={props.className}>
+      <Grid>
         <Row className="header-row">
           <div className="header-content">フォルダーリスト</div>
         </Row>
       </Grid>
-    </>
+    </header>
   );
 };
 

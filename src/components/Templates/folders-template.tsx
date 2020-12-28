@@ -60,9 +60,7 @@ const FoldersTemplatePresenter = React.memo((props: Props) => {
 
   return (
     <div className={props.className}>
-      <header className="folders-header">
-        <FoldersHeader />
-      </header>
+      <FoldersHeader className="folders-header" />
       <main className="folders-main">
         <Grid container>
           <Row className="setting-row">
