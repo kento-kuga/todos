@@ -10,6 +10,7 @@ import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { Icon } from "../atoms/icon";
 import { Column, Grid, Row } from "../atoms/layout";
 import { Segment } from "../atoms/segment";
+import { EditAndFixedButton } from "./button/edit-and-fixed-button";
 import { CheckBox } from "./check-box";
 import { UpdateTaskFolderNameForm } from "./form/update-task-folder-name-form";
 
@@ -128,6 +129,35 @@ const TaskFolderPresenter = React.memo((props: Props) => {
     <Segment className={props.className}>
       <Grid>
         <Row columns={props.editMode ? 3 : 4} className="task-folder-row">
+          {props.editMode && (
+            <>
+              <Column
+                width={1}
+                className="task-folder-column"
+                onClick={handleSelectCheckBoxColumn}
+              >
+                <CheckBox
+                  selected={selected}
+                  className="folder-select-check-box"
+                />
+              </Column>
+              <Column width={12} className="task-folder-column">
+                {!editFolderName && <> {props.taskFolderInfo.folderName} </>}
+                {editFolderName && (
+                  <UpdateTaskFolderNameForm
+                    defaultFolderName={props.taskFolderInfo.folderName}
+                  />
+                )}
+              </Column>
+              <Column width={2} className="task-folder-column" textAlign="left">
+                <EditAndFixedButton
+                  isEdit={props.editMode}
+                  handleClickEditButton={handleEditFolderName}
+                  handleClickFixedButton={handleSubmit(handleFixeFolderName)}
+                />
+              </Column>
+            </>
+          )}
           {!props.editMode && (
             <>
               <Column
@@ -155,46 +185,6 @@ const TaskFolderPresenter = React.memo((props: Props) => {
               </Column>
             </>
           )}
-          {props.editMode && (
-            <>
-              <Column
-                width={1}
-                className="task-folder-column"
-                onClick={handleSelectCheckBoxColumn}
-              >
-                <CheckBox
-                  selected={selected}
-                  className="folder-select-check-box"
-                />
-              </Column>
-              <Column width={12} className="task-folder-column">
-                {!editFolderName && <> {props.taskFolderInfo.folderName} </>}
-                {editFolderName && (
-                  <UpdateTaskFolderNameForm
-                    defaultFolderName={props.taskFolderInfo.folderName}
-                  />
-                )}
-              </Column>
-              <Column width={2} className="task-folder-column" textAlign="left">
-                {!editFolderName && (
-                  <Icon
-                    iconName="edit outline"
-                    onClick={handleEditFolderName}
-                    className="edit-task-folder-name-button"
-                    size="large"
-                  />
-                )}
-                {editFolderName && (
-                  <Icon
-                    iconName="check circle outline"
-                    onClick={handleSubmit(handleFixeFolderName)}
-                    color="blue"
-                    className="fixed-task-folder-name-button"
-                  />
-                )}
-              </Column>
-            </>
-          )}
         </Row>
       </Grid>
     </Segment>
@@ -215,15 +205,6 @@ export const TaskFolder = styled(TaskFolderPresenter)`
         //フォルダー選択チェックボックス
         .folder-select-check-box {
           padding: 0.3rem;
-        }
-        //タスクフォルダーネーム編集ボタン
-        .edit-task-folder-name-button {
-          font-size: 1.2em;
-        }
-        //タスクフォルダーネーム確定ボタン
-        .fixed-task-folder-name-button {
-          font-size: 1.3em;
-          padding-top: 0.2rem;
         }
       }
     }

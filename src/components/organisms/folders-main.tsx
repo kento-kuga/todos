@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
 import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { UseFoldersHandler } from "../../common/hooks/folders/folders-handler-hook";
-import { Icon, IconGroup } from "../atoms/icon";
+import { Icon } from "../atoms/icon";
 import { Grid, Row } from "../atoms/layout";
+import { AddFolderButton } from "../molecules/button/add-folder-button";
+import { SettingButton } from "../molecules/button/setting-button";
+import { TrashButton } from "../molecules/button/trash-button";
 import { TaskFolderList } from "./task-folder-list";
 
 interface Props {
@@ -41,15 +44,8 @@ const FoldersMainPresenter = (props: Props) => {
   return (
     <main className="folders-main">
       <Grid container>
-        <Row className="setting-row">
-          <div className="setting-button">
-            <Icon
-              size="large"
-              iconName="setting"
-              color={editMode ? "blue" : "black"}
-              onClick={toggleEditMode}
-            />
-          </div>
+        <Row className="setting-row" textAlign="right">
+          <SettingButton isActive={editMode} handleClick={toggleEditMode} />
         </Row>
         <Row className="folder-list-row">
           <TaskFolderList
@@ -63,17 +59,12 @@ const FoldersMainPresenter = (props: Props) => {
         <Row textAlign="right" className="add-folder-row">
           <div className="add-folder-button">
             {!editMode && (
-              <IconGroup size="big" onClick={props.handleClickAddFolderButton}>
-                <Icon iconName="folder outline" />
-                <Icon iconName="add" corner="top right" inverted />
-              </IconGroup>
+              <AddFolderButton handleClick={props.handleClickAddFolderButton} />
             )}
             {editMode && (
-              <Icon
-                iconName="trash"
-                size="big"
-                disable={selectedFolderIdList.length === 0 ? true : false}
-                onClick={handleClickDelete}
+              <TrashButton
+                isDisable={selectedFolderIdList.length === 0 ? true : false}
+                handleClick={handleClickDelete}
               />
             )}
           </div>
@@ -86,19 +77,19 @@ const FoldersMainPresenter = (props: Props) => {
 export const FoldersMain = styled(FoldersMainPresenter)`
   &&&&& {
     .folders-main {
+      //設定ボタン行
       .setting-row {
         padding-top: 0.5rem;
         padding-bottom: 0;
-        .setting-button {
-          font-size: 1.2rem;
-          text-align: right;
-        }
       }
+      //フォルダーリスト行
       .folder-list-row {
         padding-bottom: 0rem;
       }
+      //フォルダー追加ボタン行
       .add-folder-row {
         padding-top: 0rem;
+        //フォルダー追加ボタン
         .add-folder-button {
           padding-right: 1rem;
         }
