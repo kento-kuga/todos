@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
 import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { UseFoldersHandler } from "../../common/hooks/folders/folders-handler-hook";
-import { Icon } from "../atoms/icon";
 import { Grid, Row } from "../atoms/layout";
 import { AddFolderButton } from "../molecules/button/add-folder-button";
 import { SettingButton } from "../molecules/button/setting-button";
@@ -21,7 +20,7 @@ interface Props {
 
 const FoldersMainPresenter = (props: Props) => {
   //編集モードフラグ
-  const [editMode, toggleEditMode, , turnOffEditMode] = useToggle();
+  const [editMode, , turnOnEditMode, turnOffEditMode] = useToggle();
   //選択済フォルダーIdリスト
   const [selectedFolderIdList, setSelectedFolderIdList] = React.useState(
     [] as string[]
@@ -41,11 +40,29 @@ const FoldersMainPresenter = (props: Props) => {
     turnOffEditMode();
   }, [handleDeleteFolders, selectedFolderIdList, turnOffEditMode]);
 
+  //設定ボタン押下時ハンドラー
+  const handleClickSettingButton = React.useCallback(() => {
+    if (editMode) {
+      //編集中の場合
+      //選択フォルダーリストを初期化
+      setSelectedFolderIdList([]);
+      //編集モード解除
+      turnOffEditMode();
+    } else {
+      //それ以外の場合
+      //編集中にする
+      turnOnEditMode();
+    }
+  }, [editMode, turnOffEditMode, turnOnEditMode]);
+
   return (
     <main className="folders-main">
       <Grid container>
         <Row className="setting-row" textAlign="right">
-          <SettingButton isActive={editMode} handleClick={toggleEditMode} />
+          <SettingButton
+            isActive={editMode}
+            handleClick={handleClickSettingButton}
+          />
         </Row>
         <Row className="folder-list-row">
           <TaskFolderList
