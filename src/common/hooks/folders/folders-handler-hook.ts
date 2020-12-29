@@ -44,7 +44,7 @@ export const UseFoldersHandler = () => {
       //フォルダーリスト削除
       deleteFolder(taskFolderIdList);
     },
-    []
+    [deleteFolder]
   );
 
   return {
