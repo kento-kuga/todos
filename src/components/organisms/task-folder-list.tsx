@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
-import { UseFoldersHandler } from "../../common/hooks/folders/folders-handler-hook";
-import { TaskFolder } from "../molecules/task-folder";
+import { TaskFolderController } from "./task-folder-controller";
 
 interface Props {
   /** タスクフォルダーリスト */
@@ -18,19 +17,14 @@ interface Props {
 }
 
 const TaskFolderListPresenter = React.memo((props: Props) => {
-  //function
-  //フォルダーズハンドラー
-  const { handleUpdateFolderName } = UseFoldersHandler();
-
   return (
     <div className={props.className}>
       {props.taskFolderList.map((folder, i) => (
         <div className="task-folder" key={i}>
-          <TaskFolder
+          <TaskFolderController
             key={folder.taskFolderId}
             taskFolderInfo={folder}
             editMode={props.editMode}
-            handleUpdateFolderName={handleUpdateFolderName}
             selectedFolderIdList={props.selectedFolderIdList}
             setSelectedFolderIdList={props.setSelectedFolderIdList}
           />

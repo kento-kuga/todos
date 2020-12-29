@@ -9,6 +9,8 @@ interface Props {
   handleClickEditButton: () => void;
   /** 確定ボタン押下時ハンドラ */
   handleClickFixedButton: () => void;
+  /** クラスネーム */
+  className?: string;
 }
 
 const EditAndFixedButtonPresenter = (props: Props) => {
@@ -18,7 +20,7 @@ const EditAndFixedButtonPresenter = (props: Props) => {
         <Icon
           iconName="edit outline"
           onClick={props.handleClickEditButton}
-          className="edit-button"
+          className={props.className}
           size="large"
         />
       )}
@@ -27,23 +29,28 @@ const EditAndFixedButtonPresenter = (props: Props) => {
           iconName="check circle outline"
           onClick={props.handleClickFixedButton}
           color="blue"
-          className="fixed-button"
+          className={props.className}
         />
       )}
     </>
   );
 };
 
-export const EditAndFixedButton = styled(EditAndFixedButtonPresenter)`
+export const EditAndFixedButton = styled(EditAndFixedButtonPresenter)<Props>`
   &&&&& {
-    //編集ボタン
-    .edit-button {
-      font-size: 1.2em;
-    }
-    //確定ボタン
-    .fixed-button {
-      font-size: 1.3em;
-      padding-top: 0.2rem;
-    }
+    ${(props) => {
+      if (props.isEdit) {
+        //確定ボタン
+        return `
+          font-size: 1.3em;
+          padding-top: 0.2rem;
+        `;
+      } else {
+        //編集ボタン
+        return `
+          font-size: 1.2em;
+        `;
+      }
+    }}
   }
 `;
