@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskFolderInfo } from "../../common/dto/task-folder";
+import { UseFoldersHandler } from "../../common/hooks/folders/folders-handler-hook";
 import { TaskFolder } from "../molecules/task-folder";
 
 interface Props {
@@ -8,14 +9,6 @@ interface Props {
   taskFolderList: TaskFolderInfo[];
   /** 編集モード */
   editMode: boolean;
-  /** フォルダーネーム更新時ハンドラー */
-  handleUpdateFolderName: (
-    taskFolderId: string,
-    prevFolderName: string,
-    newFolderName: string
-  ) => void;
-  /** フォルダー押下時ハンドラー */
-  handleClickFolder: (taskFolderInfo: TaskFolderInfo) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
@@ -25,6 +18,10 @@ interface Props {
 }
 
 const TaskFolderListPresenter = React.memo((props: Props) => {
+  //function
+  //フォルダーズハンドラー
+  const { handleUpdateFolderName } = UseFoldersHandler();
+
   return (
     <div className={props.className}>
       {props.taskFolderList.map((folder, i) => (
@@ -33,8 +30,7 @@ const TaskFolderListPresenter = React.memo((props: Props) => {
             key={folder.taskFolderId}
             taskFolderInfo={folder}
             editMode={props.editMode}
-            handleUpdateFolderName={props.handleUpdateFolderName}
-            handleClickFolder={props.handleClickFolder}
+            handleUpdateFolderName={handleUpdateFolderName}
             selectedFolderIdList={props.selectedFolderIdList}
             setSelectedFolderIdList={props.setSelectedFolderIdList}
           />

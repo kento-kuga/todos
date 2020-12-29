@@ -1,10 +1,12 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
   TaskFolderInfo,
   FoldersFormParams,
 } from "../../common/dto/task-folder";
+import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { Icon } from "../atoms/icon";
 import { Column, Grid, Row } from "../atoms/layout";
 import { Segment } from "../atoms/segment";
@@ -22,8 +24,6 @@ interface Props {
     prevFolderName: string,
     newFolderName: string
   ) => void;
-  /** フォルダー押下時ハンドラー */
-  handleClickFolder: (taskFolderInfo: TaskFolderInfo) => void;
   /** 選択済フォルダーIdリスト */
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
@@ -34,23 +34,32 @@ interface Props {
 
 const TaskFolderPresenter = React.memo((props: Props) => {
   //hooks
+  //ヒストリー
+  const history = useHistory();
+
+  //hooks
   //フォームコンテキスト
   const { handleSubmit } = useFormContext();
 
   //state
   //フォルダーネーム編集モード
-  const [editFolderName, setEditFolderName] = React.useState(false);
+  const [
+    editFolderName,
+    ,
+    turnOnEditFolderName,
+    turnOffEditFolderName,
+  ] = useToggle();
   //選択済み
-  const [selected, setSelected] = React.useState(false);
+  const [selected, , turnOnSelected, turnOffSelected] = useToggle();
 
   //effect
   React.useEffect(() => {
     if (!props.editMode) {
       //編集モードが解除されたら、ステートをリセットする。
-      setEditFolderName(false);
-      setSelected(false);
+      turnOffEditFolderName();
+      turnOffSelected();
     }
-  }, [props.editMode]);
+  }, [props.editMode, turnOffEditFolderName, turnOffSelected]);
 
   //function
 
@@ -61,14 +70,14 @@ const TaskFolderPresenter = React.memo((props: Props) => {
 
     if (!selected) {
       //未選択の場合
-      setSelected(true);
+      turnOnSelected();
       //選択済フォルダーIdリストに追加
       const tmpList = [...props.selectedFolderIdList];
       tmpList.push(props.taskFolderInfo.taskFolderId);
       props.setSelectedFolderIdList(tmpList);
     } else {
       //選択済みの場合
-      setSelected(false);
+      turnOffSelected();
 
       //選択済フォルダーIdリストから削除
       const tmpList = props.selectedFolderIdList.filter(
@@ -80,11 +89,11 @@ const TaskFolderPresenter = React.memo((props: Props) => {
 
   //フォルダーネーム編集ボタン押下時
   const handleEditFolderName = () => {
-    setEditFolderName(true);
+    turnOnEditFolderName();
 
-    //`選択されていた場合、選択を解除
+    //選択されていた場合、選択を解除
     if (selected) {
-      setSelected(false);
+      turnOffSelected();
 
       //選択済フォルダーIdリストから削除
       const tmpList = props.selectedFolderIdList.filter(
@@ -103,13 +112,17 @@ const TaskFolderPresenter = React.memo((props: Props) => {
       data.updateFolderName
     );
 
-    setEditFolderName(false);
+    turnOffEditFolderName();
   };
 
-  //フォルダー押下時
-  const handleClickFolder = () => {
-    props.handleClickFolder(props.taskFolderInfo);
-  };
+  //フォルダークリック時ハンドラ
+  const handleClickFolder = React.useCallback(() => {
+    //編集中の場合、何もしない。
+    if (props.editMode) return;
+
+    //タスクリスト画面へ遷移
+    history.push("/tasks", { taskFolderInfo: props.taskFolderInfo });
+  }, [history, props.editMode, props.taskFolderInfo]);
 
   return (
     <Segment className={props.className}>
