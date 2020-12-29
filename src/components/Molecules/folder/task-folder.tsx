@@ -1,8 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { TaskFolderInfo } from "../../../common/dto/task-folder";
-import { useToggle } from "../../../common/hooks/common/toggle-hook";
 import { Icon } from "../../atoms/icon";
 import { Column, Grid, Row } from "../../atoms/layout";
 import { Segment } from "../../atoms/segment";
