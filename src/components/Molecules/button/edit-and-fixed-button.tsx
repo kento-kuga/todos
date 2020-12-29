@@ -5,6 +5,8 @@ import { Icon } from "../../atoms/icon";
 interface Props {
   /** 編集中 */
   isEdit: boolean;
+  /** フォルダーネーム編集ボタン非活性フラグ */
+  disableEditFolderName: boolean;
   /** 編集ボタン押下時ハンドラ */
   handleClickEditButton: () => void;
   /** 確定ボタン押下時ハンドラ */
@@ -22,6 +24,7 @@ const EditAndFixedButtonPresenter = (props: Props) => {
           onClick={props.handleClickEditButton}
           className={props.className}
           size="large"
+          disable={props.disableEditFolderName}
         />
       )}
       {props.isEdit && (

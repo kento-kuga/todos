@@ -12,6 +12,10 @@ interface Props {
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
   setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
+  /** フォルダー名編集中フォルダーId */
+  editingNameFolderId: string;
+  /** フォルダー名編集中フォルダーIdセット関数 */
+  setEditingNameFolderId: React.Dispatch<React.SetStateAction<string>>;
   /** クラスネーム */
   className?: string;
 }
@@ -27,6 +31,8 @@ const TaskFolderListPresenter = React.memo((props: Props) => {
             editMode={props.editMode}
             selectedFolderIdList={props.selectedFolderIdList}
             setSelectedFolderIdList={props.setSelectedFolderIdList}
+            editingNameFolderId={props.editingNameFolderId}
+            setEditingNameFolderId={props.setEditingNameFolderId}
           />
         </div>
       ))}

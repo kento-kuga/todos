@@ -12,10 +12,12 @@ import { CheckBox } from "../check-box";
 import { UpdateTaskFolderNameForm } from "../form/update-task-folder-name-form";
 
 interface Props {
-  //タスクフォルダー情報
+  /** タスクフォルダー情報 */
   taskFolderInfo: TaskFolderInfo;
   /** フォルダーネーム編集モード */
   editFolderNameMode: boolean;
+  /** フォルダーネーム編集ボタン非活性フラグ */
+  disableEditFolderName: boolean;
   /** フォルダー選択中フラグ */
   selected: boolean;
   /** 選択チェックボックスカラム押下時 */
@@ -66,6 +68,7 @@ const EditingNameTaskFolderPresenter = (props: Props) => {
           <Column width={2} className="task-folder-column" textAlign="left">
             <EditAndFixedButton
               isEdit={props.editFolderNameMode}
+              disableEditFolderName={props.disableEditFolderName}
               handleClickEditButton={props.handleEditFolderName}
               handleClickFixedButton={handleSubmit(props.handleFixeFolderName)}
             />

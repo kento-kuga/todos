@@ -18,6 +18,10 @@ interface Props {
   selectedFolderIdList: string[];
   /** 選択済フォルダーIdリストセット関数 */
   setSelectedFolderIdList: React.Dispatch<React.SetStateAction<string[]>>;
+  /** フォルダー名編集中フォルダーId */
+  editingNameFolderId: string;
+  /** フォルダー名編集中フォルダーIdセット関数 */
+  setEditingNameFolderId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const TaskFolderController = (props: Props) => {
@@ -36,6 +40,8 @@ export const TaskFolderController = (props: Props) => {
 
   //選択済み
   const [selected, , turnOnSelected, turnOffSelected] = useToggle();
+  //操作不可フラグ
+  const [disable, setDisable] = React.useState(false);
 
   //effect
   React.useEffect(() => {
@@ -46,16 +52,38 @@ export const TaskFolderController = (props: Props) => {
     }
   }, [props.editMode, turnOffEditFolderNameMode, turnOffSelected]);
 
+  React.useEffect(() => {
+    if (props.editingNameFolderId === "") {
+      //編集中フォルダーIdが空の場合
+      if (disable) {
+        //操作不可だった場合
+        //解除する
+        setDisable(false);
+      } else {
+        //それ以外の場合
+        //何もしない
+        return;
+      }
+    } else if (
+      props.editingNameFolderId !== props.taskFolderInfo.taskFolderId
+    ) {
+      //他のフォルダーがフォルダー名編集中の場合
+      //操作不可にする
+      setDisable(true);
+    }
+  }, [disable, props.editingNameFolderId, props.taskFolderInfo.taskFolderId]);
+
   //function
   //フォルダーズハンドラー
   const { handleUpdateFolderName } = UseFoldersHandler();
 
   //function
-
   //選択チェックボックスカラム押下時
   const handleSelectCheckBoxColumn = () => {
     //フォルダーネーム編集中の場合、何もしない。
     if (editFolderNameMode) return;
+    //操作不可の場合何もしない
+    if (disable) return;
 
     if (!selected) {
       //未選択の場合
@@ -78,7 +106,12 @@ export const TaskFolderController = (props: Props) => {
 
   //フォルダーネーム編集ボタン押下時
   const handleEditFolderName = () => {
+    //操作不可の場合何もしない
+    if (disable) return;
+
     turnOnEditFolderNameMode();
+    //タスクフォルダーIdを編集中フォルダーIdにセットする。
+    props.setEditingNameFolderId(props.taskFolderInfo.taskFolderId);
 
     //選択されていた場合、選択を解除
     if (selected) {
@@ -100,6 +133,8 @@ export const TaskFolderController = (props: Props) => {
       props.taskFolderInfo.folderName,
       data.updateFolderName
     );
+    //フォルダー名編集中フォルダーIdを初期化
+    props.setEditingNameFolderId("");
     turnOffEditFolderNameMode();
   };
 
@@ -118,6 +153,7 @@ export const TaskFolderController = (props: Props) => {
         <EditingNameTaskFolder
           taskFolderInfo={props.taskFolderInfo}
           editFolderNameMode={editFolderNameMode}
+          disableEditFolderName={disable}
           selected={selected}
           handleSelectCheckBoxColumn={handleSelectCheckBoxColumn}
           handleFixeFolderName={handleFixeFolderName}

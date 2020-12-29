@@ -19,8 +19,11 @@ interface Props {
 }
 
 const FoldersMainPresenter = (props: Props) => {
+  //state
   //編集モードフラグ
   const [editMode, , turnOnEditMode, turnOffEditMode] = useToggle();
+  //フォルダー名編集中フォルダーId
+  const [editingNameFolderId, setEditingNameFolderId] = React.useState("");
   //選択済フォルダーIdリスト
   const [selectedFolderIdList, setSelectedFolderIdList] = React.useState(
     [] as string[]
@@ -46,6 +49,8 @@ const FoldersMainPresenter = (props: Props) => {
       //編集中の場合
       //選択フォルダーリストを初期化
       setSelectedFolderIdList([]);
+      //フォルダー名編集中フォルダーIdを初期化
+      setEditingNameFolderId("");
       //編集モード解除
       turnOffEditMode();
     } else {
@@ -71,6 +76,8 @@ const FoldersMainPresenter = (props: Props) => {
             editMode={editMode}
             selectedFolderIdList={selectedFolderIdList}
             setSelectedFolderIdList={setSelectedFolderIdList}
+            editingNameFolderId={editingNameFolderId}
+            setEditingNameFolderId={setEditingNameFolderId}
           />
         </Row>
         <Row textAlign="right" className="add-folder-row">
