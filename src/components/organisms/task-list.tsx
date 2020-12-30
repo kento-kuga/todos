@@ -6,7 +6,8 @@ import { Task } from "../molecules/task";
 
 interface Props {
   /** タスクリスト */
-  tasks: TaskInfo[];
+  tasks: TaskInfo[] /** クラスネーム */;
+  className?: string;
 }
 
 const TaskListPresenter = React.memo((props: Props) => {
@@ -21,10 +22,15 @@ const TaskListPresenter = React.memo((props: Props) => {
           task={task}
           handleChangeTaskCompleted={handleChangeTaskCompleted}
           key={i}
+          className={props.className}
         />
       ))}
     </>
   );
 });
 
-export const TaskList = styled(TaskListPresenter)``;
+export const TaskList = styled(TaskListPresenter)`
+  &&&&& {
+    margin: 0.3rem 0;
+  }
+`;

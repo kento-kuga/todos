@@ -6,9 +6,9 @@ import { useTaskFolder } from "../../common/hooks/tasks/task-folder-hook";
 import { useTasks } from "../../common/hooks/tasks/tasks-hook";
 import { useTasksHandler } from "../../common/hooks/tasks/tasks-handler-hook";
 import { Accordion } from "../atoms/accordion";
-import { Icon } from "../atoms/icon";
 import { Grid, Row } from "../atoms/layout";
 import { TaskList } from "./task-list";
+import { TrashButton } from "../molecules/button/trash-button";
 
 interface ContainerProps {
   /** クラスネーム */
@@ -86,23 +86,31 @@ const TaskMainPresenter = (props: PresenterProps) => {
         <Grid container>
           <Row />
           <div className="task-folder-name">{props.taskFolder.folderName}</div>
-          <Row>
+          <Row className="uncompleted-task-list">
             <TaskList tasks={props.unCompletedTasks} />
           </Row>
-          <Row>
-            <Accordion title="完了したタスク">
-              <div className="completed-task-delete">
-                <Icon
-                  iconName="trash"
-                  size="large"
-                  onClick={() =>
-                    props.handleClickCompletedTaskDelete(props.completedTasks)
-                  }
-                />
-              </div>
-              <TaskList tasks={props.completedTasks} />
-            </Accordion>
-          </Row>
+          {props.completedTasks.length > 0 && (
+            <Row className="completed-task-list-row">
+              <Accordion
+                title="完了したタスク"
+                getBeforeDisplayOptionContent={
+                  <div className="completed-task-count">
+                    {props.completedTasks.length}
+                  </div>
+                }
+                getAfterDisplayOptionContent={
+                  <TrashButton
+                    handleClick={() =>
+                      props.handleClickCompletedTaskDelete(props.completedTasks)
+                    }
+                    className="completed-task-delete-button"
+                  />
+                }
+              >
+                <TaskList tasks={props.completedTasks} />
+              </Accordion>
+            </Row>
+          )}
         </Grid>
       </main>
     </>
@@ -111,12 +119,27 @@ const TaskMainPresenter = (props: PresenterProps) => {
 
 export const TaskMain = styled(TaskMainContainer)<ContainerProps>`
   &&&&& {
+    //タスクフォルダー名
     .task-folder-name {
       font-size: 2rem;
       font-weight: 600;
     }
-    .completed-task-delete {
-      text-align: right;
+    //未完了タスク行
+    .uncompleted-task-list {
+      padding-bottom: 0rem;
+    }
+    //完了済タスク行
+    .completed-task-list-row {
+      padding: 0;
+      //完了済タスクカウンター
+      .completed-task-count {
+        font-size: 1.1rem;
+        padding-right: 0.5rem;
+      }
+      //完了済タスク削除ボタン
+      .completed-task-delete-button {
+        font-size: 1.1rem;
+      }
     }
   }
 `;

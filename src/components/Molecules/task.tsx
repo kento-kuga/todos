@@ -45,15 +45,21 @@ const TaskPresenter = (props: Props) => {
 
 export const Task = styled(TaskPresenter)<Props>`
   &&&&& {
+    //タスク全体
     font-size: 1.1rem;
-    border: 1px solid;
+    border: 0px solid;
+    padding: 0.8rem 0rem;
+    box-shadow: none;
     ${(props) => {
       return props.task.completed
         ? css`
+            //完了済タスク
+            //チェックボックス列
             .check-box-column {
               display: flex;
               align-items: center;
             }
+            //タスク名列
             .task-name-column {
               overflow-wrap: break-word;
               color: #94979b;
@@ -61,10 +67,13 @@ export const Task = styled(TaskPresenter)<Props>`
             }
           `
         : css`
+            //未完了タスク
+            //チェックボックス列
             .check-box-column {
               display: flex;
               align-items: center;
             }
+            //タスク名列
             .task-name-column {
               overflow-wrap: break-word;
             }

@@ -9,6 +9,8 @@ interface Props {
   handleClick: () => void;
   /** 大きさ(default：large) */
   size?: IconSize;
+  /** クラスネーム */
+  className?: string;
 }
 
 export const TrashButton = (props: Props) => {
@@ -18,6 +20,7 @@ export const TrashButton = (props: Props) => {
       size={props.size ? props.size : "large"}
       disable={props.isDisable}
       onClick={props.handleClick}
+      className={props.className}
     />
   );
 };
