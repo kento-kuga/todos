@@ -4,18 +4,18 @@ import { Icon } from "../../atoms/icon";
 
 interface Props {
   /** 無効 */
-  isDisable: boolean;
+  isDisable?: boolean;
   /** クリック時ハンドラ */
   handleClick: () => void;
   /** 大きさ(default：large) */
-  size?: IconSize | "large";
+  size?: IconSize;
 }
 
 export const TrashButton = (props: Props) => {
   return (
     <Icon
       iconName="trash"
-      size={props.size}
+      size={props.size ? props.size : "large"}
       disable={props.isDisable}
       onClick={props.handleClick}
     />
