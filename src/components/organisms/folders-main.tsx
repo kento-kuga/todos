@@ -89,6 +89,7 @@ const FoldersMainPresenter = (props: Props) => {
               <TrashButton
                 isDisable={selectedFolderIdList.length === 0 ? true : false}
                 handleClick={handleClickDelete}
+                size="big"
               />
             )}
           </div>
