@@ -26,7 +26,6 @@ export class TasksRepository implements TasksRepositoryInterface {
       await this._db
         .collection(COLLECTION_NAME_TASKS)
         .where("taskFolderId", "==", folderId)
-        .orderBy("createdAt", "asc")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {

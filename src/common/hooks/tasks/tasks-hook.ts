@@ -43,6 +43,15 @@ export const useTasks = () => {
 
   //タスクリストセット関数
   const setTasks = (tasks: TaskInfo[]) => {
+    //タスクを日付の降順に並べ替え
+    tasks.sort((a, b) => {
+      if (a.createdAt < b.createdAt) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+
     tasksContext.setTasks(tasks);
   };
 
