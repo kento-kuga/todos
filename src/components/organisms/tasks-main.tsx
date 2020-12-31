@@ -121,7 +121,7 @@ export const TaskMain = styled(TaskMainContainer)<ContainerProps>`
   &&&&& {
     //タスクフォルダー名
     .task-folder-name {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 600;
     }
     //未完了タスク行

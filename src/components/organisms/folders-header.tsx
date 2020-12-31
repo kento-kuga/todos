@@ -12,7 +12,7 @@ const FoldersHeaderPresenter = (props: Props) => {
     <header className={props.className}>
       <Grid>
         <Row className="header-row">
-          <div className="header-content">フォルダーリスト</div>
+          <div className="header-content">Folders</div>
         </Row>
       </Grid>
     </header>
