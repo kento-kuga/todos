@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { TaskFoldersContextProvider } from "../../common/context/task-folders-context";
 import { TasksContextProvider } from "../../common/context/tasks-context";
 import { useUserInfo } from "../../common/hooks/common/user-info-hook";
 import { Folders } from "./folders";
@@ -16,7 +17,11 @@ export const App = () => {
       <Route
         exact
         path={"/folders"}
-        render={() => <Folders userInfo={userInfo} />}
+        render={() => (
+          <TaskFoldersContextProvider>
+            <Folders userInfo={userInfo} />
+          </TaskFoldersContextProvider>
+        )}
       ></Route>
       <Route
         exact

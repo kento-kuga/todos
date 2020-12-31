@@ -12,8 +12,6 @@ interface State {
   isLoading: boolean;
   /** ユーザー情報 */
   userInfo: UserInfo | null;
-  /** タスクフォルダーリスト */
-  taskFolders: TaskFolderInfo[] | null;
   /** Appリスナー */
   appListener: Listener;
 }
@@ -22,7 +20,6 @@ interface State {
 const initialState: State = {
   isLoading: false,
   userInfo: null,
-  taskFolders: null,
   appListener: {} as Listener,
 };
 
@@ -37,10 +34,6 @@ type AppContextAction =
   | {
       type: "SET_USER_INFO";
       userInfo: UserInfo | null;
-    }
-  | {
-      type: "SET_TASK_FOLDERS";
-      taskFolders: TaskFolderInfo[] | null;
     };
 
 //reducer
@@ -60,11 +53,6 @@ const reducer = (state: State, action: AppContextAction) => {
       return {
         ...state,
         userInfo: action.userInfo,
-      };
-    case "SET_TASK_FOLDERS":
-      return {
-        ...state,
-        taskFolders: action.taskFolders,
       };
   }
 };
