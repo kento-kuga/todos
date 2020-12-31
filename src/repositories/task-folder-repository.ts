@@ -5,10 +5,12 @@ import {
 } from "../common/dto/task-folder";
 import { UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
+import firebase from "firebase";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
 import {
   COLLECTION_NAME_FOLDERS,
+  COLLECTION_NAME_TASKS,
   COLLECTION_NAME_USERS,
 } from "./repository-helper";
 
@@ -113,9 +115,40 @@ export const deleteTaskFolders = async (
   try {
     listener.started();
 
-    //タスクフォルダー削除
     for (const id of deleteTaskFolderIdList) {
+      //タスクフォルダー削除
       await db.collection(COLLECTION_NAME_FOLDERS).doc(id).delete();
+
+      //タスクリスト削除
+      //バッチ作成
+      const batchArray: firebase.firestore.WriteBatch[] = [];
+      batchArray.push(db.batch());
+      let operationCounter = 0;
+      let batchIndex = 0;
+
+      //タスクリスト取得
+      const tasks = await db
+        .collection(COLLECTION_NAME_TASKS)
+        .where("taskFolderId", "==", id)
+        .get();
+      console.log(
+        "🚀 ~ file: task-folder-repository.ts ~ line 134 ~ tasks",
+        tasks
+      );
+
+      //削除実行
+      await tasks.forEach((doc) => {
+        batchArray[batchIndex].delete(doc.ref);
+        operationCounter++;
+
+        if (operationCounter === 499) {
+          batchArray.push(db.batch());
+          batchIndex++;
+          operationCounter = 0;
+        }
+      });
+      //コミット
+      batchArray.forEach(async (batch) => await batch.commit());
     }
 
     //ユーザーのフォルダーリストからも削除。
