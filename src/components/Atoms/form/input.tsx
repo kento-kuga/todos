@@ -24,12 +24,20 @@ interface Props {
   placeholder?: string;
   /** テストid */
   testid?: string;
+  /** フォーカス時ハンドラ */
+  handleFocus?: () => void;
   /** フォーカスアウト時ハンドラ */
   handleBlur?: () => void;
 }
 
 const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
   //function
+  //フォーカス時ハンドラ
+  const handleFocus = React.useCallback(() => {
+    if (props.handleFocus) {
+      props.handleFocus();
+    }
+  }, [props]);
   //フォーカスアウト時ハンドラ
   const handleBlur = React.useCallback(() => {
     if (props.handleBlur) {
@@ -46,6 +54,7 @@ const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
             fluid={props.fluid}
             placeholder={props.placeholder}
             data-testid={props.testid}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={controllerProps.onChange}
             className={props.className}
