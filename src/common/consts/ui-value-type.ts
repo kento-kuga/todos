@@ -51,7 +51,9 @@ export type IconName =
   | "edit outline"
   | "check circle outline"
   | "square outline"
-  | "check square outline";
+  | "check square outline"
+  | "send"
+  | "chevron left";
 
 /** アイコンの位置 */
 export type IconCorner =

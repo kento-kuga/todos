@@ -28,12 +28,9 @@ export const TasksTemplate = styled(TasksTemplatePresenter)`
       position: fixed;
       top: 0;
       z-index: 1;
-      height: 6vh;
-      width: 100%;
-      background-color: white;
     }
     .tasks-main {
-      padding-top: 6vh;
+      padding-top: 4vh;
       padding-bottom: 20vh;
     }
     .tasks-footer {
@@ -43,7 +40,6 @@ export const TasksTemplate = styled(TasksTemplatePresenter)`
       left: 0;
       bottom: 0;
       z-index: 1;
-      background-color: white;
     }
   }
 `;
