@@ -29,7 +29,7 @@ const TaskFolderPresenter = React.memo((props: Props) => {
             <Icon iconName="folder outline" size="large" />
           </Column>
           <Column
-            width={12}
+            width={13}
             className="task-folder-column"
             onClick={props.handleClickFolder}
           >
@@ -40,9 +40,6 @@ const TaskFolderPresenter = React.memo((props: Props) => {
             className="task-folder-column task-folder-tasks-column"
           >
             {props.taskFolderInfo.taskNumber}
-          </Column>
-          <Column width={1} className="task-folder-column">
-            <Icon iconName="group" size="large" />
           </Column>
         </Row>
       </Grid>

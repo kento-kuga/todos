@@ -1,7 +1,5 @@
-import {
-  createTaskFolder,
-  getTaskFolders,
-} from "../../../repositories/task-folder-repository";
+import { TaskFolderRepository } from "../../../repositories/task-folder-repository";
+import { TaskFoldersRepository } from "../../../repositories/task-folders-repository";
 import { UserRepository } from "../../../repositories/user-repository";
 import { useAppContext } from "../../context/app-context";
 import { useUserInfo } from "../common/user-info-hook";
@@ -11,6 +9,8 @@ import { useTaskFolders } from "./task-folders-hook";
 export const useCreateFolder = () => {
   //repository
   const User = new UserRepository();
+  const TaskFolder = new TaskFolderRepository();
+  const TaskFolders = new TaskFoldersRepository();
 
   //state
   const [state] = useAppContext();
@@ -19,7 +19,7 @@ export const useCreateFolder = () => {
 
   const createFolder = async (createFolderName: string) => {
     //フォルダー作成
-    await createTaskFolder(createFolderName, userInfo, state.appListener);
+    await TaskFolder.create(createFolderName, userInfo, state.appListener);
 
     //ユーザー情報再取得
     const tmpUserInfo = await User.getByUserId(
@@ -31,7 +31,7 @@ export const useCreateFolder = () => {
     }
 
     //フォルダー情報再取得
-    const tmpTaskFolders = await getTaskFolders(
+    const tmpTaskFolders = await TaskFolders.getByFolderIdList(
       tmpUserInfo.taskFolderIdList,
       state.appListener
     );

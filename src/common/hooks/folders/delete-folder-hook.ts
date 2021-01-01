@@ -1,7 +1,4 @@
-import {
-  deleteTaskFolders,
-  getTaskFolders,
-} from "../../../repositories/task-folder-repository";
+import { TaskFoldersRepository } from "../../../repositories/task-folders-repository";
 import { UserRepository } from "../../../repositories/user-repository";
 import { useAppContext } from "../../context/app-context";
 import { useUserInfo } from "../common/user-info-hook";
@@ -11,6 +8,7 @@ import { useTaskFolders } from "./task-folders-hook";
 export const useDeleteFolder = () => {
   //repository
   const User = new UserRepository();
+  const TaskFolders = new TaskFoldersRepository();
 
   //hooks
   const [state] = useAppContext();
@@ -19,7 +17,7 @@ export const useDeleteFolder = () => {
 
   const deleteFolder = async (taskFolderIdList: string[]) => {
     //フォルダー削除
-    await deleteTaskFolders(taskFolderIdList, userInfo, state.appListener);
+    await TaskFolders.delete(taskFolderIdList, userInfo, state.appListener);
 
     //ユーザー情報再取得
     const tmpUserInfo = await User.getByUserId(
@@ -31,7 +29,7 @@ export const useDeleteFolder = () => {
     }
 
     //フォルダー情報再取得
-    const tmpTaskFolders = await getTaskFolders(
+    const tmpTaskFolders = await TaskFolders.getByFolderIdList(
       tmpUserInfo.taskFolderIdList,
       state.appListener
     );

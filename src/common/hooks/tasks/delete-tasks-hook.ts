@@ -19,7 +19,7 @@ export const useDeleteTasks = () => {
   //渡されたタスクリストのタスクを削除する。
   const deleteTask = async (tasks: TaskInfo[], taskFolderId: string) => {
     //タスク削除
-    await Tasks.delete(tasks, appContextState.appListener);
+    await Tasks.delete(taskFolderId, tasks, appContextState.appListener);
 
     //タスクリスト再取得
     Tasks.getByFolderId(

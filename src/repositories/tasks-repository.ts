@@ -3,7 +3,10 @@ import Firebase from "../core/firebase";
 import { TaskInfo } from "../common/dto/task";
 import { SystemError } from "../core/error";
 import { Listener } from "../core/listener";
-import { COLLECTION_NAME_TASKS } from "./repository-helper";
+import {
+  COLLECTION_NAME_FOLDERS,
+  COLLECTION_NAME_TASKS,
+} from "./repository-helper";
 import { TasksRepositoryInterface } from "./interfaces/tasks-interface";
 
 export class TasksRepository implements TasksRepositoryInterface {
@@ -15,7 +18,7 @@ export class TasksRepository implements TasksRepositoryInterface {
   }
 
   /** タスクリスト取得 */
-  getByFolderId = async (folderId: string, listener?: Listener) => {
+  getByFolderId = async (taskFolderId: string, listener?: Listener) => {
     try {
       listener && listener.started();
 
@@ -25,7 +28,7 @@ export class TasksRepository implements TasksRepositoryInterface {
       //フォルダーIdが一致するタスクを抽出し取得する。
       await this._db
         .collection(COLLECTION_NAME_TASKS)
-        .where("taskFolderId", "==", folderId)
+        .where("taskFolderId", "==", taskFolderId)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -43,7 +46,11 @@ export class TasksRepository implements TasksRepositoryInterface {
   };
 
   /** タスクリスト削除 */
-  delete = async (tasks: TaskInfo[], listener?: Listener) => {
+  delete = async (
+    taskFolderId: string,
+    tasks: TaskInfo[],
+    listener?: Listener
+  ) => {
     try {
       listener && listener.started();
 
@@ -54,6 +61,14 @@ export class TasksRepository implements TasksRepositoryInterface {
           .doc(task.taskId)
           .delete();
       }
+
+      //タスクフォルダーのタスク数を増加。
+      const folderRef = await this._db
+        .collection(COLLECTION_NAME_FOLDERS)
+        .doc(taskFolderId);
+      folderRef.update({
+        taskNumber: firebase.firestore.FieldValue.increment(-tasks.length),
+      });
     } catch (e) {
       console.error(e);
       throw new SystemError();

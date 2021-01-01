@@ -4,16 +4,24 @@ import { Listener } from "../../core/listener";
 export interface TasksRepositoryInterface {
   /**
    * タスク情報リスト取得
-   * @param folderId フォルダーID
+   * @param taskFolderId フォルダーID
    * @param listener リスナー
    * @return tasks タスクリスト
    */
-  getByFolderId: (folderId: string, listener?: Listener) => Promise<TaskInfo[]>;
+  getByFolderId: (
+    taskFolderId: string,
+    listener?: Listener
+  ) => Promise<TaskInfo[]>;
 
   /**
    * タスク削除(複数)
-   * @param tasks
-   * @param listener
+   * @param taskFolderId フォルダーId
+   * @param tasks タスクリスト
+   * @param listener リスナー
    */
-  delete: (tasks: TaskInfo[], listener?: Listener) => void;
+  delete: (
+    taskFolderId: string,
+    tasks: TaskInfo[],
+    listener?: Listener
+  ) => void;
 }
