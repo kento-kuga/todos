@@ -29,7 +29,7 @@ export const useUpdateFolderName = () => {
 
     //フォルダー情報再取得
     const tmpTaskFolders = await TaskFolders.getByFolderIdList(
-      userInfo.taskFolderIdList,
+      userInfo?.taskFolderIdList || [],
       state.appListener
     );
     setTaskFolders(tmpTaskFolders || []);

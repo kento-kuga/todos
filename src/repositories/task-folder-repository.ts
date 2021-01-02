@@ -24,10 +24,13 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
   /** タスクフォルダー作成 */
   create = async (
     createFolderName: string,
-    userInfo: UserInfo,
+    userInfo: UserInfo | null,
     listener: Listener
   ) => {
     const db = Firebase.instance.db;
+
+    //ユーザー情報がなければ何もしない
+    if (!userInfo) return;
 
     try {
       listener.started();

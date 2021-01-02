@@ -14,7 +14,10 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   /** ユーザー取得 */
-  getByUserId = async (userId: string, listener: Listener) => {
+  getByUserId = async (userId: string | undefined, listener: Listener) => {
+    //ユーザー情報がなければ何もしない
+    if (!userId) return null;
+
     try {
       listener.started();
 

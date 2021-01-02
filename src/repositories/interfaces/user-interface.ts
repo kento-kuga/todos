@@ -8,5 +8,8 @@ export interface UserRepositoryInterface {
    * @param listener リスナー
    * @return userInfo ユーザー情報
    */
-  getByUserId: (userId: string, listener: Listener) => Promise<UserInfo>;
+  getByUserId: (
+    userId: string | undefined,
+    listener: Listener
+  ) => Promise<UserInfo | null>;
 }

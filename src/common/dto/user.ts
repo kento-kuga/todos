@@ -7,3 +7,19 @@ export class UserInfo {
   /** タスクフォルダーIDリスト */
   taskFolderIdList: string[] = [];
 }
+
+/** ユーザ-作成リクエスト */
+export class CreateUserReq {
+  /** メールアドレス */
+  email: string = "";
+  /** パスワード */
+  password: string = "";
+}
+
+/** ユーザーログインリクエスト */
+export class LoginReq {
+  /** メールアドレス */
+  email: string = "";
+  /** パスワード */
+  password: string = "";
+}

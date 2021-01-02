@@ -7,7 +7,7 @@ import { FoldersTemplate } from "../templates/folders-template";
 
 interface Props {
   /** ユーザー情報 */
-  userInfo: UserInfo;
+  userInfo: UserInfo | null;
 }
 
 export const Folders = (props: Props) => {
@@ -16,7 +16,7 @@ export const Folders = (props: Props) => {
   const methods = useForm<FoldersFormParams>();
   //state
   //タスクフォルダーリスト
-  const [taskFolders] = useTaskFolders(props.userInfo.taskFolderIdList);
+  const [taskFolders] = useTaskFolders(props.userInfo?.taskFolderIdList);
 
   return (
     <FormProvider {...methods}>

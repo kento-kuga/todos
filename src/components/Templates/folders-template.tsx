@@ -10,7 +10,7 @@ import { FoldersMain } from "../organisms/folders-main";
 
 interface Props {
   /** ユーザー情報 */
-  userInfo: UserInfo;
+  userInfo: UserInfo | null;
   /** タスクフォルダーリスト */
   taskFolderList: TaskFolderInfo[];
   /** クラスネーム */

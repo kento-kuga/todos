@@ -59,11 +59,13 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
   /** タスクフォルダー削除 */
   delete = async (
     deleteTaskFolderIdList: string[],
-    userInfo: UserInfo,
+    userInfo: UserInfo | null,
     listener: Listener
   ) => {
-    const db = Firebase.instance.db;
+    //ユーザー情報がなければ何もしない
+    if (!userInfo) return;
 
+    const db = Firebase.instance.db;
     try {
       listener.started();
 

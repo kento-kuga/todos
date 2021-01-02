@@ -21,7 +21,7 @@ export const useDeleteFolder = () => {
 
     //ユーザー情報再取得
     const tmpUserInfo = await User.getByUserId(
-      userInfo.userId,
+      userInfo?.userId,
       state.appListener
     );
     if (tmpUserInfo) {
@@ -30,7 +30,7 @@ export const useDeleteFolder = () => {
 
     //フォルダー情報再取得
     const tmpTaskFolders = await TaskFolders.getByFolderIdList(
-      tmpUserInfo.taskFolderIdList,
+      tmpUserInfo?.taskFolderIdList || [],
       state.appListener
     );
     setTaskFolders(tmpTaskFolders || []);

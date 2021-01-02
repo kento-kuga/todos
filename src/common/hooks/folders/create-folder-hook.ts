@@ -23,20 +23,22 @@ export const useCreateFolder = () => {
 
     //ユーザー情報再取得
     const tmpUserInfo = await User.getByUserId(
-      userInfo.userId,
+      userInfo?.userId,
       state.appListener
     );
     if (tmpUserInfo) {
+      //ユーザーが取得できた場合
       setUserInfo(tmpUserInfo);
-    }
 
-    //フォルダー情報再取得
-    const tmpTaskFolders = await TaskFolders.getByFolderIdList(
-      tmpUserInfo.taskFolderIdList,
-      state.appListener
-    );
-    if (tmpTaskFolders) {
-      setTaskFolders(tmpTaskFolders);
+      //フォルダー情報再取得
+      const tmpTaskFolders = await TaskFolders.getByFolderIdList(
+        tmpUserInfo.taskFolderIdList,
+        state.appListener
+      );
+
+      if (tmpTaskFolders) {
+        setTaskFolders(tmpTaskFolders);
+      }
     }
   };
 

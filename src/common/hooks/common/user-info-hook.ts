@@ -42,8 +42,5 @@ export const useUserInfo = (userId?: string) => {
     });
   };
 
-  return [
-    state.userInfo ? state.userInfo : new UserInfo(),
-    setUserInfo,
-  ] as const;
+  return [state.userInfo ? state.userInfo : null, setUserInfo] as const;
 };
