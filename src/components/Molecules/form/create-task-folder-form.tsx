@@ -3,13 +3,11 @@ import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { commonInputStyle } from "../../../common/css/common-style";
 import { FoldersFormParams } from "../../../common/dto/task-folder";
-import { Button } from "../../atoms/button";
 import { ErrorMessageDiv, Form, FormButtonArea, Input } from "../../atoms/form";
-import { Label } from "../../atoms/text";
 
 interface Props {
-  /** 送信ハンドラー */
-  handleSubmit: (createFolderName: string) => void;
+  /** フォルダー作成時ハンドラ */
+  handleCreateFolder: (data: FoldersFormParams) => void;
   /** クラスネーム */
   className?: string;
 }
@@ -20,19 +18,14 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
   const { control, errors, handleSubmit } = useFormContext();
 
   //function
-  //送信ハンドラー
-  const onSubmit = (data: FoldersFormParams) => {
-    props.handleSubmit(data.createFolderName);
-  };
   return (
     <div className={props.className}>
-      <Label label="フォルダー名" fontSize="large" />
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(props.handleCreateFolder)}>
         <Input
           name="createFolderName"
+          placeholder="folder name"
           control={control}
           defaultValue=""
-          isError={errors.createFolderName ? true : false}
           fluid
           maxlength={14}
           rules={{
@@ -51,14 +44,7 @@ const CreateTaskFolderFormPresenter = (props: Props) => {
           redFont
           className="error-folder-name"
         />
-        <FormButtonArea textAlign="right">
-          <Button
-            label="OK"
-            size="small"
-            color="black"
-            testid="create-task-folder-form-submit-button"
-          />
-        </FormButtonArea>
+        <FormButtonArea textAlign="right"></FormButtonArea>
       </Form>
     </div>
   );

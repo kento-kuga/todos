@@ -1,5 +1,8 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
+import { FoldersFormParams } from "../../../common/dto/task-folder";
+import { PrimaryButton } from "../../atoms/button";
 import { Grid, Row } from "../../atoms/layout";
 import { Modal, ModalContent } from "../../atoms/modal";
 import { CreateTaskFolderForm } from "../form/create-task-folder-form";
@@ -16,11 +19,15 @@ interface Props {
 }
 
 const CreateTaskFolderModalPresenter = (props: Props) => {
+  //hooks
+  //フォームコンテキスト
+  const { handleSubmit } = useFormContext();
+
   //function
   //ファルダー作成時ハンドラー
-  const handleCreateFolder = (createFolderName: string) => {
+  const handleCreateFolder = (data: FoldersFormParams) => {
     //フォルダー作成
-    props.handleCreateFolder(createFolderName);
+    props.handleCreateFolder(data.createFolderName);
     //モーダルを閉じる
     if (props.handleClose) {
       props.handleClose();
@@ -38,7 +45,13 @@ const CreateTaskFolderModalPresenter = (props: Props) => {
       <ModalContent className="modal-content">
         <Grid>
           <Row>
-            <CreateTaskFolderForm handleSubmit={handleCreateFolder} />
+            <CreateTaskFolderForm handleCreateFolder={handleCreateFolder} />
+          </Row>
+          <Row textAlign="right">
+            <PrimaryButton
+              label="OK"
+              onClick={handleSubmit(handleCreateFolder)}
+            />
           </Row>
         </Grid>
       </ModalContent>

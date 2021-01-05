@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Row } from "../atoms/layout";
+import { useAuthHandler } from "../../common/hooks/common/auth-handler-hook";
+import { Column, Grid, Row } from "../atoms/layout";
 
 interface Props {
   /** クラスネーム */
@@ -8,11 +9,19 @@ interface Props {
 }
 
 const FoldersHeaderPresenter = (props: Props) => {
+  //function
+  const { handleLogout } = useAuthHandler();
+
   return (
     <header className={props.className}>
       <Grid>
-        <Row className="header-row">
-          <div className="header-content">Folders</div>
+        <Row className="header-row" columns={1}>
+          <Column className="header-column">
+            <div className="header-title">Folders</div>
+            <div onClick={handleLogout} className="logout-button">
+              log out
+            </div>
+          </Column>
         </Row>
       </Grid>
     </header>
@@ -25,11 +34,22 @@ export const FoldersHeader = styled(FoldersHeaderPresenter)`
     //ヘッダー行
     .header-row {
       padding-bottom: 0;
-      .header-content {
-        padding-top: 2.5rem;
-        padding-left: 2rem;
-        font-size: 2rem;
-        font-weight: 600;
+      //ヘッダーカラム
+      .header-column {
+        display: flex;
+        //タイトル
+        padding-top: 4vh;
+        .header-title {
+          margin-right: auto;
+          padding-left: 1.5rem;
+          font-size: 2rem;
+          font-weight: 600;
+        }
+        //ログアウトボタン
+        .logout-button {
+          padding-right: 1.4rem;
+          font-size: 1.3rem;
+        }
       }
     }
   }

@@ -37,6 +37,7 @@ const FoldersTemplatePresenter = React.memo((props: Props) => {
       <FoldersMain
         taskFolderList={props.taskFolderList}
         handleClickAddFolderButton={turnOnCreateFolder}
+        className="folders-main"
       />
       <CreateTaskFolderModal
         open={createFolderOpen}
@@ -49,8 +50,13 @@ const FoldersTemplatePresenter = React.memo((props: Props) => {
 
 export const FoldersTemplate = styled(FoldersTemplatePresenter)`
   &&&&& {
+    //ヘッダー
     .folders-header {
       margin-bottom: 1rem;
+    }
+    //メイン
+    .folders-main {
+      margin-top: 3rem;
     }
   }
 `;

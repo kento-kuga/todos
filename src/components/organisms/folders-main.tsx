@@ -61,7 +61,7 @@ const FoldersMainPresenter = (props: Props) => {
   }, [editMode, turnOffEditMode, turnOnEditMode]);
 
   return (
-    <main className="folders-main">
+    <main className={props.className}>
       <Grid container>
         <Row className="setting-row" textAlign="right">
           <SettingButton
@@ -81,15 +81,19 @@ const FoldersMainPresenter = (props: Props) => {
           />
         </Row>
         <Row textAlign="right" className="add-folder-row">
-          <div className="add-folder-button">
+          <div>
             {!editMode && (
-              <AddFolderButton handleClick={props.handleClickAddFolderButton} />
+              <AddFolderButton
+                handleClick={props.handleClickAddFolderButton}
+                className="add-folder-button"
+              />
             )}
             {editMode && (
               <TrashButton
                 isDisable={selectedFolderIdList.length === 0 ? true : false}
                 handleClick={handleClickDelete}
                 size="big"
+                className="delete-folder-button"
               />
             )}
           </div>
@@ -101,23 +105,25 @@ const FoldersMainPresenter = (props: Props) => {
 
 export const FoldersMain = styled(FoldersMainPresenter)`
   &&&&& {
-    .folders-main {
-      //設定ボタン行
-      .setting-row {
-        padding-top: 0.5rem;
-        padding-bottom: 0;
+    //設定ボタン行
+    .setting-row {
+      padding-bottom: 0.2rem;
+    }
+    //フォルダーリスト行
+    .folder-list-row {
+      padding-top: 0.3rem;
+      padding-bottom: 0rem;
+    }
+    //フォルダー追加ボタン行
+    .add-folder-row {
+      padding-top: 0rem;
+      //フォルダー追加ボタン
+      .add-folder-button {
+        padding-right: 0.3rem;
       }
-      //フォルダーリスト行
-      .folder-list-row {
-        padding-bottom: 0rem;
-      }
-      //フォルダー追加ボタン行
-      .add-folder-row {
-        padding-top: 0rem;
-        //フォルダー追加ボタン
-        .add-folder-button {
-          padding-right: 1rem;
-        }
+      //フォルダー追加ボタン
+      .delete-folder-button {
+        margin-right: 0.35rem;
       }
     }
   }

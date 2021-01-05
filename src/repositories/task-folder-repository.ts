@@ -38,7 +38,7 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
       //リクエスト作成
       const taskFolder = new TaskFolderCreateReq();
       taskFolder.folderName = createFolderName;
-      taskFolder.members.push({ name: userInfo.name, userId: userInfo.userId });
+      taskFolder.members.push({ name: "", userId: userInfo.userId });
 
       //タスクフォルダー作成
       const ref = await db.collection(COLLECTION_NAME_FOLDERS).doc();
