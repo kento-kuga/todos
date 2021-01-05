@@ -7,6 +7,7 @@ import {
 } from "../core/error";
 import { Listener } from "../core/listener";
 import { AuthRepositoryInterface } from "./interfaces/auth-repository-interface";
+import { COLLECTION_NAME_USERS } from "./repository-helper";
 
 export class AuthRepository implements AuthRepositoryInterface {
   /** ユーザー作成 */
@@ -42,11 +43,15 @@ export class AuthRepository implements AuthRepositoryInterface {
     if (currentUser !== null) {
       //登録ができ、ユーザーが取得できた場合
 
-      //確認メッセージの送信
-      await firebase.auth().currentUser?.sendEmailVerification({
-        url: "http://localhost:3000",
-        handleCodeInApp: false,
-      });
+      //ユーザー情報の登録
+      await firebase
+        .firestore()
+        .collection(COLLECTION_NAME_USERS)
+        .doc(currentUser.uid)
+        .set({})
+        .catch((error) => {
+          throw error;
+        });
     } else {
       //ユーザーが取得できなかった場合
       throw new Error();

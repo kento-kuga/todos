@@ -53,7 +53,8 @@ export type IconName =
   | "square outline"
   | "check square outline"
   | "send"
-  | "chevron left";
+  | "chevron left"
+  | "log out";
 
 /** アイコンの位置 */
 export type IconCorner =

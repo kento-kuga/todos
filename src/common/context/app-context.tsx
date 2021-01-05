@@ -2,16 +2,12 @@ import React from "react";
 import { DisplayLoader } from "../../components/atoms/loader/display-loader";
 import { SystemError } from "../../core/error";
 import { Listener } from "../../core/listener";
-import { TaskFolderInfo } from "../dto/task-folder";
-import { UserInfo } from "../dto/user";
 interface Props {}
 
 //ContextのState型
 interface State {
   /** ローディングフラグ */
   isLoading: boolean;
-  /** ユーザー情報 */
-  userInfo: UserInfo | null;
   /** Appリスナー */
   appListener: Listener;
 }
@@ -19,7 +15,6 @@ interface State {
 //初期State
 const initialState: State = {
   isLoading: false,
-  userInfo: null,
   appListener: {} as Listener,
 };
 
@@ -30,10 +25,6 @@ type AppContextAction =
     }
   | {
       type: "HIDE_LOADER";
-    }
-  | {
-      type: "SET_USER_INFO";
-      userInfo: UserInfo | null;
     };
 
 //reducer
@@ -48,11 +39,6 @@ const reducer = (state: State, action: AppContextAction) => {
       return {
         ...state,
         isLoading: false,
-      };
-    case "SET_USER_INFO":
-      return {
-        ...state,
-        userInfo: action.userInfo,
       };
   }
 };

@@ -8,12 +8,12 @@ import { App } from "./components/pages/app";
 import { AuthContextProvider } from "./common/context/auth-context";
 
 ReactDOM.render(
-  <AppContextProvider>
-    <AuthContextProvider>
-      <Router>
+  <Router>
+    <AppContextProvider>
+      <AuthContextProvider>
         <App />
-      </Router>
-    </AuthContextProvider>
-  </AppContextProvider>,
+      </AuthContextProvider>
+    </AppContextProvider>
+  </Router>,
   document.getElementById("root")
 );

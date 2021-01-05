@@ -23,3 +23,36 @@ export class LoginReq {
   /** パスワード */
   password: string = "";
 }
+
+/** ユーザーログインフォームのParam型 */
+class UserLoginFormParam {
+  /** ログインメールアドレス */
+  loginEmail: string = "";
+  /** ログインパスワード */
+  loginPassword: string = "";
+}
+
+/** ユーザーサインアップフォームのParam型 */
+class UserSignUpFormParam {
+  /** サインアップメールアドレス */
+  signupEmail: string = "";
+  /** サインアップパスワード */
+  signupPassword: string = "";
+  /** 確認用サインアップパスワード */
+  confirmSignupPassword = "";
+}
+
+/** ユーザーログイン画面のParam型 */
+export class UserAuthFormParam
+  implements UserLoginFormParam, UserSignUpFormParam {
+  /** ログインメールアドレス */
+  loginEmail: string = "";
+  /** ログインパスワード */
+  loginPassword: string = "";
+  /** サインアップメールアドレス */
+  signupEmail: string = "";
+  /** サインアップパスワード */
+  signupPassword: string = "";
+  /** 確認用サインアップパスワード */
+  confirmSignupPassword = "";
+}

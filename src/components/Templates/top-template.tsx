@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Grid, Row } from "../atoms/layout";
+import { Logo } from "../atoms/logo";
+import { AuthContainer } from "../organisms/auth-container";
 
 interface Props {
   /** クラスネーム */
@@ -12,13 +13,21 @@ const TopTemplatePresenter = (props: Props) => {
   return (
     <div className={props.className}>
       <Grid>
-        <Row>トップページ</Row>
+        <Row textAlign="center">
+          <Logo label="Todos" className="logo" />
+        </Row>
         <Row>
-          <Link to="/folders">フォルダー一覧</Link>
+          <AuthContainer />
         </Row>
       </Grid>
     </div>
   );
 };
 
-export const TopTemplate = styled(TopTemplatePresenter)``;
+export const TopTemplate = styled(TopTemplatePresenter)`
+  &&&&& {
+    .logo {
+      margin-top: 2rem;
+    }
+  }
+`;

@@ -13,12 +13,16 @@ interface Props {
 const LogoPresenter = (props: Props) => {
   return (
     <div className={props.className}>
-      {props.label && <span>{props.label}</span>}
+      {props.label && <span className="label">{props.label}</span>}
     </div>
   );
 };
 
 export const Logo = styled(LogoPresenter)`
   &&&&& {
+    font-size: 2.5rem;
+    .label {
+      padding: 0.1rem 0.5rem;
+    }
   }
 `;

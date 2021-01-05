@@ -1,55 +1,71 @@
 import React from "react";
 import firebase from "firebase";
+import { UserInfo } from "../dto/user";
+import { useAppContextState } from "./app-context";
+import { UserRepository } from "../../repositories/user-repository";
+import { useHistory } from "react-router-dom";
 
 //認証コンテキストの方
 interface AuthContextState {
-  /** ユーザーId */
-  userId: string | undefined;
+  /** ユーザー情報 */
+  userInfo: UserInfo | null;
+  /** ユーザー情報セット関数 */
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
 }
 
 //認証コンテキストの初期ステート
 const initialAuthContextState = {
-  userId: undefined,
+  userInfo: null,
+  setUserInfo: {},
 } as AuthContextState;
 
 //context
 //認証コンテキスト
 export const AuthContext = React.createContext(initialAuthContextState);
 
-/**
- * ログイン状態変更時処理
- */
-const changeUser = async (
-  user: firebase.User | null | undefined,
-  setUserId: React.Dispatch<React.SetStateAction<string | undefined>>
-) => {
-  try {
-    if (user) {
-      //ユーザーが存在すれば(ログイン状態なら)ユーザーをセット。
-      setUserId(user.uid);
-    } else {
-      //それ以外なら、ユーザーをリセット。
-      setUserId(undefined);
-    }
-    window.scrollTo(0, 0);
-  } catch (e) {
-    throw e;
-  }
-};
-
 //provider
 export const AuthContextProvider: React.FC = ({ children }) => {
-  const [userId, setUserId] = React.useState<string | undefined>(undefined);
+  //repository
+  const User = new UserRepository();
+  //context
+  const state = useAppContextState();
+  //history
+  const history = useHistory();
+  //state
+  //ユーザー情報
+  const [userInfo, setUserInfo] = React.useState<UserInfo | null>(null);
 
   React.useEffect(() => {
     //ログイン状態監視
     firebase.auth().onAuthStateChanged((user) => {
-      changeUser(user, setUserId);
+      try {
+        if (user) {
+          //ユーザーが存在すれば(ログイン状態なら)ユーザー情報をDBから取得し、セットする。
+          const init = async () => {
+            const data = await User.getByUserId(user.uid, state.appListener);
+            if (data) {
+              setUserInfo(data);
+            }
+            //フォルダーリスト画面へ遷移
+            await history.push("folders");
+          };
+          init();
+        } else {
+          //それ以外なら、ユーザーをリセット。
+          setUserInfo(null);
+        }
+      } catch (e) {
+        throw e;
+      }
     });
+    //ログイン状態が変更されたときのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userId: userId }}>
+    <AuthContext.Provider
+      value={{ userInfo: userInfo, setUserInfo: setUserInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );

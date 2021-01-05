@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { AuthContext } from "../../common/context/auth-context";
 import { TaskFoldersContextProvider } from "../../common/context/task-folders-context";
 import { TasksContextProvider } from "../../common/context/tasks-context";
 import { UserInfo } from "../../common/dto/user";
@@ -10,11 +9,8 @@ import { Tasks } from "./tasks";
 import { Top } from "./top";
 
 export const App = () => {
-  //context
-  const authContext = React.useContext(AuthContext);
-
   //state
-  const [userInfo] = useUserInfo(authContext.userId);
+  const [userInfo] = useUserInfo();
 
   return (
     <Switch>
