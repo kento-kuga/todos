@@ -48,7 +48,7 @@ export class AuthRepository implements AuthRepositoryInterface {
         .firestore()
         .collection(COLLECTION_NAME_USERS)
         .doc(currentUser.uid)
-        .set({})
+        .set({ taskFolderIdList: [] })
         .catch((error) => {
           throw error;
         });
