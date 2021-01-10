@@ -14,25 +14,42 @@ export const useUpdateFolderName = () => {
   //hooks
   const [state] = useAppContext();
   const [userInfo] = useUserInfo();
-  const [, setTaskFolders] = useTaskFolders();
+  const [taskFolders, setTaskFolders] = useTaskFolders();
 
   const updateFolderName = async (
     taskFolderId: string,
     updateFolderName: string
   ) => {
-    //フォルダー更新
-    await TaskFolder.update(
-      taskFolderId,
-      { folderName: updateFolderName } as TaskFolderUpdateReq,
-      state.appListener
-    );
+    if (state.isTryUser) {
+      //体験ユーザーの場合
+      //変更対象のフォルダーを抽出
+      const tmpTaskFolders = [...taskFolders];
+      const tmpFolder = tmpTaskFolders.find(
+        (folder) => folder.taskFolderId === taskFolderId
+      );
 
-    //フォルダー情報再取得
-    const tmpTaskFolders = await TaskFolders.getByFolderIdList(
-      userInfo?.taskFolderIdList || [],
-      state.appListener
-    );
-    setTaskFolders(tmpTaskFolders || []);
+      if (tmpFolder) {
+        //名前更新
+        tmpFolder.folderName = updateFolderName;
+        //コンテキストにセット
+        setTaskFolders(tmpTaskFolders);
+      }
+    } else {
+      //体験ユーザーではない場合
+      //フォルダー更新
+      await TaskFolder.update(
+        taskFolderId,
+        { folderName: updateFolderName } as TaskFolderUpdateReq,
+        state.appListener
+      );
+
+      //フォルダー情報再取得
+      const tmpTaskFolders = await TaskFolders.getByFolderIdList(
+        userInfo?.taskFolderIdList || [],
+        state.appListener
+      );
+      setTaskFolders(tmpTaskFolders || []);
+    }
   };
   return updateFolderName;
 };

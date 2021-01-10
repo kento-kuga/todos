@@ -1,11 +1,11 @@
 import React from "react";
 import firebase from "firebase";
 import { UserInfo } from "../dto/user";
-import { useAppContextState } from "./app-context";
+import { changeTryUser, useAppContext } from "./app-context";
 import { UserRepository } from "../../repositories/user-repository";
 import { useHistory } from "react-router-dom";
 
-//認証コンテキストの方
+//認証コンテキストの型
 interface AuthContextState {
   /** ユーザー情報 */
   userInfo: UserInfo | null;
@@ -25,10 +25,13 @@ export const AuthContext = React.createContext(initialAuthContextState);
 
 //provider
 export const AuthContextProvider: React.FC = ({ children }) => {
+  //env
+  const env = process.env;
+
   //repository
   const User = new UserRepository();
   //context
-  const state = useAppContextState();
+  const [state, dispatch] = useAppContext();
   //history
   const history = useHistory();
   //state
@@ -45,6 +48,11 @@ export const AuthContextProvider: React.FC = ({ children }) => {
             const data = await User.getByUserId(user.uid, state.appListener);
             if (data) {
               setUserInfo(data);
+
+              //体験ユーザーならば、Appコンテキストにセットする。
+              if (data.userId === env.REACT_APP_TRY_USER_UID) {
+                changeTryUser(dispatch, true);
+              }
             }
             //フォルダーリスト画面へ遷移
             await history.push("folders");
@@ -53,6 +61,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         } else {
           //それ以外なら、ユーザーをリセット。
           setUserInfo(null);
+          changeTryUser(dispatch, false);
         }
       } catch (e) {
         throw e;

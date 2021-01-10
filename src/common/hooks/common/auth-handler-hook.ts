@@ -33,10 +33,26 @@ export const useAuthHandler = () => {
     [Auth, state.appListener]
   );
 
+  /** 体験ユーザーログイン */
+  const handleLoginTryUser = React.useCallback(async () => {
+    //env
+    const env = process.env;
+    const email = env.REACT_APP_TRY_USER_EMAIL;
+    const password = env.REACT_APP_TRY_USER_PASSWORD;
+
+    if (email && password) {
+      try {
+        await Auth.login({ email, password }, state.appListener);
+      } catch (e) {
+        throw e;
+      }
+    }
+  }, [Auth, state.appListener]);
+
   /** ログアウト */
   const handleLogout = React.useCallback(() => {
     Auth.logout();
   }, [Auth]);
 
-  return { handleLogin, handleSignup, handleLogout };
+  return { handleLogin, handleSignup, handleLogout, handleLoginTryUser };
 };

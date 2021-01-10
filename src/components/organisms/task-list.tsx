@@ -6,7 +6,8 @@ import { Task } from "../molecules/task";
 
 interface Props {
   /** タスクリスト */
-  tasks: TaskInfo[] /** クラスネーム */;
+  tasks: TaskInfo[];
+  /** クラスネーム */
   className?: string;
 }
 

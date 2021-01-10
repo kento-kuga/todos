@@ -9,8 +9,8 @@ interface Props {}
 
 export const Tasks = (props: Props) => {
   //context
+  //タスクフォルダーコンテキスト
   const taskFolderContext = React.useContext(TaskFolderContext);
-
   //hooks
   //ロケーション
   const location = useLocation<TasksLocationState>();
@@ -21,7 +21,6 @@ export const Tasks = (props: Props) => {
   React.useEffect(() => {
     //タスクフォルダーをコンテキストへセット
     taskFolderContext.setTaskFolder(location.state.taskFolderInfo);
-
     // タスクリスト画面へ遷移したときのみ実行する。
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state.taskFolderInfo]);

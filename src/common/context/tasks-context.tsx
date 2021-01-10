@@ -35,14 +35,28 @@ export const TasksContext = React.createContext(initialTasksContextState);
 export const TaskFolderContext = React.createContext(initialTaskFolderState);
 
 //provider
-export const TasksContextProvider: React.FC = ({ children }) => {
+//タスクフォルダープロバイダ
+const TaskFolderContextProvider: React.FC = React.memo(({ children }) => {
   //state
-  //タスクリスト
-  const [tasks, setTasks] = React.useState<TaskInfo[] | undefined>(undefined);
   //タスクフォルダー
   const [taskFolder, setTaskFolder] = React.useState<
     TaskFolderInfo | undefined
   >(undefined);
+
+  return (
+    <TaskFolderContext.Provider
+      value={{ taskFolder: taskFolder, setTaskFolder: setTaskFolder }}
+    >
+      {children}
+    </TaskFolderContext.Provider>
+  );
+});
+
+//タスクリストプロバイダ
+const TasksContextProvider: React.FC = React.memo(({ children }) => {
+  //state
+  //タスクリスト
+  const [tasks, setTasks] = React.useState<TaskInfo[] | undefined>(undefined);
 
   return (
     <TasksContext.Provider
@@ -51,11 +65,16 @@ export const TasksContextProvider: React.FC = ({ children }) => {
         setTasks: setTasks,
       }}
     >
-      <TaskFolderContext.Provider
-        value={{ taskFolder: taskFolder, setTaskFolder: setTaskFolder }}
-      >
-        {children}
-      </TaskFolderContext.Provider>
+      {children}
     </TasksContext.Provider>
   );
-};
+});
+
+//タスクリスト機能プロバイダ
+export const TasksProvider: React.FC = React.memo(({ children }) => {
+  return (
+    <TaskFolderContextProvider>
+      <TasksContextProvider>{children}</TasksContextProvider>
+    </TaskFolderContextProvider>
+  );
+});

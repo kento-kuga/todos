@@ -39,7 +39,8 @@ const TaskFolderPresenter = React.memo((props: Props) => {
             width={1}
             className="task-folder-column task-folder-tasks-column"
           >
-            {props.taskFolderInfo.taskNumber}
+            {props.taskFolderInfo.taskNumber > 0 &&
+              props.taskFolderInfo.taskNumber}
           </Column>
         </Row>
       </Grid>

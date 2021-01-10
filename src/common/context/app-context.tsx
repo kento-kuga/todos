@@ -10,12 +10,15 @@ interface State {
   isLoading: boolean;
   /** Appリスナー */
   appListener: Listener;
+  /** 体験ユーザーフラグ */
+  isTryUser: boolean;
 }
 
 //初期State
 const initialState: State = {
   isLoading: false,
   appListener: {} as Listener,
+  isTryUser: false,
 };
 
 //actions
@@ -25,6 +28,10 @@ type AppContextAction =
     }
   | {
       type: "HIDE_LOADER";
+    }
+  | {
+      type: "SET_TRY_USER";
+      isTryUser: boolean;
     };
 
 //reducer
@@ -39,6 +46,11 @@ const reducer = (state: State, action: AppContextAction) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case "SET_TRY_USER":
+      return {
+        ...state,
+        isTryUser: action.isTryUser,
       };
   }
 };
@@ -64,6 +76,15 @@ const createAppListener = (
       });
     },
   };
+};
+
+//function
+//体験ユーザーフラグ変更
+export const changeTryUser = (
+  dispatch: React.Dispatch<AppContextAction>,
+  isTryUser: boolean
+) => {
+  dispatch({ type: "SET_TRY_USER", isTryUser: isTryUser });
 };
 
 //context

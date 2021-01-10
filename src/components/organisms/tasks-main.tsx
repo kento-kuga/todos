@@ -17,10 +17,10 @@ interface ContainerProps {
 
 const TaskMainContainer = (props: ContainerProps) => {
   //state
-  //タスクリスト
-  const [tasks] = useTasks();
   //タスクフォルダー
   const [taskFolder] = useTaskFolder();
+  //タスクリスト
+  const [tasks] = useTasks(taskFolder);
   //未完了タスク
   const [unCompletedTasks, setUnCompletedTasks] = React.useState(
     [] as TaskInfo[]

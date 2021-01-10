@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useAuthHandler } from "../../common/hooks/common/auth-handler-hook";
 import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { Grid, Row } from "../atoms/layout";
 import { LoginSegment } from "./login-segment";
@@ -14,6 +15,10 @@ const AuthContainerPresenter = (props: Props) => {
   //state
   const [signup, , turnOnSignup] = useToggle();
 
+  //function
+  //体験ユーザーログインハンドラ
+  const { handleLoginTryUser } = useAuthHandler();
+
   return (
     <Grid className={props.className}>
       <Row>
@@ -26,7 +31,11 @@ const AuthContainerPresenter = (props: Props) => {
             sign up
           </div>
         )}
-        {signup && <div className="try-button">試しに使ってみる</div>}
+        {signup && (
+          <div onClick={handleLoginTryUser} className="try-button">
+            試しに使ってみる
+          </div>
+        )}
       </Row>
     </Grid>
   );
