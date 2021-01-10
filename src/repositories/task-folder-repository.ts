@@ -27,8 +27,6 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
     userInfo: UserInfo | null,
     listener: Listener
   ) => {
-    const db = Firebase.instance.db;
-
     //ユーザー情報がなければ何もしない
     if (!userInfo) return;
 
@@ -41,16 +39,19 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
       taskFolder.members.push({ name: "", userId: userInfo.userId });
 
       //タスクフォルダー作成
-      const ref = await db.collection(COLLECTION_NAME_FOLDERS).doc();
+      const ref = await this._db.collection(COLLECTION_NAME_FOLDERS).doc();
       await ref.set({ ...taskFolder });
 
       //ユーザーのフォルダーリストにも追加。
       const tmpTaskFolder = [...userInfo.taskFolderIdList];
       tmpTaskFolder.push(ref.id);
 
-      await db.collection(COLLECTION_NAME_USERS).doc(userInfo.userId).update({
-        taskFolderIdList: tmpTaskFolder,
-      });
+      await this._db
+        .collection(COLLECTION_NAME_USERS)
+        .doc(userInfo.userId)
+        .update({
+          taskFolderIdList: tmpTaskFolder,
+        });
     } catch (e) {
       console.error(e);
       throw new SystemError();

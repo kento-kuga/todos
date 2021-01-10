@@ -21,8 +21,6 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
 
   /** タスクフォルダーリスト取得 */
   getByFolderIdList = async (folderIdList: string[], listener: Listener) => {
-    const db = Firebase.instance.db;
-
     if (folderIdList.length < 1) return;
 
     try {
@@ -33,7 +31,7 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
       //Folders取得
       for (const folderId of folderIdList) {
         //コレクション取得
-        const collection = await db
+        const collection = await this._db
           .collection(COLLECTION_NAME_FOLDERS)
           .doc(folderId)
           .get();
@@ -64,24 +62,22 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
   ) => {
     //ユーザー情報がなければ何もしない
     if (!userInfo) return;
-
-    const db = Firebase.instance.db;
     try {
       listener.started();
 
       for (const id of deleteTaskFolderIdList) {
         //タスクフォルダー削除
-        await db.collection(COLLECTION_NAME_FOLDERS).doc(id).delete();
+        await this._db.collection(COLLECTION_NAME_FOLDERS).doc(id).delete();
 
         //タスクリスト削除
         //バッチ作成
         const batchArray: firebase.firestore.WriteBatch[] = [];
-        batchArray.push(db.batch());
+        batchArray.push(this._db.batch());
         let operationCounter = 0;
         let batchIndex = 0;
 
         //タスクリスト取得
-        const tasks = await db
+        const tasks = await this._db
           .collection(COLLECTION_NAME_TASKS)
           .where("taskFolderId", "==", id)
           .get();
@@ -92,7 +88,7 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
           operationCounter++;
 
           if (operationCounter === 499) {
-            batchArray.push(db.batch());
+            batchArray.push(this._db.batch());
             batchIndex++;
             operationCounter = 0;
           }
@@ -108,9 +104,12 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
       });
 
       //ユーザーのフォルダーリスト更新
-      await db.collection(COLLECTION_NAME_USERS).doc(userInfo.userId).update({
-        taskFolderIdList: tmpTaskFolder,
-      });
+      await this._db
+        .collection(COLLECTION_NAME_USERS)
+        .doc(userInfo.userId)
+        .update({
+          taskFolderIdList: tmpTaskFolder,
+        });
     } catch (e) {
       console.error(e);
       throw new SystemError();
