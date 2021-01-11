@@ -1,5 +1,5 @@
 import React from "react";
-import { TaskFolderContext } from "../../context/tasks-context";
+import { TaskFolderContext } from "../../context/task-folder-context";
 import { TaskFolderInfo } from "../../dto/task-folder";
 
 /**
@@ -10,8 +10,8 @@ export const useTaskFolder = () => {
   const taskFolderContext = React.useContext(TaskFolderContext);
 
   //セット関数
-  const setTaskFolder = (taskFolder: TaskFolderInfo[]) => {
-    setTaskFolder(taskFolder);
+  const setTaskFolder = (taskFolder: TaskFolderInfo) => {
+    taskFolderContext.setTaskFolder(taskFolder);
   };
 
   return [taskFolderContext.taskFolder, setTaskFolder] as const;

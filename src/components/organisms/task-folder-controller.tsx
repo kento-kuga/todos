@@ -6,6 +6,7 @@ import {
 } from "../../common/dto/task-folder";
 import { useToggle } from "../../common/hooks/common/toggle-hook";
 import { UseFoldersHandler } from "../../common/hooks/folders/folders-handler-hook";
+import { useTaskFolder } from "../../common/hooks/tasks/task-folder-hook";
 import { EditingNameTaskFolder } from "../molecules/folder/editing-name-task-folder";
 import { TaskFolder } from "../molecules/folder/task-folder";
 
@@ -28,6 +29,8 @@ export const TaskFolderController = (props: Props) => {
   //hooks
   //ヒストリー
   const history = useHistory();
+  //タスクフォルダーフック
+  const [, setTaskFolder] = useTaskFolder();
 
   //state
   //フォルダーネーム編集モード
@@ -143,9 +146,12 @@ export const TaskFolderController = (props: Props) => {
     //編集中の場合、何もしない。
     if (props.editMode) return;
 
+    //タスクフォルダーをコンテキストにセット
+    setTaskFolder(props.taskFolderInfo);
+
     //タスクリスト画面へ遷移
-    history.push("/tasks", { taskFolderInfo: props.taskFolderInfo });
-  }, [history, props.editMode, props.taskFolderInfo]);
+    history.push("/tasks");
+  }, [history, props.editMode, props.taskFolderInfo, setTaskFolder]);
 
   return (
     <>

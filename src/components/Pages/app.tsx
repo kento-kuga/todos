@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { TaskFolderContextProvider } from "../../common/context/task-folder-context";
 import { TaskFoldersContextProvider } from "../../common/context/task-folders-context";
 import { TasksProvider } from "../../common/context/tasks-context";
 import { UserInfo } from "../../common/dto/user";
@@ -28,20 +29,22 @@ const AuthorityRoute = (props: AuthorityRouteProps) => {
   if (props.userInfo) {
     return (
       <TaskFoldersContextProvider>
-        <Route
-          exact
-          path={"/folders"}
-          render={() => <Folders userInfo={props.userInfo} />}
-        ></Route>
-        <Route
-          exact
-          path={"/tasks"}
-          render={() => (
-            <TasksProvider>
-              <Tasks />
-            </TasksProvider>
-          )}
-        ></Route>
+        <TaskFolderContextProvider>
+          <Route
+            exact
+            path={"/folders"}
+            render={() => <Folders userInfo={props.userInfo} />}
+          ></Route>
+          <Route
+            exact
+            path={"/tasks"}
+            render={() => (
+              <TasksProvider>
+                <Tasks />
+              </TasksProvider>
+            )}
+          ></Route>
+        </TaskFolderContextProvider>
       </TaskFoldersContextProvider>
     );
   }
