@@ -8,9 +8,7 @@
 
 # testing
 /coverage
-
-# production
-/build
+/e2e
 
 # misc
 .DS_Store
