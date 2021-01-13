@@ -50,6 +50,7 @@ const InputPresenter: React.FC<Props> = ({ children, ...props }) => {
       <Controller
         render={(controllerProps) => (
           <UI.Input
+            name={props.name}
             maxLength={props.maxlength}
             fluid={props.fluid}
             placeholder={props.placeholder}
