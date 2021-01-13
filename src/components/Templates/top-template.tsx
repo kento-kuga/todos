@@ -14,7 +14,7 @@ const TopTemplatePresenter = (props: Props) => {
     <div className={props.className}>
       <Grid>
         <Row textAlign="center">
-          <Logo label="Todos" className="logo" />
+          <Logo label="ToDos" className="logo" />
         </Row>
         <Row>
           <AuthContainer />
