@@ -5,7 +5,7 @@
 タスク管理アプリ「ToDos」のリポジトリです。
 このアプリはポートフォリオとして作成しました。
 
-## デモ
+## アプリ
 
 https://todos-ap.web.app/
 
@@ -19,7 +19,7 @@ https://todos-ap.web.app/
   - Authentication
   - Hosting
 
-## ディレクトリ構成（技術感の図れるものだけ抜粋）
+## ディレクトリ構成（一部抜粋）
 
 ```
 .
@@ -50,4 +50,5 @@ https://todos-ap.web.app/
 ## アピールポイント
 
 以下の notion をご覧ください。
+
 https://www.notion.so/ToDos-5f2dfd442ecb4b008c6eea161bb07a92
