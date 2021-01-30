@@ -11,9 +11,9 @@ https://todos-ap.web.app/
 
 ## 使用技術
 
-- React.js
-- TypeScript
-- Semantic UI React
+- React.js 17.0.1
+- TypeScript 4.0.3
+- Semantic UI React 2.4.1
 - Firebase
   - Cloud Firestore
   - Authentication
