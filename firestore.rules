@@ -1,11 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-        // 認証中ユーザーかどうか
+        //認証中ユーザーかどうか
         function isAuthenticated() {
           return request.auth != null
-              && request.auth.uid != null
-              && request.auth.uid != '9XTME9uiNxPqZc5K7lWh8S1VOB32';
+              && request.auth.uid != null;
+        }
+        //試用ユーザーかどうか
+        function isTryUser() {
+          return request.auth.uid == '9XTME9uiNxPqZc5K7lWh8S1VOB32';
         }
       //ユーザーのルール
       match /users/{userId} {
@@ -26,10 +29,12 @@ service cloud.firestore {
         //作成
         allow create: if isAuthenticated()
                       && userId == request.auth.uid
+                      && !isTryUser()
                       && isValidateCreateUser(request.resource.data);
         //更新
         allow update: if isAuthenticated()
                       && userId == request.auth.uid
+                      && !isTryUser()
                       && isValidateUpdateUser(request.resource.data);
       }
       //タスクフォルダーのルール
@@ -48,18 +53,22 @@ service cloud.firestore {
               || ('taskNumber' in data && data.taskNumber is int && data.taskNumber >= 0);
         }
         //取得
-        allow get: if isAuthenticated();
+        allow get: if isAuthenticated()
+                  && !isTryUser();
 
         //作成
         allow create: if isAuthenticated()
+                    && !isTryUser()
                     && isValidateCreateTaskFolder(request.resource.data);
 
         //更新 || タスク数更新
         allow update: if isAuthenticated()
+                    && !isTryUser()
                     && isValidateUpdateTaskFolder(request.resource.data)
 
         //削除
-        allow delete: if isAuthenticated();
+        allow delete: if isAuthenticated()
+                      && !isTryUser();
 
       }
       //タスクのルール
@@ -77,18 +86,22 @@ service cloud.firestore {
         }
 
         //取得
-        allow read: if isAuthenticated();
+        allow read: if isAuthenticated()
+                    && !isTryUser();
 
         //作成
         allow create: if isAuthenticated()
+                      && !isTryUser()
                       && isValidateCreateTask(request.resource.data);
 
         //更新
         allow update: if isAuthenticated()
+                      && !isTryUser()
                       && isValidateUpdateTask(request.resource.data);
 
         //削除
-        allow delete: if isAuthenticated();
+        allow delete: if isAuthenticated()
+                      && !isTryUser();
       }
 
   }
