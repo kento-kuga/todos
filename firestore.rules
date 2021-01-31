@@ -39,7 +39,6 @@ service cloud.firestore {
           return data.size() == 3
                 && 'folderName' in data && data.folderName is string
                 && 'members' in data && data.members.size() == 1
-                && data.members.userId == request.auth.uid
                 && 'taskNumber' in data && data.taskNumber == 0 && data.taskNumber is int;
         }
         //更新時バリデーション
@@ -68,8 +67,8 @@ service cloud.firestore {
         //作成時バリデーション
         function isValidateCreateTask(data) {
           return data.size() == 3
-                && 'name' in data && data.folderName is string
-                && 'taskFolderId' in data && data.folderName is string
+                && 'name' in data && data.name is string
+                && 'taskFolderId' in data && data.taskFolderId is string
                 && 'createdAt' in data;
         }
         //更新時バリデーション
@@ -82,11 +81,11 @@ service cloud.firestore {
 
         //作成
         allow create: if isAuthenticated()
-                      && isValidateCreateTask();
+                      && isValidateCreateTask(request.resource.data);
 
         //更新
         allow update: if isAuthenticated()
-                      && isValidateUpdateTask();
+                      && isValidateUpdateTask(request.resource.data);
 
         //削除
         allow delete: if isAuthenticated();
