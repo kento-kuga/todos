@@ -26,3 +26,6 @@ yarn-error.log*
 /build
 /src/semantic/dist
 src/components/Pages/try.tsx
+
+# firebase
+/.firebase
