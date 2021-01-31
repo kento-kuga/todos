@@ -24,7 +24,7 @@ https://todos-ap.web.app/
 ```
 .
 ├ src
-│ ├ common        アプリ戦隊で使用するもの
+│ ├ common        アプリ全体で使用するもの
 │ │ ├ consts      定数
 │ │ ├ context     ReactのuseContextを利用したコンテキスト
 │ │ ├ css         汎用的なスタイルの定義（styled-componentsの中で変数として参照する）
