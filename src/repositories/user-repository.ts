@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import Firebase from "../core/firebase";
-import { UserInfo } from "../common/dto/user";
+import { UpdateUserInfo, UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import { Listener } from "../core/listener";
 import { COLLECTION_NAME_USERS } from "./repository-helper";
@@ -12,6 +12,41 @@ export class UserRepository implements UserRepositoryInterface {
   constructor() {
     this._db = Firebase.instance.db;
   }
+
+  /** ユーザー作成 */
+  create = async (userId: string, listener: Listener) => {
+    try {
+      listener.started();
+
+      await firebase
+        .firestore()
+        .collection(COLLECTION_NAME_USERS)
+        .doc(userId)
+        .set({ taskFolderIdList: [] });
+    } catch (e) {
+      console.error(e);
+      throw new SystemError();
+    } finally {
+      listener.finished();
+    }
+  };
+
+  /** ユーザー情報更新 */
+  update = async (userId: string, req: UpdateUserInfo, listener: Listener) => {
+    try {
+      listener.started();
+
+      await this._db.collection(COLLECTION_NAME_USERS).doc(userId).update({
+        name: req.name,
+        taskFolderIdList: req.taskFolderIdList,
+      });
+    } catch (e) {
+      console.error(e);
+      throw new SystemError();
+    } finally {
+      listener.finished();
+    }
+  };
 
   /** ユーザー取得 */
   getByUserId = async (userId: string | undefined, listener: Listener) => {

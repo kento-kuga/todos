@@ -7,11 +7,14 @@ import {
 } from "../core/error";
 import { Listener } from "../core/listener";
 import { AuthRepositoryInterface } from "./interfaces/auth-repository-interface";
-import { COLLECTION_NAME_USERS } from "./repository-helper";
+import { UserRepository } from "./user-repository";
 
 export class AuthRepository implements AuthRepositoryInterface {
   /** ユーザー作成 */
   create = async (req: CreateUserReq, listener: Listener) => {
+    //ユーザーリポジトリ
+    const User = new UserRepository();
+
     try {
       listener.started();
 
@@ -42,16 +45,7 @@ export class AuthRepository implements AuthRepositoryInterface {
 
     if (currentUser !== null) {
       //登録ができ、ユーザーが取得できた場合
-
-      //ユーザー情報の登録
-      await firebase
-        .firestore()
-        .collection(COLLECTION_NAME_USERS)
-        .doc(currentUser.uid)
-        .set({ taskFolderIdList: [] })
-        .catch((error) => {
-          throw error;
-        });
+      await User.create(currentUser.uid, listener);
     } else {
       //ユーザーが取得できなかった場合
       throw new Error();

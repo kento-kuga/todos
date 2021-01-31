@@ -2,16 +2,14 @@ import {
   TaskFolderCreateReq,
   TaskFolderUpdateReq,
 } from "../common/dto/task-folder";
-import { UserInfo } from "../common/dto/user";
+import { UpdateUserInfo, UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import firebase from "firebase";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
-import {
-  COLLECTION_NAME_FOLDERS,
-  COLLECTION_NAME_USERS,
-} from "./repository-helper";
+import { COLLECTION_NAME_FOLDERS } from "./repository-helper";
 import { TaskFolderRepositoryInterface } from "./interfaces/task-folder-repository-interface";
+import { UserRepository } from "./user-repository";
 
 export class TaskFolderRepository implements TaskFolderRepositoryInterface {
   //dbインスタンス
@@ -30,6 +28,9 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
     //ユーザー情報がなければ何もしない
     if (!userInfo) return;
 
+    //ユーザーリポジトリ
+    const User = new UserRepository();
+
     try {
       listener.started();
 
@@ -46,12 +47,10 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
       const tmpTaskFolder = [...userInfo.taskFolderIdList];
       tmpTaskFolder.push(ref.id);
 
-      await this._db
-        .collection(COLLECTION_NAME_USERS)
-        .doc(userInfo.userId)
-        .update({
-          taskFolderIdList: tmpTaskFolder,
-        });
+      const req = new UpdateUserInfo();
+      req.taskFolderIdList = tmpTaskFolder;
+
+      await User.update(userInfo.userId, req, listener);
     } catch (e) {
       console.error(e);
       throw new SystemError();
@@ -66,12 +65,10 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
     updateFolderParam: TaskFolderUpdateReq,
     listener: Listener
   ) => {
-    const db = Firebase.instance.db;
-
     try {
       listener.started();
 
-      await db
+      await this._db
         .collection(COLLECTION_NAME_FOLDERS)
         .doc(taskFolderId)
         .update({ ...updateFolderParam });
@@ -80,6 +77,29 @@ export class TaskFolderRepository implements TaskFolderRepositoryInterface {
       throw new SystemError();
     } finally {
       listener.finished();
+    }
+  };
+
+  /** タスク数更新 */
+  updateTaskNumber = async (
+    taskFolderId: string,
+    taskNumber: number,
+    listener?: Listener
+  ) => {
+    try {
+      listener && listener.started();
+
+      const folderRef = await this._db
+        .collection(COLLECTION_NAME_FOLDERS)
+        .doc(taskFolderId);
+      folderRef.update({
+        taskNumber: firebase.firestore.FieldValue.increment(taskNumber),
+      });
+    } catch (e) {
+      console.error(e);
+      throw new SystemError();
+    } finally {
+      listener && listener.finished();
     }
   };
 }

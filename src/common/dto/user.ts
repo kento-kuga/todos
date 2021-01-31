@@ -16,6 +16,14 @@ export class CreateUserReq {
   password: string = "";
 }
 
+/** ユーザー情報更新リクエスト */
+export class UpdateUserInfo {
+  /** ニックネーム */
+  name?: string = "";
+  /** タスクフォルダーIDリスト */
+  taskFolderIdList?: string[] = [];
+}
+
 /** ユーザーログインリクエスト */
 export class LoginReq {
   /** メールアドレス */

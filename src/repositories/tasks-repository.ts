@@ -3,11 +3,9 @@ import Firebase from "../core/firebase";
 import { TaskInfo } from "../common/dto/task";
 import { SystemError } from "../core/error";
 import { Listener } from "../core/listener";
-import {
-  COLLECTION_NAME_FOLDERS,
-  COLLECTION_NAME_TASKS,
-} from "./repository-helper";
+import { COLLECTION_NAME_TASKS } from "./repository-helper";
 import { TasksRepositoryInterface } from "./interfaces/tasks-interface";
+import { TaskFolderRepository } from "./task-folder-repository";
 
 export class TasksRepository implements TasksRepositoryInterface {
   //dbインスタンス
@@ -54,6 +52,9 @@ export class TasksRepository implements TasksRepositoryInterface {
     try {
       listener && listener.started();
 
+      //タスクフォルダーリポジトリ
+      const TaskFolder = new TaskFolderRepository();
+
       //タスク削除
       for (const task of tasks) {
         await this._db
@@ -63,12 +64,7 @@ export class TasksRepository implements TasksRepositoryInterface {
       }
 
       //タスクフォルダーのタスク数を増加。
-      const folderRef = await this._db
-        .collection(COLLECTION_NAME_FOLDERS)
-        .doc(taskFolderId);
-      folderRef.update({
-        taskNumber: firebase.firestore.FieldValue.increment(-tasks.length),
-      });
+      TaskFolder.updateTaskNumber(taskFolderId, -tasks.length, listener);
     } catch (e) {
       console.error(e);
       throw new SystemError();

@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import { TaskFolderInfo } from "../common/dto/task-folder";
-import { UserInfo } from "../common/dto/user";
+import { UpdateUserInfo, UserInfo } from "../common/dto/user";
 import { SystemError } from "../core/error";
 import Firebase from "../core/firebase";
 import { Listener } from "../core/listener";
@@ -8,8 +8,8 @@ import { TaskFoldersRepositoryInterface } from "./interfaces/task-folders-reposi
 import {
   COLLECTION_NAME_FOLDERS,
   COLLECTION_NAME_TASKS,
-  COLLECTION_NAME_USERS,
 } from "./repository-helper";
+import { UserRepository } from "./user-repository";
 
 export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
   //dbインスタンス
@@ -62,6 +62,10 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
   ) => {
     //ユーザー情報がなければ何もしない
     if (!userInfo) return;
+
+    //ユーザーリポジトリ
+    const User = new UserRepository();
+
     try {
       listener.started();
 
@@ -104,12 +108,10 @@ export class TaskFoldersRepository implements TaskFoldersRepositoryInterface {
       });
 
       //ユーザーのフォルダーリスト更新
-      await this._db
-        .collection(COLLECTION_NAME_USERS)
-        .doc(userInfo.userId)
-        .update({
-          taskFolderIdList: tmpTaskFolder,
-        });
+      //リクエスト作成
+      const req = new UpdateUserInfo();
+      req.taskFolderIdList = tmpTaskFolder;
+      User.update(userInfo.userId, req, listener);
     } catch (e) {
       console.error(e);
       throw new SystemError();
