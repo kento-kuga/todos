@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+        // 認証中ユーザーかどうか
+        function isAuthenticated() {
+          return request.auth != null
+              && request.auth.uid != null
+              && request.auth.uid != '9XTME9uiNxPqZc5K7lWh8S1VOB32';
+        }
+      //ユーザーのルール
+      match /users/{userId} {
+        //作成時バリデーション
+        function isValidateCreateUser(data) {
+          return data.size() == 1
+              && 'taskFolderIdList' in data
+              && data.taskFolderIdList.size() == 0;
+        }
+        //更新時バリデーション
+        function isValidateUpdateUser(data) {
+          return 'taskFolderIdList' in data;
+        }
+
+        //取得
+        allow get: if isAuthenticated()
+                    && userId == request.auth.uid;
+        //作成
+        allow create: if isAuthenticated()
+                      && userId == request.auth.uid
+                      && isValidateCreateUser(request.resource.data);
+        //更新
+        allow update: if isAuthenticated()
+                      && userId == request.auth.uid
+                      && isValidateUpdateUser(request.resource.data);
+      }
+      //タスクフォルダーのルール
+      match /taskFolders/{taskFolderId} {
+        //作成時バリデーション
+        function isValidateCreateTaskFolder(data) {
+          return data.size() == 3
+                && 'folderName' in data && data.folderName is string
+                && 'members' in data && data.members.size() == 1
+                && data.members.userId == request.auth.uid
+                && 'taskNumber' in data && data.taskNumber == 0 && data.taskNumber is int;
+        }
+        //更新時バリデーション
+        function isValidateUpdateTaskFolder(data) {
+          return data.keys().hasAny(['folderName','taskNumber'])
+              && ('folderName' in data && data.folderName is string)
+              || ('taskNumber' in data && data.taskNumber is int && data.taskNumber >= 0);
+        }
+        //取得
+        allow get: if isAuthenticated();
+
+        //作成
+        allow create: if isAuthenticated()
+                    && isValidateCreateTaskFolder(request.resource.data);
+
+        //更新 || タスク数更新
+        allow update: if isAuthenticated()
+                    && isValidateUpdateTaskFolder(request.resource.data)
+
+        //削除
+        allow delete: if isAuthenticated();
+
+      }
+      //タスクのルール
+      match /tasks/{taskId} {
+        //作成時バリデーション
+        function isValidateCreateTask(data) {
+          return data.size() == 3
+                && 'name' in data && data.folderName is string
+                && 'taskFolderId' in data && data.folderName is string
+                && 'createdAt' in data;
+        }
+        //更新時バリデーション
+        function isValidateUpdateTask(data) {
+          return data.keys().hasAny(['completed']);
+        }
+
+        //取得
+        allow read: if isAuthenticated();
+
+        //作成
+        allow create: if isAuthenticated()
+                      && isValidateCreateTask();
+
+        //更新
+        allow update: if isAuthenticated()
+                      && isValidateUpdateTask();
+
+        //削除
+        allow delete: if isAuthenticated();
+      }
+
+  }
+}
