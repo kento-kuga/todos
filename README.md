@@ -35,6 +35,7 @@ https://todos-ap.web.app/
 │ ├ core          アプリのシステムに関連するもの
 │ ├ repositories  Firebaseを内包したリポジトリ層
 │ └ test          テスト関連（未実装）
+├ firestore.rules Firebaseのセキュリティールール
 └ memo.md         開発時のやることリストと、コーディング規約
 ```
 
